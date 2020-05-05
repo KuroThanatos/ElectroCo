@@ -23,6 +23,11 @@ namespace ElectroCo.Models
         /// </summary>
         public string Email { get; set; }
 
+        /// <summary>
+        /// Contacto Telefonico de contacto com o Utilizador
+        /// </summary>
+        public string Telefone { get; set; }
+
         /*
         /// <summary>
         /// Password Encriptada do Utilizador
