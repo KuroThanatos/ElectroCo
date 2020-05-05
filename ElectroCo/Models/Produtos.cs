@@ -21,5 +21,7 @@ namespace ElectroCo.Models
 
         public string EstadoProduto { get; set; }
 
+        public string Imagem { get; set; }
+
     }
 }
