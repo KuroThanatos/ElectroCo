@@ -7,21 +7,30 @@ using System.Threading.Tasks;
 
 namespace ElectroCo.Models
 {
-    public class DetalheEncomenda
+    public class DetalhesEncomenda
     {
         [Key]
         public int ID { get; set; }
 
+        /// <summary>
+        /// Quantidade do produto
+        /// </summary>
         public int Quantidade { get; set; }
 
+        /// <summary>
+        /// Preço total do Produto
+        /// </summary>
         public float PrecoProduto { get; set; }
 
-        [ForeignKey(nameof(Order))]
-        public int EncomendaID { get; set; }
-        public virtual ICollection<Encomenda> Order { get; set; }
 
+        //FK para Encomendas
+        [ForeignKey(nameof(Order))]
+        public int EncomendaID { get; set; }// DetalheEncomenda ---> Encomenda
+        public virtual ICollection<Encomendas> Order { get; set; }
+
+        //FK para Produto
         [ForeignKey(nameof(Product))]
-        public int ProdutoID { get; set; }
+        public int ProdutoID { get; set; }// DetalheEncomenda ---> Produto
         public virtual ICollection<Produtos> Product { get; set; }
     }
 }

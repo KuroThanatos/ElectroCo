@@ -11,17 +11,26 @@ namespace ElectroCo.Models
     {
         [Key]
         public int ID { get; set; }
-
+        
+        /// <summary>
+        ///Nome do Utilizador
+        /// </summary>
         [Required(ErrorMessage = "O Nome é de preenchimento obrigatório")]
-        [StringLength(40, ErrorMessage = "O {0} não pode ter mais de {1} carateres.")]
-        [RegularExpression("[A-ZÓÂÍ][a-zçáéíóúàèìòùãõäëïöüâêîôûñ]+(( | d[ao](s)? | e |-|'| d')[A-ZÓÂÍ][a-zçáéíóúàèìòùãõäëïöüâêîôûñ]+){1,3}",
-                          ErrorMessage = "Deve escrever entre 2 e 4 nomes, começados por uma Maiúscula, seguidos de minúsculas.")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// Email Principal do Utilizador
+        /// </summary>
         public string Email { get; set; }
 
-        public string Password { get; set; }
-        public virtual ICollection<Cliente> Clients { get; set; }
-        public virtual ICollection<Funcionario> Employees { get; set; }
+        /*
+        /// <summary>
+        /// Password Encriptada do Utilizador
+        /// </summary>
+        ///public string Password { get; set; }
+        */
+
+        public virtual ICollection<Clientes> Clients { get; set; }
+        public virtual ICollection<Funcionarios> Employees { get; set; }
     }
 }

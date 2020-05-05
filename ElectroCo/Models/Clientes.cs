@@ -8,8 +8,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ElectroCo.Models
 {
-    public class Cliente
+    public class Clientes
     {
+        public Clientes(){
+            Orders = new HashSet<Encomendas>();
+        }
+
         [Key]
         public int ID{ get; set; }
 
@@ -21,9 +25,15 @@ namespace ElectroCo.Models
         [RegularExpression("[12567][0-9]{8}", ErrorMessage = "Deve escrever um nº, com 9 algarismos, começando por 1, 2, 5, 6 ou 7.")]
         public int NIF { get; set; }
         
+        //FK para Utilizadores
         [ForeignKey(nameof(Users))]
-        public int UserId { get; set; }
+        public int UserId { get; set; } //Cliente ---> Utilizador
         public virtual ICollection<Utilizadores> Users { get; set; }
+
+        /// <summary>
+        /// lista de Encomendas de um determinado cliente
+        /// </summary>
+        public virtual ICollection<Encomendas> Orders { get; set; }
 
     }
 }
