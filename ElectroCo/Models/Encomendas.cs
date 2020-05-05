@@ -19,11 +19,6 @@ namespace ElectroCo.Models
         public string EstadoEncomenda { get; set; }
 
         /// <summary>
-        /// Comprovativo de Compra
-        /// </summary>
-        public string Comprovativo { get; set; }
-
-        /// <summary>
         /// Data da realização da Encomenda
         /// </summary>
         public DateTime DataEncomenda { get; set; }
