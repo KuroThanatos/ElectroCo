@@ -84,3 +84,6 @@ C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\Electr
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.csproj.CoreCompileInputs.cache
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\partials\_head.cshtml.g.cs
+C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\partials\_header.cshtml.g.cs
+C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\partials\_footer.cshtml.g.cs
