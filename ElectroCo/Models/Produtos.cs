@@ -8,6 +8,7 @@ namespace ElectroCo.Models
         public Produtos()
         {
             Orders = new HashSet<DetalhesEncomenda>();
+            Cart = new HashSet<ShoppingCart>();
         }
 
         [Key]
@@ -44,6 +45,7 @@ namespace ElectroCo.Models
         public string Imagem { get; set; }
 
         public virtual ICollection<DetalhesEncomenda> Orders { get; set; }
+        public virtual ICollection<ShoppingCart> Cart { get; set; }
 
     }
 }

@@ -8,6 +8,7 @@ namespace ElectroCo.Models
     {
         public Clientes(){
             Orders = new HashSet<Encomendas>();
+            Cart = new HashSet<ShoppingCart>();
         }
 
         [Key]
@@ -38,6 +39,8 @@ namespace ElectroCo.Models
         /// lista de Encomendas de um determinado cliente
         /// </summary>
         public virtual ICollection<Encomendas> Orders { get; set; }
+
+        public virtual ICollection<ShoppingCart> Cart { get; set; }
 
     }
 }

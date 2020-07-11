@@ -19,6 +19,7 @@ namespace ElectroCo.Data
         public virtual DbSet<Encomendas> Encomendas { get; set; }
         public virtual DbSet<Funcionarios> Funcionarios { get; set; }
         public virtual DbSet<DetalhesEncomenda> DetalhesEncomendas { get; set; }
+        public virtual DbSet<ShoppingCart> ShoppingCart { get; set; }
     }
  
 
