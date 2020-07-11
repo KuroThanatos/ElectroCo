@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ElectroCo.Data.Migrations
+namespace ElectroCo.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,11 +47,62 @@ namespace ElectroCo.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Clientes",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    Telefone = table.Column<string>(nullable: true),
+                    NIF = table.Column<int>(maxLength: 9, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clientes", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Funcionarios",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    Telefone = table.Column<string>(nullable: true),
+                    NumFuncionario = table.Column<int>(nullable: false),
+                    TipoFuncionario = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Funcionarios", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Produtos",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(nullable: true),
+                    Tipo = table.Column<string>(nullable: true),
+                    Preco = table.Column<float>(nullable: false),
+                    Stock = table.Column<int>(nullable: false),
+                    EstadoProduto = table.Column<string>(nullable: true),
+                    Imagem = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Produtos", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -73,7 +123,7 @@ namespace ElectroCo.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -153,6 +203,66 @@ namespace ElectroCo.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Encomendas",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EstadoEncomenda = table.Column<string>(nullable: true),
+                    DataEncomenda = table.Column<DateTime>(nullable: false),
+                    MoradaEncomenda = table.Column<string>(nullable: true),
+                    MoradaFaturacao = table.Column<string>(nullable: true),
+                    PrevisaoEntrega = table.Column<DateTime>(nullable: false),
+                    TrackID = table.Column<string>(nullable: true),
+                    ClientID = table.Column<int>(nullable: false),
+                    GestorID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Encomendas", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Encomendas_Clientes_ClientID",
+                        column: x => x.ClientID,
+                        principalTable: "Clientes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Encomendas_Funcionarios_GestorID",
+                        column: x => x.GestorID,
+                        principalTable: "Funcionarios",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DetalhesEncomendas",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Quantidade = table.Column<int>(nullable: false),
+                    PrecoProduto = table.Column<float>(nullable: false),
+                    EncomendaID = table.Column<int>(nullable: false),
+                    ProdutoID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DetalhesEncomendas", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_DetalhesEncomendas_Encomendas_EncomendaID",
+                        column: x => x.EncomendaID,
+                        principalTable: "Encomendas",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DetalhesEncomendas_Produtos_ProdutoID",
+                        column: x => x.ProdutoID,
+                        principalTable: "Produtos",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +301,26 @@ namespace ElectroCo.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetalhesEncomendas_EncomendaID",
+                table: "DetalhesEncomendas",
+                column: "EncomendaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetalhesEncomendas_ProdutoID",
+                table: "DetalhesEncomendas",
+                column: "ProdutoID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Encomendas_ClientID",
+                table: "Encomendas",
+                column: "ClientID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Encomendas_GestorID",
+                table: "Encomendas",
+                column: "GestorID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,10 +341,25 @@ namespace ElectroCo.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "DetalhesEncomendas");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Encomendas");
+
+            migrationBuilder.DropTable(
+                name: "Produtos");
+
+            migrationBuilder.DropTable(
+                name: "Clientes");
+
+            migrationBuilder.DropTable(
+                name: "Funcionarios");
         }
     }
 }

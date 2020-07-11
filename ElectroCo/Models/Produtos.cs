@@ -1,9 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ElectroCo.Models
 {
     public class Produtos
     {
+        public Produtos()
+        {
+            Orders = new HashSet<DetalhesEncomenda>();
+        }
+
         [Key]
         public int ID{ get; set; }
 
@@ -36,6 +42,8 @@ namespace ElectroCo.Models
         /// Imagem do Produto
         /// </summary>
         public string Imagem { get; set; }
+
+        public virtual ICollection<DetalhesEncomenda> Orders { get; set; }
 
     }
 }

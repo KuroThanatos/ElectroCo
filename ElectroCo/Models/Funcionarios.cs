@@ -6,8 +6,26 @@ namespace ElectroCo.Models
 {
     public class Funcionarios
     {
+        public Funcionarios()
+        {
+            Orders = new HashSet<Encomendas>();
+        }
+
         [Key]
         public int ID { get; set; }
+
+        [Required(ErrorMessage = "O Nome é de preenchimento obrigatório")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Email Principal do Utilizador
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Contacto Telefonico de contacto com o Utilizador
+        /// </summary>
+        public string Telefone { get; set; }
 
         /// <summary>
         /// Número do Funcionário
@@ -19,9 +37,6 @@ namespace ElectroCo.Models
         /// </summary>
         public string TipoFuncionario { get; set; }
 
-        //FK para Utilizador
-        [ForeignKey(nameof(Users))]
-        public int UserId { get; set; } //Funcionario ---> Utilizador
-        public virtual ICollection<Utilizadores> Users { get; set; }
+        public virtual ICollection<Encomendas> Orders { get; set; }
     }
 }

@@ -8,7 +8,12 @@ using System.Threading.Tasks;
 namespace ElectroCo.Models
 {
     public class Encomendas
-    {  
+    {
+        public Encomendas()
+        {
+            Orders = new HashSet<DetalhesEncomenda>();
+        }
+
         [Key]
         public int ID{ get; set; }
 
@@ -46,11 +51,13 @@ namespace ElectroCo.Models
         //FK para Cliente
         [ForeignKey(nameof(Cliente))]
         public int ClientID { get; set; } //Encomenda ---> Cliente
-        public virtual ICollection<Clientes> Cliente { get; set; }
+        public virtual Clientes Cliente { get; set; }
 
         //FK para Funcionario
         [ForeignKey(nameof(Gestor))]
         public int GestorID { get; set; } //Encomenda ---> Funcionário
-        public virtual ICollection<Funcionarios> Gestor { get; set; }
+        public virtual Funcionarios Gestor { get; set; }
+
+        public virtual ICollection<DetalhesEncomenda> Orders { get; set; }
     }
 }
