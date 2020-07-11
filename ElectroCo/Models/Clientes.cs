@@ -13,6 +13,19 @@ namespace ElectroCo.Models
         [Key]
         public int ID{ get; set; }
 
+        [Required(ErrorMessage = "O Nome é de preenchimento obrigatório")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Email Principal do Utilizador
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Contacto Telefonico de contacto com o Utilizador
+        /// </summary>
+        public string Telefone { get; set; }
+
         /// <summary>
         /// Número de Identificação Fiscal, vulgo 'nº de contribuinte'
         /// </summary>
@@ -20,11 +33,6 @@ namespace ElectroCo.Models
         [StringLength(9, MinimumLength = 9, ErrorMessage = "Deve escrever exatamente {1} algarismos no {0}.")]
         [RegularExpression("[12567][0-9]{8}", ErrorMessage = "Deve escrever um nº, com 9 algarismos, começando por 1, 2, 5, 6 ou 7.")]
         public int NIF { get; set; }
-        
-        //FK para Utilizadores
-        [ForeignKey(nameof(Users))]
-        public int UserId { get; set; } //Cliente ---> Utilizador
-        public virtual ICollection<Utilizadores> Users { get; set; }
 
         /// <summary>
         /// lista de Encomendas de um determinado cliente

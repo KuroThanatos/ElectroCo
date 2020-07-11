@@ -9,6 +9,7 @@ namespace ElectroCo.Models
 {
     public class DetalhesEncomenda
     {
+
         [Key]
         public int ID { get; set; }
 
@@ -26,11 +27,11 @@ namespace ElectroCo.Models
         //FK para Encomendas
         [ForeignKey(nameof(Order))]
         public int EncomendaID { get; set; }// DetalheEncomenda ---> Encomenda
-        public virtual ICollection<Encomendas> Order { get; set; }
+        public virtual Encomendas Order { get; set; }
 
         //FK para Produto
         [ForeignKey(nameof(Product))]
         public int ProdutoID { get; set; }// DetalheEncomenda ---> Produto
-        public virtual ICollection<Produtos> Product { get; set; }
+        public virtual Produtos Product { get; set; }
     }
 }
