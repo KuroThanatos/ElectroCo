@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectroCo", "ElectroCo\ElectroCo.csproj", "{AF4139B9-5E07-4D4A-AAF4-0CD2CF30FFA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectroCo", "ElectroCo\ElectroCo.csproj", "{92CBAC16-F917-4498-929E-C307C4C8591A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AF4139B9-5E07-4D4A-AAF4-0CD2CF30FFA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF4139B9-5E07-4D4A-AAF4-0CD2CF30FFA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF4139B9-5E07-4D4A-AAF4-0CD2CF30FFA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF4139B9-5E07-4D4A-AAF4-0CD2CF30FFA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92CBAC16-F917-4498-929E-C307C4C8591A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92CBAC16-F917-4498-929E-C307C4C8591A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92CBAC16-F917-4498-929E-C307C4C8591A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92CBAC16-F917-4498-929E-C307C4C8591A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {595C6DB5-3DBB-4D0F-92E1-11149006D974}
+		SolutionGuid = {FE20802B-EB47-46CE-A5C1-9D98F433A624}
 	EndGlobalSection
 EndGlobal
