@@ -171,6 +171,28 @@ namespace ElectroCo.Migrations
                     b.ToTable("Produtos");
                 });
 
+            modelBuilder.Entity("ElectroCo.Models.ShoppingCart", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClientID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutoID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ClientID");
+
+                    b.HasIndex("ProdutoID");
+
+                    b.ToTable("ShoppingCart");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -397,6 +419,21 @@ namespace ElectroCo.Migrations
                     b.HasOne("ElectroCo.Models.Funcionarios", "Gestor")
                         .WithMany("Orders")
                         .HasForeignKey("GestorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ElectroCo.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("ElectroCo.Models.Clientes", "Cliente")
+                        .WithMany("Cart")
+                        .HasForeignKey("ClientID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ElectroCo.Models.Produtos", "Product")
+                        .WithMany("Cart")
+                        .HasForeignKey("ProdutoID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
