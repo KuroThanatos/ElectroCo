@@ -27,19 +27,20 @@ namespace ElectroCo.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
         private readonly ApplicationDbContext db;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            db = context;
         }
 
         [BindProperty]
@@ -98,9 +99,9 @@ namespace ElectroCo.Areas.Identity.Pages.Account
                     novoCliente.NIF = 123456789;
 
 
-                    //db.Add(novoCliente);
+                    db.Add(novoCliente);
 
-                   // await db.SaveChangesAsync();
+                    await db.SaveChangesAsync();
 
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
