@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using ElectroCo.Data;
 using ElectroCo.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace ElectroCo.Areas.Identity.Pages.Account
 {
@@ -52,12 +54,41 @@ namespace ElectroCo.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "This field is required")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "This field is required")]
+            [StringLength(40, ErrorMessage = "It {0} can't have more than {1} characters.")]
+            [RegularExpression("[A-ZÓÂÍ][a-zçáéíóúàèìòùãõäëïöüâêîôûñ]+(( | d[ao](s)? | e |-|'| d')[A-ZÓÂÍ][a-zçáéíóúàèìòùãõäëïöüâêîôûñ]+){1,3}",
+                          ErrorMessage = "Should write between 2 and 4 names, starting Uppercase, followed by lowercase.")]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
+
+            [Required(ErrorMessage = "This field is required")]
+            [StringLength(9, MinimumLength = 9, ErrorMessage = "Must have exactly {1} digits in {0}.")]
+            [RegularExpression("[12567][0-9]{8}", ErrorMessage = "Should write a number, with 9 digits, starting with 1, 2, 5, 6 or 7.")]
+            [Display(Name = "NIF")]
+            public string NIF { get; set; }
+
+            [Required(ErrorMessage = "This field is required")]
+            [StringLength(9, MinimumLength = 9, ErrorMessage = "Must have exactly {1} digits in {0}.")]
+            [RegularExpression("[29][0-9]{8}", ErrorMessage = "Should write a number, with 9 digits, starting with 2 or 9.")]
+            [Display(Name = "Phone")]
+            public string Phone { get; set; }
+
+            [Required(ErrorMessage = "This field is required")]
+            [Display(Name = "Address")]
+            public string Address { get; set; }
+
+            [Required(ErrorMessage = "This field is required")]
+            [StringLength(8, MinimumLength = 8, ErrorMessage = "Must have exactly {1} digits and - after 4 first digits in {0}.")]
+            [RegularExpression("[0-9]{4}-[0-9]{3}", ErrorMessage = "Should write a number, with 8 digits, with 4 digits, hifen and more 3 digits")]
+            [Display(Name = "Postal Code")]
+            public string CP { get; set; }
+
+            [Required(ErrorMessage = "This field is required")]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -93,27 +124,30 @@ namespace ElectroCo.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     Clientes novoCliente = new Clientes();
-                    novoCliente.Name = Input.Email;
+                    novoCliente.Name = Input.Name;
                     novoCliente.Email = Input.Email;
                     novoCliente.UserId = user.Id;
-                    novoCliente.NIF = 123456789;
+                    novoCliente.NIF = int.Parse(Input.NIF);
+                    novoCliente.Telefone = Input.Phone;
+                    novoCliente.Morada = Input.Address;
+                    novoCliente.CodigoPostal = Input.CP;
 
 
                     db.Add(novoCliente);
 
                     await db.SaveChangesAsync();
 
+                    
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    //var callbackUrl = Url.Page(
+                    //    "/Account/ConfirmEmail",
+                    //    pageHandler: null,
+                    //    values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                    //    protocol: Request.Scheme);
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
