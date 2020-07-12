@@ -20,6 +20,7 @@ namespace ElectroCo.Models
         /// <summary>
         /// Email Principal do Utilizador
         /// </summary>
+        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
         public string Email { get; set; }
 
         /// <summary>
@@ -34,6 +35,12 @@ namespace ElectroCo.Models
         [StringLength(9, MinimumLength = 9, ErrorMessage = "Deve escrever exatamente {1} algarismos no {0}.")]
         [RegularExpression("[12567][0-9]{8}", ErrorMessage = "Deve escrever um nº, com 9 algarismos, começando por 1, 2, 5, 6 ou 7.")]
         public int NIF { get; set; }
+
+        public string Morada { get; set; }
+
+        public string CodigoPostal { get; set; }
+
+        public string UserId { get; set; }
 
         /// <summary>
         /// lista de Encomendas de um determinado cliente

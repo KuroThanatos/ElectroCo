@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ElectroCo.Migrations
 {
-    public partial class FirstMigration : Migration
+    public partial class firstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,9 +53,11 @@ namespace ElectroCo.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: false),
                     Telefone = table.Column<string>(nullable: true),
-                    NIF = table.Column<int>(maxLength: 9, nullable: false)
+                    NIF = table.Column<int>(maxLength: 9, nullable: false),
+                    Morada = table.Column<string>(nullable: true),
+                    CodigoPostal = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -236,6 +238,32 @@ namespace ElectroCo.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShoppingCart",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClientID = table.Column<int>(nullable: false),
+                    ProdutoID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCart", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCart_Clientes_ClientID",
+                        column: x => x.ClientID,
+                        principalTable: "Clientes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCart_Produtos_ProdutoID",
+                        column: x => x.ProdutoID,
+                        principalTable: "Produtos",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DetalhesEncomendas",
                 columns: table => new
                 {
@@ -262,6 +290,21 @@ namespace ElectroCo.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "ad", "1da3c985-b04b-4bb0-8aae-ed3e5014b0fb", "administrador", null });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "ga", "1a5c5980-cd01-484a-b92a-35ad9105ce3c", "gestorArmazem", null });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "c", "1171efd6-f581-4dbb-b71d-e2006397c0b5", "cliente", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -321,6 +364,16 @@ namespace ElectroCo.Migrations
                 name: "IX_Encomendas_GestorID",
                 table: "Encomendas",
                 column: "GestorID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCart_ClientID",
+                table: "ShoppingCart",
+                column: "ClientID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCart_ProdutoID",
+                table: "ShoppingCart",
+                column: "ProdutoID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -342,6 +395,9 @@ namespace ElectroCo.Migrations
 
             migrationBuilder.DropTable(
                 name: "DetalhesEncomendas");
+
+            migrationBuilder.DropTable(
+                name: "ShoppingCart");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
