@@ -4,14 +4,16 @@ using ElectroCo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ElectroCo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200711235058_addUserIdClientesMigration")]
+    partial class addUserIdClientesMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,23 +235,20 @@ namespace ElectroCo.Migrations
                         new
                         {
                             Id = "ad",
-                            ConcurrencyStamp = "fe4fa11e-4896-41c1-97a3-8f817355d7ed",
-                            Name = "administrador",
-                            NormalizedName = "administrador"
+                            ConcurrencyStamp = "e8839932-7ea6-4499-a929-cebd23bb7cbb",
+                            Name = "administrador"
                         },
                         new
                         {
                             Id = "ga",
-                            ConcurrencyStamp = "32d80c83-b118-48ec-ae99-b08095cc7914",
-                            Name = "gestorArmazem",
-                            NormalizedName = "gestorArmazem"
+                            ConcurrencyStamp = "a09f4dc5-1ab3-43dd-b7c8-2fc0ad9312e9",
+                            Name = "gestorArmazem"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "1e61cba7-3cc3-47d5-82a1-08597bf63670",
-                            Name = "cliente",
-                            NormalizedName = "cliente"
+                            ConcurrencyStamp = "55f622b7-201d-4929-8d0f-37335ff4af06",
+                            Name = "cliente"
                         });
                 });
 

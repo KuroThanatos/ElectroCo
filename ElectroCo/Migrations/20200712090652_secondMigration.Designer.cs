@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectroCo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200711161148_SecondMigration")]
-    partial class SecondMigration
+    [Migration("20200712090652_secondMigration")]
+    partial class secondMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,14 @@ namespace ElectroCo.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CodigoPostal")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Morada")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NIF")
@@ -40,6 +47,9 @@ namespace ElectroCo.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -220,6 +230,29 @@ namespace ElectroCo.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ad",
+                            ConcurrencyStamp = "fe4fa11e-4896-41c1-97a3-8f817355d7ed",
+                            Name = "administrador",
+                            NormalizedName = "administrador"
+                        },
+                        new
+                        {
+                            Id = "ga",
+                            ConcurrencyStamp = "32d80c83-b118-48ec-ae99-b08095cc7914",
+                            Name = "gestorArmazem",
+                            NormalizedName = "gestorArmazem"
+                        },
+                        new
+                        {
+                            Id = "c",
+                            ConcurrencyStamp = "1e61cba7-3cc3-47d5-82a1-08597bf63670",
+                            Name = "cliente",
+                            NormalizedName = "cliente"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
