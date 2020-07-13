@@ -36,8 +36,9 @@ namespace ElectroCo.Migrations
                     b.Property<string>("Morada")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NIF")
-                        .HasColumnType("int")
+                    b.Property<string>("NIF")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(9)")
                         .HasMaxLength(9);
 
                     b.Property<string>("Name")
@@ -45,7 +46,8 @@ namespace ElectroCo.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(9)")
+                        .HasMaxLength(9);
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -233,21 +235,21 @@ namespace ElectroCo.Migrations
                         new
                         {
                             Id = "ad",
-                            ConcurrencyStamp = "fe4fa11e-4896-41c1-97a3-8f817355d7ed",
+                            ConcurrencyStamp = "50117104-213e-44f1-a2b9-28f998432715",
                             Name = "administrador",
                             NormalizedName = "administrador"
                         },
                         new
                         {
                             Id = "ga",
-                            ConcurrencyStamp = "32d80c83-b118-48ec-ae99-b08095cc7914",
+                            ConcurrencyStamp = "009f48fe-0e7f-4e5f-bb60-b671c20009cc",
                             Name = "gestorArmazem",
                             NormalizedName = "gestorArmazem"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "1e61cba7-3cc3-47d5-82a1-08597bf63670",
+                            ConcurrencyStamp = "ca80ac31-45d2-432f-9678-2e0aff7efdec",
                             Name = "cliente",
                             NormalizedName = "cliente"
                         });

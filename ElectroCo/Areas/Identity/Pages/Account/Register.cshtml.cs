@@ -101,7 +101,7 @@ namespace ElectroCo.Areas.Identity.Pages.Account
 
             ///Pode ser interessante
             public Clientes Cliente { get; set; }
-            
+
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -113,7 +113,7 @@ namespace ElectroCo.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-           // ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            // ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
@@ -123,21 +123,33 @@ namespace ElectroCo.Areas.Identity.Pages.Account
                     var result1 = await _userManager.AddToRoleAsync(user, "cliente");
                     _logger.LogInformation("User created a new account with password.");
 
-                    Clientes novoCliente = new Clientes();
-                    novoCliente.Name = Input.Name;
-                    novoCliente.Email = Input.Email;
-                    novoCliente.UserId = user.Id;
-                    novoCliente.NIF = int.Parse(Input.NIF);
-                    novoCliente.Telefone = Input.Phone;
-                    novoCliente.Morada = Input.Address;
-                    novoCliente.CodigoPostal = Input.CP;
+                    Clientes novoCliente = new Clientes
+                    {
+                        Name = Input.Name,
+                        Email = Input.Email,
+                        UserId = user.Id,
+                        NIF = Input.NIF,
+                        Telefone = Input.Phone,
+                        Morada = Input.Address,
+                        CodigoPostal = Input.CP
+                    };
 
+                    try
+                    {
+                        db.Add(novoCliente);
+                        await db.SaveChangesAsync();
+                    }
+                    catch (Exception)
+                    {
+                        // escrever uma msg de erro para visualização futura, guardando os dados da var. ex
+                        // na BD, numa tabela de 'Erros'
+                        // num ficheiro de texto
 
-                    db.Add(novoCliente);
+                        // eventualmente, se não é possível criar o Cliente
+                        // deverá ser eliminado o User que se acabou de criar
+                        return RedirectToAction("Index", "Home");
+                    }
 
-                    await db.SaveChangesAsync();
-
-                    
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     //var callbackUrl = Url.Page(

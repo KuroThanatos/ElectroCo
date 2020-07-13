@@ -7,16 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ElectroCo.Data;
 using ElectroCo.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ElectroCo.Controllers
 {
+
+    [Authorize(Roles = "administrador,cliente")]
     public class ClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ClientesController(ApplicationDbContext context)
+        /// <summary>
+        /// recolher os dados de uma pessoa que está autenticada
+        /// </summary>
+        private readonly UserManager<IdentityUser> _userManager;
+
+
+        public ClientesController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Clientes
@@ -31,39 +42,57 @@ namespace ElectroCo.Controllers
             if (id == null)
             {
                 return NotFound();
+                // return RedirectToAction("Index", "Clientes");
             }
 
-            var clientes = await _context.Clientes
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (clientes == null)
+            // select *
+            // from clientes
+            // where ID = id
+            var cliente = await _context.Clientes.FirstOrDefaultAsync(c => c.ID == id);
+
+            if (cliente == null)
             {
                 return NotFound();
             }
 
-            return View(clientes);
-        }
-
-        // GET: Clientes/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Clientes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Email,Telefone,NIF")] Clientes clientes)
-        {
-            if (ModelState.IsValid)
+            // o Cliente foi encontrado
+            // será que a pessoa q está a tentar aceder a estes dados tem autorização de acesso?
+            // Quem tem acesso?
+            //   - pessoas com role 'Administrador'
+            //   - o próprio
+            if (User.IsInRole("administrador") ||
+                cliente.UserId == _userManager.GetUserId(User)
+                )
             {
-                _context.Add(clientes);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(cliente);
             }
-            return View(clientes);
+
+            // se cheguei aqui, é pq não tenho acesso aos dados
+            return RedirectToAction("Index", "Clientes");
         }
+
+        //// GET: Clientes/Create
+        //[Authorize(Roles = "administrador")]
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
+
+        //// POST: Clientes/Create
+        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        //// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("ID,Name,Email,Telefone,NIF")] Clientes clientes)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(clientes);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(clientes);
+        //}
 
         // GET: Clientes/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -73,12 +102,12 @@ namespace ElectroCo.Controllers
                 return NotFound();
             }
 
-            var clientes = await _context.Clientes.FindAsync(id);
-            if (clientes == null)
+            var cliente = await _context.Clientes.FindAsync(id);
+            if (cliente == null)
             {
                 return NotFound();
             }
-            return View(clientes);
+            return View(cliente);
         }
 
         // POST: Clientes/Edit/5

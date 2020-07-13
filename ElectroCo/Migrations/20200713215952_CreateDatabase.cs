@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ElectroCo.Migrations
 {
-    public partial class firstMigration : Migration
+    public partial class CreateDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,10 +54,11 @@ namespace ElectroCo.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
-                    Telefone = table.Column<string>(nullable: true),
-                    NIF = table.Column<int>(maxLength: 9, nullable: false),
+                    Telefone = table.Column<string>(maxLength: 9, nullable: true),
+                    NIF = table.Column<string>(maxLength: 9, nullable: false),
                     Morada = table.Column<string>(nullable: true),
-                    CodigoPostal = table.Column<string>(nullable: true)
+                    CodigoPostal = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -294,17 +295,17 @@ namespace ElectroCo.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ad", "1da3c985-b04b-4bb0-8aae-ed3e5014b0fb", "administrador", null });
+                values: new object[] { "ad", "50117104-213e-44f1-a2b9-28f998432715", "administrador", "administrador" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ga", "1a5c5980-cd01-484a-b92a-35ad9105ce3c", "gestorArmazem", null });
+                values: new object[] { "ga", "009f48fe-0e7f-4e5f-bb60-b671c20009cc", "gestorArmazem", "gestorArmazem" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "c", "1171efd6-f581-4dbb-b71d-e2006397c0b5", "cliente", null });
+                values: new object[] { "c", "ca80ac31-45d2-432f-9678-2e0aff7efdec", "cliente", "cliente" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
