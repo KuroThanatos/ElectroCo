@@ -7,19 +7,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ElectroCo.Data;
 using ElectroCo.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace ElectroCo.Controllers
 {
     public class EncomendasController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public EncomendasController(ApplicationDbContext context)
+        public EncomendasController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Encomendas
+        [Authorize(Roles = "administrador, gestorArmazem")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Encomendas.Include(e => e.Cliente).Include(e => e.Gestor);
@@ -42,8 +47,13 @@ namespace ElectroCo.Controllers
             {
                 return NotFound();
             }
-
-            return View(encomendas);
+            if (User.IsInRole("administrador") ||
+                encomendas.Cliente.UserId == _userManager.GetUserId(User)
+                )
+            {
+                return View(encomendas);
+            }
+            return RedirectToAction("Index", "Clientes");
         }
 
         // GET: Encomendas/Create
@@ -73,6 +83,7 @@ namespace ElectroCo.Controllers
         }
 
         // GET: Encomendas/Edit/5
+        [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -93,6 +104,7 @@ namespace ElectroCo.Controllers
         // POST: Encomendas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,EstadoEncomenda,DataEncomenda,MoradaEncomenda,MoradaFaturacao,PrevisaoEntrega,TrackID,ClientID,GestorID")] Encomendas encomendas)
@@ -128,6 +140,7 @@ namespace ElectroCo.Controllers
         }
 
         // GET: Encomendas/Delete/5
+        [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -148,6 +161,7 @@ namespace ElectroCo.Controllers
         }
 
         // POST: Encomendas/Delete/5
+        [Authorize(Roles = "administrador")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

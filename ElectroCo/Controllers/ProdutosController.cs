@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ElectroCo.Data;
 using ElectroCo.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ElectroCo.Controllers
 {
@@ -44,6 +45,7 @@ namespace ElectroCo.Controllers
         }
 
         // GET: Produtos/Create
+        [Authorize(Roles = "administrador")]
         public IActionResult Create()
         {
             return View();
@@ -52,6 +54,7 @@ namespace ElectroCo.Controllers
         // POST: Produtos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Nome,Tipo,Preco,Stock,EstadoProduto,Imagem")] Produtos produtos)
@@ -66,6 +69,7 @@ namespace ElectroCo.Controllers
         }
 
         // GET: Produtos/Edit/5
+        [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,6 +88,7 @@ namespace ElectroCo.Controllers
         // POST: Produtos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Nome,Tipo,Preco,Stock,EstadoProduto,Imagem")] Produtos produtos)
@@ -117,6 +122,7 @@ namespace ElectroCo.Controllers
         }
 
         // GET: Produtos/Delete/5
+        [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,6 +141,7 @@ namespace ElectroCo.Controllers
         }
 
         // POST: Produtos/Delete/5
+        [Authorize(Roles = "administrador")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

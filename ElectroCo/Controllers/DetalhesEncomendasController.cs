@@ -7,19 +7,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ElectroCo.Data;
 using ElectroCo.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace ElectroCo.Controllers
 {
     public class DetalhesEncomendasController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public DetalhesEncomendasController(ApplicationDbContext context)
+        public DetalhesEncomendasController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: DetalhesEncomendas
+        [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.DetalhesEncomendas.Include(d => d.Order).Include(d => d.Product);
@@ -38,12 +43,19 @@ namespace ElectroCo.Controllers
                 .Include(d => d.Order)
                 .Include(d => d.Product)
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (detalhesEncomenda == null)
+
+            var cliente = await _context.Clientes.FirstOrDefaultAsync(m => m.ID == detalhesEncomenda.Order.ClientID);
+            if (detalhesEncomenda == null || cliente == null)
             {
                 return NotFound();
             }
-
-            return View(detalhesEncomenda);
+            if (User.IsInRole("administrador, gestorArmazem") ||
+               cliente.UserId == _userManager.GetUserId(User)
+               )
+            {
+                return View(detalhesEncomenda);
+            }
+            return RedirectToAction("Index", "Clientes");
         }
 
         // GET: DetalhesEncomendas/Create
@@ -73,6 +85,7 @@ namespace ElectroCo.Controllers
         }
 
         // GET: DetalhesEncomendas/Edit/5
+        [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -93,6 +106,7 @@ namespace ElectroCo.Controllers
         // POST: DetalhesEncomendas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Quantidade,PrecoProduto,EncomendaID,ProdutoID")] DetalhesEncomenda detalhesEncomenda)
@@ -128,6 +142,7 @@ namespace ElectroCo.Controllers
         }
 
         // GET: DetalhesEncomendas/Delete/5
+        [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -148,6 +163,7 @@ namespace ElectroCo.Controllers
         }
 
         // POST: DetalhesEncomendas/Delete/5
+        [Authorize(Roles = "administrador")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

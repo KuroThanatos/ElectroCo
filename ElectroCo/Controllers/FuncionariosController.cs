@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ElectroCo.Data;
 using ElectroCo.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ElectroCo.Controllers
 {
+    [Authorize(Roles = "administrador")]
     public class FuncionariosController : Controller
     {
         private readonly ApplicationDbContext _context;
