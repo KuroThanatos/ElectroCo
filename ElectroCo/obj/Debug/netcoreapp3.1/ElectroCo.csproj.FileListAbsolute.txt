@@ -421,7 +421,6 @@ C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\Electr
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\partials\_header.cshtml.g.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\partials\_LoginPartial.cshtml.g.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
-C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\ShoppingCarts\Create.cshtml.g.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\ShoppingCarts\Delete.cshtml.g.cs
