@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ElectroCo.Data;
 using ElectroCo.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace ElectroCo.Controllers
 {
@@ -15,10 +16,12 @@ namespace ElectroCo.Controllers
     public class FuncionariosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public FuncionariosController(ApplicationDbContext context)
+        public FuncionariosController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Funcionarios
@@ -56,10 +59,15 @@ namespace ElectroCo.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Email,Telefone,NumFuncionario,TipoFuncionario")] Funcionarios funcionarios)
+        public async Task<IActionResult> Create([Bind("ID,Name,Email,Telefone,password,NumFuncionario,TipoFuncionario")] Funcionarios funcionarios)
         {
             if (ModelState.IsValid)
             {
+                var user = new IdentityUser { UserName = funcionarios.Email, Email = funcionarios.Email};
+                var result = await _userManager.CreateAsync(user,funcionarios.password);
+                var result1 = await _userManager.AddToRoleAsync(user, funcionarios.TipoFuncionario);
+                funcionarios.password = null;
+                funcionarios.UserId = user.Id;
                 _context.Add(funcionarios);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
