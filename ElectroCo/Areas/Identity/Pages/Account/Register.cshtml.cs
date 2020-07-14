@@ -19,6 +19,7 @@ using ElectroCo.Data;
 using ElectroCo.Models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Security.Claims;
 
 namespace ElectroCo.Areas.Identity.Pages.Account
 {
@@ -28,20 +29,17 @@ namespace ElectroCo.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext db;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
             ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
             db = context;
         }
 
@@ -86,11 +84,17 @@ namespace ElectroCo.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new IdentityUser { 
+                    UserName = Input.Email, 
+                    Email = Input.Email
+                };
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    var result1 = await _userManager.AddToRoleAsync(user, "cliente");
+                    var claim = new System.Security.Claims.Claim("Nome", Input.Cliente.Nome);
+                    await _userManager.AddClaimAsync(user, claim);
+                    await _userManager.AddToRoleAsync(user, "cliente");
                     _logger.LogInformation("User created a new account with password.");
                     
                     try
@@ -109,25 +113,14 @@ namespace ElectroCo.Areas.Identity.Pages.Account
                         db.Add(novoCliente);
                         await db.SaveChangesAsync();
                     }
-                    catch (Exception /*ex*/)
+                    catch (Exception)
                     {
+                        await _userManager.RemoveFromRoleAsync(user, "cliente");
+                        await _userManager.RemoveClaimAsync(user,claim);
                         await _userManager.DeleteAsync(user);
-                        //Trace.WriteLine("Msg: "+ ex);
-                        //Trace.WriteLine("User:"+ user);
-                        
+
                         return RedirectToAction("Index", "Home");
                     }
-
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    //var callbackUrl = Url.Page(
-                    //    "/Account/ConfirmEmail",
-                    //    pageHandler: null,
-                    //    values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                    //    protocol: Request.Scheme);
-
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
