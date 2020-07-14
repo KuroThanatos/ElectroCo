@@ -37,6 +37,11 @@ namespace ElectroCo.Models
         /// </summary>
         public string TipoFuncionario { get; set; }
 
+        /// <summary>
+        /// Referência ao Utilizador que se autentica
+        /// </summary>
+        public string UserId { get; set; }
+
         public virtual ICollection<Encomendas> Orders { get; set; }
     }
 }

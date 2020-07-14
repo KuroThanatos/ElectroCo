@@ -54,49 +54,20 @@ namespace ElectroCo.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required(ErrorMessage = "This field is required")]
+            [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required(ErrorMessage = "This field is required")]
-            [StringLength(40, ErrorMessage = "It {0} can't have more than {1} characters.")]
-            [RegularExpression("[A-ZÓÂÍ][a-zçáéíóúàèìòùãõäëïöüâêîôûñ]+(( | d[ao](s)? | e |-|'| d')[A-ZÓÂÍ][a-zçáéíóúàèìòùãõäëïöüâêîôûñ]+){1,3}",
-                          ErrorMessage = "Should write between 2 and 4 names, starting Uppercase, followed by lowercase.")]
-            [Display(Name = "Name")]
-            public string Name { get; set; }
-
-            [Required(ErrorMessage = "This field is required")]
-            [StringLength(9, MinimumLength = 9, ErrorMessage = "Must have exactly {1} digits in {0}.")]
-            [RegularExpression("[12567][0-9]{8}", ErrorMessage = "Should write a number, with 9 digits, starting with 1, 2, 5, 6 or 7.")]
-            [Display(Name = "NIF")]
-            public string NIF { get; set; }
-
-            [Required(ErrorMessage = "This field is required")]
-            [StringLength(9, MinimumLength = 9, ErrorMessage = "Must have exactly {1} digits in {0}.")]
-            [RegularExpression("[29][0-9]{8}", ErrorMessage = "Should write a number, with 9 digits, starting with 2 or 9.")]
-            [Display(Name = "Phone")]
-            public string Phone { get; set; }
-
-            [Required(ErrorMessage = "This field is required")]
-            [Display(Name = "Address")]
-            public string Address { get; set; }
-
-            [Required(ErrorMessage = "This field is required")]
-            [StringLength(8, MinimumLength = 8, ErrorMessage = "Must have exactly {1} digits and - after 4 first digits in {0}.")]
-            [RegularExpression("[0-9]{4}-[0-9]{3}", ErrorMessage = "Should write a number, with 8 digits, with 4 digits, hifen and more 3 digits")]
-            [Display(Name = "Postal Code")]
-            public string CP { get; set; }
-
-            [Required(ErrorMessage = "This field is required")]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "A {0} é de preenchimento obrigatório")]
+            [StringLength(100, MinimumLength = 6, ErrorMessage = "A {0} deve ter ao menos {2} e no máximo {1} caracteres.")]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Confirme password")]
+            [Compare("Password", ErrorMessage = "A password e a confirmação não corresponde.")]
             public string ConfirmPassword { get; set; }
 
             ///Pode ser interessante
@@ -113,7 +84,6 @@ namespace ElectroCo.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-            // ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
@@ -122,31 +92,29 @@ namespace ElectroCo.Areas.Identity.Pages.Account
                 {
                     var result1 = await _userManager.AddToRoleAsync(user, "cliente");
                     _logger.LogInformation("User created a new account with password.");
-
-                    Clientes novoCliente = new Clientes
-                    {
-                        Name = Input.Name,
-                        Email = Input.Email,
-                        UserId = user.Id,
-                        NIF = Input.NIF,
-                        Telefone = Input.Phone,
-                        Morada = Input.Address,
-                        CodigoPostal = Input.CP
-                    };
-
+                    
                     try
                     {
+                        Clientes novoCliente = new Clientes
+                        {
+                            Nome = Input.Cliente.Nome,
+                            Email = Input.Email,
+                            UserId = user.Id,
+                            NIF = Input.Cliente.NIF,
+                            Telefone = Input.Cliente.Telefone,
+                            Morada = Input.Cliente.Morada,
+                            CodigoPostal = Input.Cliente.CodigoPostal
+                        };
+                    
                         db.Add(novoCliente);
                         await db.SaveChangesAsync();
                     }
-                    catch (Exception)
+                    catch (Exception /*ex*/)
                     {
-                        // escrever uma msg de erro para visualização futura, guardando os dados da var. ex
-                        // na BD, numa tabela de 'Erros'
-                        // num ficheiro de texto
-
-                        // eventualmente, se não é possível criar o Cliente
-                        // deverá ser eliminado o User que se acabou de criar
+                        await _userManager.DeleteAsync(user);
+                        //Trace.WriteLine("Msg: "+ ex);
+                        //Trace.WriteLine("User:"+ user);
+                        
                         return RedirectToAction("Index", "Home");
                     }
 
