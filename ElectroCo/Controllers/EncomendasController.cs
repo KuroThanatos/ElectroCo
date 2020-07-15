@@ -97,8 +97,17 @@ namespace ElectroCo.Controllers
         {
             if (ModelState.IsValid)
             {
-                encomendas.GestorID = 2;
-                
+                var funcionario = new Funcionarios();
+                Random r = new Random();
+                do
+                {
+                    int id=r.Next(0, 100);
+                    funcionario = await _context.Funcionarios
+                   .FirstOrDefaultAsync(m => m.ID == id);
+
+                } while (funcionario == null);
+
+                encomendas.GestorID = funcionario.ID;
                 var Cliente = await _context.Clientes
                 .FirstOrDefaultAsync(m => m.UserId == _userManager.GetUserId(User));
                 encomendas.ClientID = Cliente.ID;
