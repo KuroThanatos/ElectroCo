@@ -3,7 +3,7 @@
 @inject UserManager<IdentityUser> UserManager
 @{
     var nome = "";
-    if (User.Identity.IsAuthenticated) {
+    if (SignInManager.IsSignedIn(User)) {
          nome = User.Claims.Where(cl => cl.Type.Equals("Nome", StringComparison.OrdinalIgnoreCase)).FirstOrDefault().Value ?? "";
     }
 }

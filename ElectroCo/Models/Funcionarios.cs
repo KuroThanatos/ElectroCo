@@ -16,7 +16,7 @@ namespace ElectroCo.Models
         public int ID { get; set; }
 
         [Required(ErrorMessage = "O Nome é de preenchimento obrigatório")]
-        public string Name { get; set; }
+        public string Nome { get; set; }
 
         [DataType(DataType.Password)]
         public string password { get; set; }

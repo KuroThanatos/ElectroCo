@@ -27,8 +27,32 @@ namespace ElectroCo.Controllers
         [Authorize(Roles = "administrador, gestorArmazem")]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Encomendas.Include(e => e.Cliente).Include(e => e.Gestor);
+            var Funcionario = await _context.Funcionarios
+               .FirstOrDefaultAsync(m => m.UserId == _userManager.GetUserId(User));
+            if (User.IsInRole("administrador"))
+            {
+                var applicationDbContex = _context.Encomendas.Include(e => e.Cliente).Include(e => e.Gestor);
+                return View(await applicationDbContex.ToListAsync());
+            }
+            var applicationDbContext = _context.Encomendas.Include(e => e.Cliente).Where(m => m.GestorID == Funcionario.ID);
             return View(await applicationDbContext.ToListAsync());
+
+        }
+
+        public async Task<IActionResult> Concluido(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var encomendas = await _context.Encomendas.FindAsync(id);
+
+            encomendas.EstadoEncomenda = "Concluido";
+
+            _context.Update(encomendas);
+            await _context.SaveChangesAsync();
+
+            return View("Index");
         }
 
         // GET: Encomendas/Details/5
@@ -73,12 +97,27 @@ namespace ElectroCo.Controllers
         {
             if (ModelState.IsValid)
             {
+                var funcionario = new Funcionarios();
+                Random r = new Random();
+                do
+                {
+                    int id=r.Next(0, 100);
+                    funcionario = await _context.Funcionarios
+                   .FirstOrDefaultAsync(m => m.ID == id);
+
+                } while (funcionario == null);
+
+                encomendas.GestorID = funcionario.ID;
+                var Cliente = await _context.Clientes
+                .FirstOrDefaultAsync(m => m.UserId == _userManager.GetUserId(User));
+                encomendas.ClientID = Cliente.ID;
+
                 _context.Add(encomendas);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientID"] = new SelectList(_context.Clientes, "ID", "Name", encomendas.ClientID);
-            ViewData["GestorID"] = new SelectList(_context.Funcionarios, "ID", "Name", encomendas.GestorID);
+           // ViewData["ClientID"] = new SelectList(_context.Clientes, "ID", "Name", encomendas.ClientID);
+           // ViewData["GestorID"] = new SelectList(_context.Funcionarios, "ID", "Name", encomendas.GestorID);
             return View(encomendas);
         }
 
