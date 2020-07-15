@@ -2,8 +2,14 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @{
-    var nome = User.Claims.Where(cl => cl.Type.Equals("Nome", StringComparison.OrdinalIgnoreCase)).FirstOrDefault().Value ?? "";
-}
+    var nome = "";
+    if (SignInManager.IsSignedIn(User))
+    {
+        nome = User.Claims.Where(cl => cl.Type.Equals("Nome", StringComparison.OrdinalIgnoreCase)).FirstOrDefault().Value ?? "";
+    }
+    }
+    
+   
 <ul class="horizontal">
     @if (SignInManager.IsSignedIn(User))
     {
