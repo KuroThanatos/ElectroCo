@@ -22,6 +22,14 @@ namespace ElectroCo.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
+            if (User.IsInRole("gestorArmazem"))
+            {
+                return LocalRedirect("~/encomendas");
+            }
+            if (User.IsInRole("administrador"))
+            {
+                return LocalRedirect("~/funcionarios");
+            }
             return View();
         }
 
