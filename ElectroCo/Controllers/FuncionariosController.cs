@@ -59,18 +59,36 @@ namespace ElectroCo.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Email,Telefone,password,NumFuncionario,TipoFuncionario")] Funcionarios funcionarios)
+        public async Task<IActionResult> Create([Bind("ID,Nome,Email,Telefone,password,NumFuncionario,TipoFuncionario")] Funcionarios funcionarios)
         {
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = funcionarios.Email, Email = funcionarios.Email};
                 var result = await _userManager.CreateAsync(user,funcionarios.password);
-                var result1 = await _userManager.AddToRoleAsync(user, funcionarios.TipoFuncionario);
-                funcionarios.password = null;
-                funcionarios.UserId = user.Id;
-                _context.Add(funcionarios);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (result.Succeeded)
+                {
+                    var claim = new System.Security.Claims.Claim("Nome", funcionarios.Nome);
+                    await _userManager.AddClaimAsync(user, claim);
+                    var result1 = await _userManager.AddToRoleAsync(user, funcionarios.TipoFuncionario);
+                    funcionarios.password = null;
+                    funcionarios.UserId = user.Id;
+                    try
+                    {
+                        _context.Add(funcionarios);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    catch (Exception)
+                    {
+                        await _userManager.RemoveFromRoleAsync(user, funcionarios.TipoFuncionario);
+                        await _userManager.RemoveClaimAsync(user, claim);
+                        await _userManager.DeleteAsync(user);
+
+                        return View(funcionarios);
+                    }
+                }
+              
+
             }
             return View(funcionarios);
         }
