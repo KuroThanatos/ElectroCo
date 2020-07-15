@@ -368,6 +368,7 @@ C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\Electr
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.csprojAssemblyReference.cache
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.csproj.CoreCompileInputs.cache
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.MvcApplicationPartsAssemblyInfo.cache
@@ -437,4 +438,3 @@ C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\Electr
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.dll
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.pdb
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.genruntimeconfig.cache
-C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.csprojAssemblyReference.cache

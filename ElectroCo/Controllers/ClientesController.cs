@@ -37,7 +37,8 @@ namespace ElectroCo.Controllers
         }
 
         // GET: Clientes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [Authorize(Roles = "administrador,cliente")]
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -48,7 +49,7 @@ namespace ElectroCo.Controllers
             // select *
             // from clientes
             // where ID = id
-            var cliente = await _context.Clientes.FirstOrDefaultAsync(c => c.ID == id);
+            var cliente = await _context.Clientes.FirstOrDefaultAsync(c => c.UserId == id);
 
             if (cliente == null)
             {
