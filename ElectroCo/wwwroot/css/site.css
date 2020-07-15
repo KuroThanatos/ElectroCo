@@ -76,3 +76,45 @@ body {
   white-space: nowrap;
   line-height: 25px; /* Vertically center the text there */
 }
+
+
+     .logged-dropbtn {
+        display: inline-block;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+        li a:hover, .logged-dropdown:hover .logged-dropbtn {
+            background-color: red;
+        }
+
+    li.logged-dropdown {
+        display: inline-block;
+    }
+
+.logged-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: black;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.logged-dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.logged-dropdown-content a:hover {
+    background-color: black;
+}
+
+.logged-dropdown:hover .logged-dropdown-content {
+    display: block;
+}

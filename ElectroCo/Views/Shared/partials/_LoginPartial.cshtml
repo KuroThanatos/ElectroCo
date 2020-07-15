@@ -3,33 +3,38 @@
 @inject UserManager<IdentityUser> UserManager
 @{
     var nome = "";
-    if (SignInManager.IsSignedIn(User))
-    {
-        nome = User.Claims.Where(cl => cl.Type.Equals("Nome", StringComparison.OrdinalIgnoreCase)).FirstOrDefault().Value ?? "";
+    if (User.Identity.IsAuthenticated) {
+         nome = User.Claims.Where(cl => cl.Type.Equals("Nome", StringComparison.OrdinalIgnoreCase)).FirstOrDefault().Value ?? "";
     }
-    }
-    
-   
+}
 <ul class="horizontal">
     @if (SignInManager.IsSignedIn(User))
     {
 
         <li class="nav-item pull-right">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-light">Logout</button>
-            </form>
+            
         </li>
-        <li class="nav-item pull-right">
-            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @nome</a>
+        <li class="nav-item pull-right logged-dropdown">
+            <a class="nav-link text-light">Hello @nome</a>
+            <div class="logged-dropdown-content">
+                <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="nav-link btn btn-link text-light">Logout</button>
+                </form>
+            </div>
+            
         </li>
     }
     else
     {
         <li class="nav-item pull-right">
-            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-user-o text-light"></i>Sign In</a>
+            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-user-o text-light"></i>Entrar</a>
         </li>
     }
+    @if (!User.Identity.IsAuthenticated || User.IsInRole("cliente"))
+    {
     <li class="nav-item pull-right">
-        <a class="nav-link text-light"><i class="fa fa-shopping-cart text-light"></i>My Shopping Cart</a>
+        <a class="nav-link text-light"><i class="fa fa-shopping-cart text-light"></i>Carrinho</a>
     </li>
+    }
 </ul>
