@@ -31,6 +31,7 @@ namespace ElectroCo.Controllers
         }
 
         // GET: Clientes
+        [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Clientes.ToListAsync());
@@ -72,29 +73,7 @@ namespace ElectroCo.Controllers
             return RedirectToAction("Index", "Clientes");
         }
 
-        //// GET: Clientes/Create
-        //[Authorize(Roles = "administrador")]
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: Clientes/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        //// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("ID,Name,Email,Telefone,NIF")] Clientes clientes)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(clientes);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(clientes);
-        //}
-
+        
         // GET: Clientes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -146,7 +125,9 @@ namespace ElectroCo.Controllers
             return View(clientes);
         }
 
+
         // GET: Clientes/Delete/5
+        [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -164,7 +145,9 @@ namespace ElectroCo.Controllers
             return View(clientes);
         }
 
+
         // POST: Clientes/Delete/5
+        [Authorize(Roles = "administrador")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
