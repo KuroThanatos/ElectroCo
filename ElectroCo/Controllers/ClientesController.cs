@@ -43,7 +43,8 @@ namespace ElectroCo.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                TempData["error"] = "Não existe informação";
+                return LocalRedirect("~/");
                 // return RedirectToAction("Index", "Clientes");
             }
 
@@ -80,13 +81,15 @@ namespace ElectroCo.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                TempData["error"] = "Não existe informação";
+                return LocalRedirect("~/");
             }
 
             var cliente = await _context.Clientes.FindAsync(id);
             if (cliente == null)
             {
-                return NotFound();
+                TempData["error"] = "Não existe informação";
+                return LocalRedirect("~/");
             }
             return View(cliente);
         }
@@ -96,34 +99,43 @@ namespace ElectroCo.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Email,Telefone,NIF")] Clientes clientes)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Nome,Email,Telefone,NIF,Morada,CodigoPostal,UserId")] Clientes cliente)
         {
-            if (id != clientes.ID)
+            if (id != cliente.ID)
             {
-                return NotFound();
+                TempData["error"] = "Não existe informação";
+                return LocalRedirect("~/");
             }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(clientes);
+                    _context.Update(cliente);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClientesExists(clientes.ID))
+                    if (!ClientesExists(cliente.ID))
                     {
-                        return NotFound();
+                        TempData["error"] = "Não existe informação";
+                        return LocalRedirect("~/");
                     }
                     else
                     {
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                if (User.IsInRole("administrador"))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else {
+                    return RedirectToAction(nameof(Details), new {id = cliente.UserId });
+                }
+               
             }
-            return View(clientes);
+            return View(cliente);
         }
 
         // GET: Clientes/ChangePassword/5
@@ -131,13 +143,15 @@ namespace ElectroCo.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                TempData["error"] = "Não existe informação";
+                return LocalRedirect("~/");
             }
 
             var cliente = await _context.Clientes.FindAsync(id);
             if (cliente == null)
             {
-                return NotFound();
+                TempData["error"] = "Não existe informação";
+                return LocalRedirect("~/");
             }
             return View(cliente);
         }
