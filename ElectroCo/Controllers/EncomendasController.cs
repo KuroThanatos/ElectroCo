@@ -9,6 +9,7 @@ using ElectroCo.Data;
 using ElectroCo.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
 
 namespace ElectroCo.Controllers
 {
@@ -114,7 +115,8 @@ namespace ElectroCo.Controllers
 
                 _context.Add(encomendas);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction("Create", "DetalhesEncomendas");
             }
            // ViewData["ClientID"] = new SelectList(_context.Clientes, "ID", "Name", encomendas.ClientID);
            // ViewData["GestorID"] = new SelectList(_context.Funcionarios, "ID", "Name", encomendas.GestorID);

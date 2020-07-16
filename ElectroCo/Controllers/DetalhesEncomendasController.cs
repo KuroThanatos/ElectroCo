@@ -9,6 +9,7 @@ using ElectroCo.Data;
 using ElectroCo.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
 
 namespace ElectroCo.Controllers
 {
@@ -24,7 +25,6 @@ namespace ElectroCo.Controllers
         }
 
         // GET: DetalhesEncomendas
-        [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.DetalhesEncomendas.Include(d => d.Order).Include(d => d.Product);
@@ -58,20 +58,50 @@ namespace ElectroCo.Controllers
             return RedirectToAction("Index", "Clientes");
         }
 
+        public async Task<IActionResult> Create()
+        {
+            var Cliente = await _context.Clientes
+                .FirstOrDefaultAsync(m => m.UserId == _userManager.GetUserId(User));
+
+            var applicationDbContext = _context.ShoppingCart.Include(e => e.Cliente).Include(s => s.Product).Where(m => m.ClientID == Cliente.ID);
+
+
+            var idEnc = _context.Encomendas.Max(m => m.ID);
+
+
+            foreach (var item in applicationDbContext)
+            {
+                var detalhes = new DetalhesEncomenda();
+                detalhes.EncomendaID = idEnc;
+                detalhes.Quantidade = item.Quantidade;
+                detalhes.PrecoProduto = item.Product.Preco;
+                detalhes.ProdutoID = item.Product.ID;
+                _context.Add(detalhes);
+            }
+
+           await _context.SaveChangesAsync();
+
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
         // GET: DetalhesEncomendas/Create
-        public IActionResult Create()
+        public IActionResult Create2()
         {
             ViewData["EncomendaID"] = new SelectList(_context.Encomendas, "ID", "ID");
             ViewData["ProdutoID"] = new SelectList(_context.Produtos, "ID", "ID");
             return View();
         }
 
+
+
         // POST: DetalhesEncomendas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Quantidade,PrecoProduto,EncomendaID,ProdutoID")] DetalhesEncomenda detalhesEncomenda)
+        public async Task<IActionResult> Create2([Bind("ID,Quantidade,PrecoProduto,EncomendaID,ProdutoID")] DetalhesEncomenda detalhesEncomenda)
         {
             if (ModelState.IsValid)
             {
