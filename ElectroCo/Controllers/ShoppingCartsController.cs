@@ -25,8 +25,13 @@ namespace ElectroCo.Controllers
         // GET: ShoppingCarts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.ShoppingCart.Include(s => s.Cliente).Include(s => s.Product);
+            var Cliente = await _context.Clientes
+              .FirstOrDefaultAsync(m => m.UserId == _userManager.GetUserId(User));
+
+            var applicationDbContext = _context.ShoppingCart.Include(e => e.Cliente).Include(s => s.Product).Where(m => m.ClientID == Cliente.ID);
             return View(await applicationDbContext.ToListAsync());
+
+ 
         }
 
         public async Task<IActionResult> Encomendar()

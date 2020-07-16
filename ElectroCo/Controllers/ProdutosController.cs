@@ -55,7 +55,9 @@ namespace ElectroCo.Controllers
 
 
             var Produto = await _context.ShoppingCart
-               .FirstOrDefaultAsync(m => m.ProdutoID == id);
+               .FirstOrDefaultAsync(m => m.ProdutoID.Equals(id) && m.ClientID.Equals(Cliente.ID));
+
+
 
             if(Produto!= null){
                 Produto.Quantidade = Produto.Quantidade + 1;
