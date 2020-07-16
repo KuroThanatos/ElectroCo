@@ -3,14 +3,12 @@
 @{
     ViewData["Title"] = "Editar";
 }
-
-<h2>@ViewData["Title"]</h2>
-
-<div class="row">
-    <form asp-action="Edit">
-        <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
+<form asp-action="Edit">
+    <div class="form-group">
+        <h2>@ViewData["Title"]</h2>
+        <input type="submit" value="Save" class="btn btn-default" />
+    </div>
+    <div class="row">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="ID" />
         <input type="hidden" asp-for="UserId" />
@@ -64,9 +62,8 @@
                 <span asp-validation-for="CodigoPostal" class="text-danger"></span>
             </div>
         </div>
-
-    </form>
-</div>
+    </div>
+</form>
 @if (User.IsInRole("administrador"))
 {
     <div>

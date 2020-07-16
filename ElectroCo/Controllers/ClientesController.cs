@@ -138,24 +138,6 @@ namespace ElectroCo.Controllers
             return View(cliente);
         }
 
-        // GET: Clientes/ChangePassword/5
-        public async Task<IActionResult> ChangePassword(int? id)
-        {
-            if (id == null)
-            {
-                TempData["error"] = "Não existe informação";
-                return LocalRedirect("~/");
-            }
-
-            var cliente = await _context.Clientes.FindAsync(id);
-            if (cliente == null)
-            {
-                TempData["error"] = "Não existe informação";
-                return LocalRedirect("~/");
-            }
-            return View(cliente);
-        }
-
         // GET: Clientes/Delete/5
         [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Delete(int? id)

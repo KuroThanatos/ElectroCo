@@ -440,3 +440,4 @@ C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\Electr
 C:\Users\migue\Source\Repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.csprojAssemblyReference.cache
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\partials\_error.cshtml.g.cs
 C:\Users\migue\Source\Repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\partials\_error.cshtml.g.cs
+C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ChangePassword.cshtml.g.cs
