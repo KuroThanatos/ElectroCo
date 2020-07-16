@@ -49,12 +49,13 @@ namespace ElectroCo.Controllers
 
             // select *
             // from clientes
-            // where ID = id
+            // where UserId = id
             var cliente = await _context.Clientes.FirstOrDefaultAsync(c => c.UserId == id);
 
             if (cliente == null)
             {
-                return NotFound();
+                TempData["error"] = "Não existe informação";
+                return LocalRedirect("~/");
             }
 
             // o Cliente foi encontrado
@@ -70,7 +71,7 @@ namespace ElectroCo.Controllers
             }
 
             // se cheguei aqui, é pq não tenho acesso aos dados
-            return RedirectToAction("Index", "Clientes");
+            return RedirectToAction("Index", "Home");
         }
 
         
@@ -125,6 +126,21 @@ namespace ElectroCo.Controllers
             return View(clientes);
         }
 
+        // GET: Clientes/ChangePassword/5
+        public async Task<IActionResult> ChangePassword(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var cliente = await _context.Clientes.FindAsync(id);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+            return View(cliente);
+        }
 
         // GET: Clientes/Delete/5
         [Authorize(Roles = "administrador")]

@@ -13,14 +13,11 @@
                 <!-- row -->
                 <div class="row pull-left">
                     <div class="header-logo">
-                        @*<a href="@Url.Action("","/")" class="logo">*@
                         <a asp-action="Index" asp-controller="Home" class="logo">
                             <h1 class="text-light">ElectroCo.</h1>
                         </a>
                     </div>
-
                     <!-- row -->
-
                 </div>
                 <partial name="partials/_LoginPartial" />
             </div>
@@ -29,6 +26,10 @@
         <!-- /MAIN HEADER -->
     </header>
     <div class="container body-content">
+        @if (TempData.Keys.Count != 0)
+        {
+            <partial name="partials/_error" />
+        }
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
