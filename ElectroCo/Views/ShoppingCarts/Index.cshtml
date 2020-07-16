@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    var Total = 0.0;
 }
 
 <h2>Index</h2>
@@ -18,11 +19,21 @@
             <th>
                 @Html.DisplayNameFor(model => model.Product)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Preco)
+            </th>
+
             <th></th>
         </tr>
+        
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
+            Total = Total + (item.Product.Preco * item.Quantidade);
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Cliente.Nome)
@@ -31,11 +42,24 @@
                 @Html.DisplayFor(modelItem => item.Product.ID)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Quantidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Preco)
+            </td>
+            <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
             </td>
+
+
         </tr>
-}
+        }
+        <tr>
+            <th>Preço Total:</th>
+            <td>@Total</td>
+            <td><a asp-action="Encomendar">Finalizar</a></td>
+        </tr>
     </tbody>
 </table>

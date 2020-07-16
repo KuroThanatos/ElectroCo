@@ -55,7 +55,6 @@ C:\Users\migue\source\repos\ElectroCo\ElectroCo\bin\Debug\netcoreapp3.1\runtimes
 C:\Users\migue\source\repos\ElectroCo\ElectroCo\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\migue\source\repos\ElectroCo\ElectroCo\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\migue\source\repos\ElectroCo\ElectroCo\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\migue\source\repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.csprojAssemblyReference.cache
 C:\Users\migue\source\repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.AssemblyInfoInputs.cache
 C:\Users\migue\source\repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.AssemblyInfo.cs
 C:\Users\migue\source\repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.RazorAssemblyInfo.cache

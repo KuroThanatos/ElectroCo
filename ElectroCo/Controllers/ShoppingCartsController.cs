@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ElectroCo.Data;
 using ElectroCo.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace ElectroCo.Controllers
 {
     public class ShoppingCartsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ShoppingCartsController(ApplicationDbContext context)
+        public ShoppingCartsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: ShoppingCarts
@@ -24,6 +27,18 @@ namespace ElectroCo.Controllers
         {
             var applicationDbContext = _context.ShoppingCart.Include(s => s.Cliente).Include(s => s.Product);
             return View(await applicationDbContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> Encomendar()
+        {
+            var Cliente = await _context.Clientes
+               .FirstOrDefaultAsync(m => m.UserId == _userManager.GetUserId(User));
+            var shoppingCart = await _context.ShoppingCart.FirstOrDefaultAsync(m => m.ClientID == Cliente.ID);
+            if(shoppingCart != null)
+            {
+                return RedirectToAction("Create", "Encomendas");
+            }
+            return RedirectToAction("Index", "Produtos");
         }
 
         // GET: ShoppingCarts/Details/5

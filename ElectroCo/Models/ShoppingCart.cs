@@ -13,6 +13,7 @@ namespace ElectroCo.Models
         [Key]
         public int ID { get; set; }
 
+        public int Quantidade { get; set; }
 
         //FK para Cliente
         [ForeignKey(nameof(Cliente))]

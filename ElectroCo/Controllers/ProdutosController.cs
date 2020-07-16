@@ -8,16 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using ElectroCo.Data;
 using ElectroCo.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace ElectroCo.Controllers
 {
     public class ProdutosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ProdutosController(ApplicationDbContext context)
+        public ProdutosController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Produtos
@@ -42,6 +45,34 @@ namespace ElectroCo.Controllers
             }
 
             return View(produtos);
+        }
+
+        public async Task<IActionResult> AdicionarCarrinho(int? id)
+        {
+            var Cliente = await _context.Clientes
+               .FirstOrDefaultAsync(m => m.UserId == _userManager.GetUserId(User));
+            var shopppingCart = new ShoppingCart();
+
+
+            var Produto = await _context.ShoppingCart
+               .FirstOrDefaultAsync(m => m.ProdutoID == id);
+
+            if(Produto!= null){
+                Produto.Quantidade = Produto.Quantidade + 1;
+                _context.Update(Produto);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            shopppingCart.ClientID = Cliente.ID;
+            shopppingCart.ProdutoID = (int)id;
+            shopppingCart.Quantidade = 1;
+
+            _context.Add(shopppingCart);
+            await _context.SaveChangesAsync();
+
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Produtos/Create

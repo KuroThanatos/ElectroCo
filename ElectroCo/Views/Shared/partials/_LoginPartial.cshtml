@@ -34,7 +34,7 @@
     @if (!User.Identity.IsAuthenticated || User.IsInRole("cliente"))
     {
     <li class="nav-item pull-right">
-        <a class="nav-link text-light"><i class="fa fa-shopping-cart text-light"></i>Carrinho</a>
+        <a class="nav-link text-light" href="@Url.Action("Index", "ShoppingCarts")"><i class="fa fa-shopping-cart text-light"></i>Carrinho</a>
     </li>
     }
 </ul>
