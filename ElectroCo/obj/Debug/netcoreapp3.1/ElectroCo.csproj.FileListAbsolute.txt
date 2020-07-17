@@ -217,6 +217,9 @@ C:\Users\migue\Source\Repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Vi
 C:\Users\migue\Source\Repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\ShoppingCarts\Details.cshtml.g.cs
 C:\Users\migue\Source\Repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\ShoppingCarts\Edit.cshtml.g.cs
 C:\Users\migue\Source\Repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\ShoppingCarts\Index.cshtml.g.cs
+C:\Users\migue\Source\Repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.csprojAssemblyReference.cache
+C:\Users\migue\Source\Repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\partials\_error.cshtml.g.cs
+C:\Users\migue\source\repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ChangePassword.cshtml.g.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
@@ -379,6 +382,7 @@ C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\Electr
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.TagHelpers.output.cache
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.RazorCoreGenerate.cache
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\AccessDenied.cshtml.g.cs
+C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ChangePassword.cshtml.g.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Login.cshtml.g.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Logout.cshtml.g.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Register.cshtml.g.cs
@@ -415,6 +419,7 @@ C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\Electr
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Produtos\Edit.cshtml.g.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Produtos\Index.cshtml.g.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
+C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\partials\_error.cshtml.g.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\partials\_footer.cshtml.g.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\partials\_head.cshtml.g.cs
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\partials\_header.cshtml.g.cs
@@ -437,8 +442,3 @@ C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\Electr
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.dll
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.pdb
 C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.genruntimeconfig.cache
-C:\Users\migue\Source\Repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\ElectroCo.csprojAssemblyReference.cache
-C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\partials\_error.cshtml.g.cs
-C:\Users\migue\Source\Repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Views\Shared\partials\_error.cshtml.g.cs
-C:\Users\Oscar\Desktop\IPT\2ºano\2º Semestre\TI2\aulas 3 horas\Projecto\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ChangePassword.cshtml.g.cs
-C:\Users\migue\source\repos\ElectroCo\ElectroCo\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ChangePassword.cshtml.g.cs
