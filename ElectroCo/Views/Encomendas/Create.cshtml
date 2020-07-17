@@ -13,16 +13,6 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="EstadoEncomenda" class="control-label"></label>
-                <input asp-for="EstadoEncomenda" class="form-control" />
-                <span asp-validation-for="EstadoEncomenda" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataEncomenda" class="control-label"></label>
-                <input asp-for="DataEncomenda" class="form-control" />
-                <span asp-validation-for="DataEncomenda" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="MoradaEncomenda" class="control-label"></label>
                 <input asp-for="MoradaEncomenda" class="form-control" />
                 <span asp-validation-for="MoradaEncomenda" class="text-danger"></span>
@@ -31,16 +21,6 @@
                 <label asp-for="MoradaFaturacao" class="control-label"></label>
                 <input asp-for="MoradaFaturacao" class="form-control" />
                 <span asp-validation-for="MoradaFaturacao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrevisaoEntrega" class="control-label"></label>
-                <input asp-for="PrevisaoEntrega" class="form-control" />
-                <span asp-validation-for="PrevisaoEntrega" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TrackID" class="control-label"></label>
-                <input asp-for="TrackID" class="form-control" />
-                <span asp-validation-for="TrackID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
