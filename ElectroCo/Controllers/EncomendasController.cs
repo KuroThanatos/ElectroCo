@@ -25,16 +25,25 @@ namespace ElectroCo.Controllers
         }
 
         // GET: Encomendas
-        [Authorize(Roles = "administrador, gestorArmazem")]
         public async Task<IActionResult> Index()
         {
             var Funcionario = await _context.Funcionarios
                .FirstOrDefaultAsync(m => m.UserId == _userManager.GetUserId(User));
+
+            var Cliente = await _context.Clientes
+               .FirstOrDefaultAsync(m => m.UserId == _userManager.GetUserId(User));
+
             if (User.IsInRole("administrador"))
             {
                 var applicationDbContex = _context.Encomendas.Include(e => e.Cliente).Include(e => e.Gestor);
                 return View(await applicationDbContex.ToListAsync());
             }
+            if (User.IsInRole("cliente"))
+            {
+                var enc = _context.Encomendas.Include(e => e.Cliente).Where(m => m.ClientID == Cliente.ID);
+                return View(await enc.ToListAsync());
+            }
+
             var applicationDbContext = _context.Encomendas.Include(e => e.Cliente).Where(m => m.GestorID == Funcionario.ID);
             return View(await applicationDbContext.ToListAsync());
 
@@ -68,6 +77,10 @@ namespace ElectroCo.Controllers
                 .Include(e => e.Cliente)
                 .Include(e => e.Gestor)
                 .FirstOrDefaultAsync(m => m.ID == id);
+
+            var pro =  _context.DetalhesEncomendas.Where(m => m.EncomendaID == id);
+
+
             if (encomendas == null)
             {
                 return NotFound();
@@ -76,7 +89,7 @@ namespace ElectroCo.Controllers
                 encomendas.Cliente.UserId == _userManager.GetUserId(User)
                 )
             {
-                return View(encomendas);
+                return View(await pro.ToListAsync());
             }
             return RedirectToAction("Index", "Clientes");
         }
