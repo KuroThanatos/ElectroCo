@@ -4,3 +4,15 @@
 // Write your JavaScript code.
 $('.toast').toast("show");
 
+$('.dropdown-submenu a.dropright').on("mouseover", function (e) {
+    $(".toggled").toggle();
+    $(".toggled").removeClass("toggled");
+    $(this).next('ul').toggle();
+    $(this).next('ul').toggleClass("toggled");
+    e.stopPropagation();
+    e.preventDefault();
+});
+
+
+
+

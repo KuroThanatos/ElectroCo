@@ -7,15 +7,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ElectroCo.Models;
 using Microsoft.AspNetCore.Authorization;
+using ElectroCo.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace ElectroCo.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
+            _context = context;
+            _userManager = userManager;
             _logger = logger;
         }
 
@@ -26,17 +34,27 @@ namespace ElectroCo.Controllers
             {
                 return LocalRedirect("~/encomendas");
             }
-            if (User.IsInRole("administrador"))
+            else if (User.IsInRole("administrador"))
             {
                 return LocalRedirect("~/funcionarios");
             }
-            return View();
+
+            List<string> TiposProduto = (from p in _context.Produtos select p.Tipo).Distinct().ToList<string>();
+            
+            
+            return View(TiposProduto);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [AllowAnonymous]
+        public IActionResult Products(string type)
+        {
+            return View(_context.Produtos.Where(p => p.Tipo == type).ToListAsync());
         }
     }
 }

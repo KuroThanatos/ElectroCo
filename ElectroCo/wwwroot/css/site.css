@@ -78,21 +78,21 @@ body {
 }
 
 
-     .logged-dropbtn {
-        display: inline-block;
-        color: black;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
+.logged-dropbtn {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
 
-        li a:hover, .logged-dropdown:hover .logged-dropbtn {
-            background-color: red;
-        }
+li a:hover, .logged-dropdown:hover .logged-dropbtn, a.nav-link:hover {
+    background-color: red;
+}
 
-    li.logged-dropdown {
-        display: inline-block;
-    }
+li.logged-dropdown {
+    display: inline-block;
+}
 
 .logged-dropdown-content {
     display: none;
@@ -112,9 +112,38 @@ body {
 }
 
 .logged-dropdown-content a:hover {
-    background-color: black;
+    background-color: grey;
 }
 
 .logged-dropdown:hover .logged-dropdown-content {
     display: block;
+}
+
+.client-menu {
+    background-color: #4c4c4c;
+    margin-bottom: 0px !important;
+}
+
+.client-menu .horizontal li a:hover {
+    color:black !important;
+    background-color: #c4c4c4 !important;
+}
+
+.dropdown {
+    background-color: #4c4c4c;
+    color: white;
+    margin-left: 20px !important;
+    margin-bottom: 0px !important;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+    color:black !important;
+    background-color: #c4c4c4 !important;
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
 }
