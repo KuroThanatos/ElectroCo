@@ -17,6 +17,10 @@
             <div class="logged-dropdown-content">
                 <a class="nav-link text-light" asp-action="Details" asp-controller="Clientes" asp-route-id="@UserManager.GetUserId(User)">Perfil</a>
                 <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/ChangePassword">Mudar Password</a>
+                @if (User.IsInRole("cliente"))
+                {
+                    <a class="nav-link text-light" asp-action="Index" asp-controller="Encomendas">Encomendas</a>
+                }
                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                     <button type="submit" class="nav-link btn btn-link text-light">Sair</button>
                 </form>
@@ -30,7 +34,7 @@
             <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-user-o text-light"></i>Entrar</a>
         </li>
     }
-    @if (!User.Identity.IsAuthenticated || User.IsInRole("cliente"))
+    @if (User.IsInRole("cliente"))
     {
     <li class="nav-item pull-right">
         <a class="nav-link text-light" href="@Url.Action("Index", "ShoppingCarts")"><i class="fa fa-shopping-cart text-light"></i>Carrinho</a>
