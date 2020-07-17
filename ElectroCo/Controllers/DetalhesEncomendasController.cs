@@ -62,27 +62,44 @@ namespace ElectroCo.Controllers
         {
             var Cliente = await _context.Clientes
                 .FirstOrDefaultAsync(m => m.UserId == _userManager.GetUserId(User));
-
-            var applicationDbContext = _context.ShoppingCart.Include(e => e.Cliente).Include(s => s.Product).Where(m => m.ClientID == Cliente.ID);
-
-
-            var idEnc = _context.Encomendas.Max(m => m.ID);
-
-
-            foreach (var item in applicationDbContext)
+            if (Cliente == null)
             {
-                var detalhes = new DetalhesEncomenda();
-                detalhes.EncomendaID = idEnc;
-                detalhes.Quantidade = item.Quantidade;
-                detalhes.PrecoProduto = item.Product.Preco;
-                detalhes.ProdutoID = item.Product.ID;
-                _context.Add(detalhes);
+                return NotFound();
+            }
+            var idEnc = _context.Encomendas.Max(m => m.ID);
+            var applicationDbContext = _context.ShoppingCart.Include(e => e.Cliente).Include(s => s.Product).Where(m => m.ClientID == Cliente.ID);
+            if (applicationDbContext == null)
+            {
+                var encomenda = _context.Encomendas.FirstOrDefaultAsync(m => m.ID == idEnc);
+                _context.Remove(encomenda);
+
+                return RedirectToAction("Index", "Produtos");
             }
 
-           await _context.SaveChangesAsync();
+            try
+            {
+                foreach (var item in applicationDbContext)
+                {
+                    var detalhes = new DetalhesEncomenda();
+                    detalhes.EncomendaID = idEnc;
+                    detalhes.Quantidade = item.Quantidade;
+                    detalhes.PrecoProduto = item.Product.Preco;
+                    detalhes.ProdutoID = item.Product.ID;
+                    _context.Add(detalhes);
+                    _context.Remove(item);
+                }
+
+                await _context.SaveChangesAsync();
 
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                    return RedirectToAction("Index", "Produtos");
+            }
+
+           
         }
 
 

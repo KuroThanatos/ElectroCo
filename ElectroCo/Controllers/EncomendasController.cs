@@ -94,7 +94,7 @@ namespace ElectroCo.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,EstadoEncomenda,DataEncomenda,MoradaEncomenda,MoradaFaturacao,PrevisaoEntrega,TrackID,ClientID,GestorID")] Encomendas encomendas)
+        public async Task<IActionResult> Create([Bind("ID,MoradaEncomenda,MoradaFaturacao,")] Encomendas encomendas)
         {
             if (ModelState.IsValid)
             {
@@ -111,15 +111,30 @@ namespace ElectroCo.Controllers
                 encomendas.GestorID = funcionario.ID;
                 var Cliente = await _context.Clientes
                 .FirstOrDefaultAsync(m => m.UserId == _userManager.GetUserId(User));
-                encomendas.ClientID = Cliente.ID;
 
-                _context.Add(encomendas);
-                await _context.SaveChangesAsync();
+                if (Cliente == null)
+                {
+                    return NotFound();
+                }
+                try
+                {
+                    DateTime date = DateTime.Now;
+                    encomendas.ClientID = Cliente.ID;
+                    encomendas.TrackID = "AdcWERewff12oo98";
+                    encomendas.EstadoEncomenda = "Em processamento";
+                    encomendas.DataEncomenda = date;
+                    encomendas.PrevisaoEntrega = date.AddDays(2);
+                    _context.Add(encomendas);
+                    await _context.SaveChangesAsync();
 
-                return RedirectToAction("Create", "DetalhesEncomendas");
+                    return RedirectToAction("Create", "DetalhesEncomendas");
+                }
+                catch (Exception)
+                {
+                    return View(encomendas);
+                }
+
             }
-           // ViewData["ClientID"] = new SelectList(_context.Clientes, "ID", "Name", encomendas.ClientID);
-           // ViewData["GestorID"] = new SelectList(_context.Funcionarios, "ID", "Name", encomendas.GestorID);
             return View(encomendas);
         }
 

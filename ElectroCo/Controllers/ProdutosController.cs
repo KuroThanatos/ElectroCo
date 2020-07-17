@@ -49,32 +49,53 @@ namespace ElectroCo.Controllers
 
         public async Task<IActionResult> AdicionarCarrinho(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
             var Cliente = await _context.Clientes
                .FirstOrDefaultAsync(m => m.UserId == _userManager.GetUserId(User));
+
+            if(Cliente == null)
+            {
+                return NotFound();
+            }
+
+            var ProdutoExiste = await _context.Produtos.FirstOrDefaultAsync(m => m.ID == id);
+
+            if (ProdutoExiste == null)
+            {
+                return NotFound();
+            }
+
             var shopppingCart = new ShoppingCart();
-
-
-            var Produto = await _context.ShoppingCart
+            var shoppingProduto = await _context.ShoppingCart
                .FirstOrDefaultAsync(m => m.ProdutoID.Equals(id) && m.ClientID.Equals(Cliente.ID));
 
+            try
+            {
+                if(shoppingProduto != null){
+                    shoppingProduto.Quantidade = shoppingProduto.Quantidade + 1;
+                    _context.Update(shoppingProduto);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
 
+                shopppingCart.ClientID = Cliente.ID;
+                shopppingCart.ProdutoID = (int)id;
+                shopppingCart.Quantidade = 1;
 
-            if(Produto!= null){
-                Produto.Quantidade = Produto.Quantidade + 1;
-                _context.Update(Produto);
+                _context.Add(shopppingCart);
                 await _context.SaveChangesAsync();
+
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
                 return RedirectToAction(nameof(Index));
             }
 
-            shopppingCart.ClientID = Cliente.ID;
-            shopppingCart.ProdutoID = (int)id;
-            shopppingCart.Quantidade = 1;
-
-            _context.Add(shopppingCart);
-            await _context.SaveChangesAsync();
-
-
-            return RedirectToAction(nameof(Index));
         }
 
         // GET: Produtos/Create
