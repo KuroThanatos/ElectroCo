@@ -14,10 +14,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Cliente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product)
+                @Html.DisplayNameFor(model => model.Product.Nome)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Quantidade)
@@ -36,10 +33,7 @@
             Total = Total + (item.Product.Preco * item.Quantidade);
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Cliente.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.ID)
+                @Html.DisplayFor(modelItem => item.Product.Nome)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Quantidade)
@@ -48,8 +42,6 @@
                 @Html.DisplayFor(modelItem => item.Product.Preco)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
             </td>
 
