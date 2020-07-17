@@ -62,7 +62,7 @@ namespace ElectroCo.Controllers
             _context.Update(encomendas);
             await _context.SaveChangesAsync();
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
         // GET: Encomendas/Details/5
