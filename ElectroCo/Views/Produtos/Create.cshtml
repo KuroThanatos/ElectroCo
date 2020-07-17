@@ -43,7 +43,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="EstadoProduto" class="control-label"></label>
-                <input asp-for="EstadoProduto" class="form-control" />
+                <select asp-for="EstadoProduto" class="form-control">
+                    <option value="Disponível">Disponível</option>
+                    <option value="Indisponível">Indisponível</option>
+                </select>
                 <span asp-validation-for="EstadoProduto" class="text-danger"></span>
             </div>
             <div class="form-group">

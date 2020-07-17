@@ -53,7 +53,25 @@
             </div>
             <div class="form-group">
                 <label asp-for="EstadoProduto" class="control-label"></label>
-                <input asp-for="EstadoProduto" class="form-control" />
+                <select asp-for="EstadoProduto" class="form-control">
+                    @if (Model.Tipo == "Disponível")
+                    {
+                        <option value="Disponível" selected>Disponível</option>
+                    }
+                    else
+                    {
+                        <option value="Disponível">Disponível</option>
+                    }
+                    @if (Model.Tipo == "Indisponível")
+                    {
+                        <option value="Indisponível" selected>Indisponível</option>
+                    }
+                    else
+                    {
+                        <option value="Indisponível">Indisponível</option>
+                    }
+
+                </select>
                 <span asp-validation-for="EstadoProduto" class="text-danger"></span>
             </div>
             <div class="form-group">
