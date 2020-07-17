@@ -25,7 +25,6 @@
     "Access Points / Repetidores", "Antenas", "Bluetooth", "Placas Rede", "Powerlines", "Routers / Modems", "Switch",
     });
 
-
 }
 <div class="row client-menu">
     @if (User.IsInRole("cliente") || !User.Identity.IsAuthenticated)
@@ -54,14 +53,18 @@
         </ul>
     </div>
 
-            
-    
-    }  
-    else
+
+
+    }
+    else if (User.IsInRole("gestorArmazem"))
     {
 
 
-        
+
+    }
+    else
+    {
+
     }
 
 

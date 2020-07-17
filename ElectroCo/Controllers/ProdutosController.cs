@@ -102,6 +102,7 @@ namespace ElectroCo.Controllers
         [Authorize(Roles = "administrador")]
         public IActionResult Create()
         {
+            ViewBag.product_types = new SelectList (this.TipoProdutos());
             return View();
         }
 
@@ -136,6 +137,7 @@ namespace ElectroCo.Controllers
             {
                 return NotFound();
             }
+            ViewBag.product_types = new SelectList(this.TipoProdutos());
             return View(produtos);
         }
 
@@ -206,6 +208,35 @@ namespace ElectroCo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        private Dictionary<string,string[]> TipoProdutos() {
+            var product_types = new Dictionary<string, string[]>();
+            product_types.Add("armazenamento", new string[] {
+            "Adaptadores de Armazenamento", "Armazenamento Externo", "Armazenamento Interno", "Armazenamento em Cloud", "Caixas Externas e Docking",
+            "Cartões de Memórias", "Leitores de Cartões", "Pen Drives",
+            });
+                    product_types.Add("componentes", new string[] {
+                "Caixas de Computador", "Coolers CPU", "Drives Ópticas", "Fonte de Alimentação", "Memórias RAM", "Motherboard", "Placa Gráfica",
+                "Placas de Expansão", "Placas de Som", "Processadores", "Ventoinhas",
+            });
+                    product_types.Add("computadores", new string[] {
+                "Acessórios Portáteis","Barebones","Desktops","Mini PCS","Notebooks","Servidores",
+            });
+                    product_types.Add("imagem e som", new string[] {
+                "Câmara","Entretenimento e Streaming","Home Audio", "Monitores", "Projeção de Imagem", "Suportes", "Televisores",
+            });
+                    product_types.Add("mobilidade", new string[] {
+            "Acessórios","EBooks","Mobile Audio","Smartphones","Tablets","Wearables",
+            });
+                    product_types.Add("periféricos", new string[] {
+            "Conversação Web", "Design Gráfico", "Distribuição de Energia", "Gravação e Controlo de Produção", "Impressão e Consumíveis",
+            "PC Audio", "Ratos / Teclados", "Simulação e Controladores Gaming",
+            });
+                    product_types.Add("redes/comunicação", new string[] {
+            "Access Points / Repetidores", "Antenas", "Bluetooth", "Placas Rede", "Powerlines", "Routers / Modems", "Switch",
+            });
+
+            return product_types;
+        }
         private bool ProdutosExists(int id)
         {
             return _context.Produtos.Any(e => e.ID == id);
