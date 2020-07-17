@@ -42,12 +42,6 @@ namespace ElectroCo.Controllers
             var produtos = _context.DetalhesEncomendas.Include(o => o.Order).Include(o => o.Product).Where(m => m.EncomendaID == id);
 
 
-
-
-
-
-
-
             var detalhesEncomenda = await _context.DetalhesEncomendas
                 .Include(d => d.Order)
                 .Include(d => d.Product)
