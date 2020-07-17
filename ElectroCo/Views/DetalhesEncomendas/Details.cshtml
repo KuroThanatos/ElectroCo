@@ -1,42 +1,94 @@
-﻿@model ElectroCo.Models.DetalhesEncomenda
+﻿@model IEnumerable<ElectroCo.Models.DetalhesEncomenda>
 
 @{
     ViewData["Title"] = "Details";
+    var Total = 0.0;
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>DetalhesEncomenda</h4>
+    <h3>Detalhes da Encomenda</h3>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantidade)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Order.EstadoEncomenda)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Quantidade)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstOrDefault().Order.EstadoEncomenda)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecoProduto)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Order.MoradaEncomenda)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PrecoProduto)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstOrDefault().Order.MoradaEncomenda)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Order)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Order.MoradaFaturacao)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Order.ID)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstOrDefault().Order.MoradaFaturacao)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Product)
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Order.DataEncomenda)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Product.ID)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstOrDefault().Order.DataEncomenda)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Order.PrevisaoEntrega)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstOrDefault().Order.PrevisaoEntrega)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Order.TrackID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstOrDefault().Order.TrackID)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <h3>Produtos da Encomenda</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nome do Produto
+                </th>
+                <th>
+                    Preço
+                </th>
+                <th>
+                   Quantidade   
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                Total = Total + (item.Product.Preco * item.Quantidade);
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecoProduto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantidade)
+                </td>
+            </tr>
+                    }
+        <tr>
+            <th>Preço Total:</th>
+            <td>@Total</td>
+        </tr>
+            </tbody>
+        </table>
+</div>
+<div>
     <a asp-action="Index">Back to List</a>
 </div>

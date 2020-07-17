@@ -51,7 +51,7 @@ namespace ElectroCo.Controllers
             var detalhesEncomenda = await _context.DetalhesEncomendas
                 .Include(d => d.Order)
                 .Include(d => d.Product)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.EncomendaID == id);
 
             var cliente = await _context.Clientes.FirstOrDefaultAsync(m => m.ID == detalhesEncomenda.Order.ClientID);
             if (detalhesEncomenda == null || cliente == null)
@@ -62,7 +62,7 @@ namespace ElectroCo.Controllers
                cliente.UserId == _userManager.GetUserId(User)
                )
             {
-                return View(detalhesEncomenda);
+                return View(await produtos.ToListAsync());
             }
             return RedirectToAction("Index", "Clientes");
         }
