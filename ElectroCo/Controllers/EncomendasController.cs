@@ -95,8 +95,22 @@ namespace ElectroCo.Controllers
         }
 
         // GET: Encomendas/Create
-        public IActionResult Create()
+        public  IActionResult Create()
         {
+            var Cliente =  _context.Clientes.FirstOrDefault(m => m.UserId == _userManager.GetUserId(User));
+            if (Cliente == null)
+            {
+                return NotFound();
+            }
+            var shopping = _context.ShoppingCart.Include(e => e.Cliente).Include(s => s.Product).Where(m => m.ClientID == Cliente.ID);
+            if (shopping == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["shopping"] = shopping.ToList();
+
+
             ViewData["ClientID"] = new SelectList(_context.Clientes, "ID", "Name");
             ViewData["GestorID"] = new SelectList(_context.Funcionarios, "ID", "Name");
             return View();
@@ -125,6 +139,16 @@ namespace ElectroCo.Controllers
                 var Cliente = await _context.Clientes
                 .FirstOrDefaultAsync(m => m.UserId == _userManager.GetUserId(User));
 
+                if(encomendas.MoradaEncomenda == null)
+                {
+                    encomendas.MoradaEncomenda = Cliente.Morada +" "+ Cliente.CodigoPostal;
+                }
+
+                if (encomendas.MoradaFaturacao == null)
+                {
+                    encomendas.MoradaFaturacao = Cliente.Morada + " " + Cliente.CodigoPostal;
+                }
+
                 if (Cliente == null)
                 {
                     return NotFound();
@@ -132,11 +156,20 @@ namespace ElectroCo.Controllers
                 try
                 {
                     DateTime date = DateTime.Now;
+                    var week = date.DayOfWeek.ToString();
                     encomendas.ClientID = Cliente.ID;
                     encomendas.TrackID = "AdcWERewff12oo98";
                     encomendas.EstadoEncomenda = "Em processamento";
                     encomendas.DataEncomenda = date;
-                    encomendas.PrevisaoEntrega = date.AddDays(2);
+                    if(week == "Thursday" || week == "Friday")
+                    {
+                        encomendas.PrevisaoEntrega = date.AddDays(4);
+                    }
+                    else
+                    {
+                        encomendas.PrevisaoEntrega = date.AddDays(2);
+                    }
+                    
                     _context.Add(encomendas);
                     await _context.SaveChangesAsync();
 
@@ -148,7 +181,7 @@ namespace ElectroCo.Controllers
                 }
 
             }
-            return View(encomendas);
+            return View();
         }
 
         // GET: Encomendas/Edit/5
