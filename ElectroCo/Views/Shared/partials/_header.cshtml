@@ -26,7 +26,7 @@
     });
 
 }
-<div class="row client-menu">
+<div class="client-menu">
     @if (User.IsInRole("cliente") || !User.Identity.IsAuthenticated)
     {
 
@@ -58,13 +58,20 @@
     }
     else if (User.IsInRole("gestorArmazem"))
     {
-
+        <ul class="nav nav-tabs">
+            <li class="nav-item text-light"><a class="nav-link">Inventário</a></li>
+            <li class="nav-item text-light"><a class="nav-link">Encomendas</a></li>
+        </ul>
 
 
     }
     else
     {
-
+        <ul class="nav nav-tabs">
+            <li class="nav-item text-light"><a class="nav-link">Produtos</a></li>
+            <li class="nav-item text-light"><a class="nav-link">Funcionários</a></li>
+            <li class="nav-item text-light"><a class="nav-link">Encomendas</a></li>
+        </ul>
     }
 
 
