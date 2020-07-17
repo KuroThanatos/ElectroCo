@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\migue\\source\\repos\\ElectroCo\\ElectroCo\\ElectroCo.csproj": {}
+    "C:\\Users\\migue\\Source\\Repos\\ElectroCo\\ElectroCo\\ElectroCo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\migue\\source\\repos\\ElectroCo\\ElectroCo\\ElectroCo.csproj": {
+    "C:\\Users\\migue\\Source\\Repos\\ElectroCo\\ElectroCo\\ElectroCo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\migue\\source\\repos\\ElectroCo\\ElectroCo\\ElectroCo.csproj",
+        "projectUniqueName": "C:\\Users\\migue\\Source\\Repos\\ElectroCo\\ElectroCo\\ElectroCo.csproj",
         "projectName": "ElectroCo",
-        "projectPath": "C:\\Users\\migue\\source\\repos\\ElectroCo\\ElectroCo\\ElectroCo.csproj",
+        "projectPath": "C:\\Users\\migue\\Source\\Repos\\ElectroCo\\ElectroCo\\ElectroCo.csproj",
         "packagesPath": "C:\\Users\\migue\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\migue\\source\\repos\\ElectroCo\\ElectroCo\\obj\\",
+        "outputPath": "C:\\Users\\migue\\Source\\Repos\\ElectroCo\\ElectroCo\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
