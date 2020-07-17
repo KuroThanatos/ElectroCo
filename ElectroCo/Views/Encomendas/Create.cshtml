@@ -1,35 +1,87 @@
-﻿@model ElectroCo.Models.Encomendas
+﻿@model ElectroCo.Models.Encomendas 
+
 
 @{
     ViewData["Title"] = "Create";
+    IEnumerable<ShoppingCart> shopping = ViewData["shopping"] as IEnumerable<ShoppingCart>;
+    var Total = 0.0;
 }
 
-<h1>Create</h1>
+<h1>Nova encomenda</h1>
 
-<h4>Encomendas</h4>
+<hr />
+
+<div>
+    <h3>Produtos da Encomenda</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nome do Produto
+                </th>
+                <th>
+                    Preço
+                </th>
+                <th>
+                    Quantidade
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in shopping)
+            {
+                Total = Total + (item.Product.Preco * item.Quantidade);
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Preco)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantidade)
+                    </td>
+                </tr>
+            }
+            <tr>
+                <th>Preço Total:</th>
+                <td>@Total</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
+        <h3>Dados de Envio</h3>
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="MoradaEncomenda" class="control-label"></label>
+                <label asp-for="MoradaEncomenda" class="control-label">Morada de Envio</label>
                 <input asp-for="MoradaEncomenda" class="form-control" />
                 <span asp-validation-for="MoradaEncomenda" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MoradaFaturacao" class="control-label"></label>
+                <label asp-for="MoradaFaturacao" class="control-label">Morada de Faturação</label>
                 <input asp-for="MoradaFaturacao" class="form-control" />
                 <span asp-validation-for="MoradaFaturacao" class="text-danger"></span>
             </div>
+            <h6>Deixar em branco se ja tiver as moradas guardadas</h6>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
+
+
+
     </div>
 </div>
-
 <div>
+    
     <a asp-action="Index">Back to List</a>
 </div>
 
