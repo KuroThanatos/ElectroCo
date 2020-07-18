@@ -16,3 +16,7 @@ $('.dropdown-submenu a.dropright').on("mouseover", function (e) {
 
 
 
+
+$(document).ready(function () {
+    $('#dtBasicExample').DataTable();
+});

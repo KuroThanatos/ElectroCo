@@ -1,8 +1,46 @@
-﻿@{
+﻿@model IEnumerable<ElectroCo.Models.Produtos>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (User.IsInRole("cliente") || !User.Identity.IsAuthenticated)
+{
+    <table id="dtBasicExample" class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                <th></th>
+                @if (User.IsInRole("cliente")){
+                    <th></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    <img src="~/Imagens/produtos/@item.Imagem" height="60" alt="imagem do produto @item.Nome" title="@item.Nome" />
+                </td>
+                @if (User.IsInRole("cliente"))
+                {
+                    <td>
+                        <a asp-action="AdicionarCarrinho" asp-controller="Produtos" asp-route-id="@item.ID">Adicionar ao Carrinho</a>
+                    </td>
+                }
+                </tr>
+             }
+            </tbody>
+    </table>
+
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>
+}

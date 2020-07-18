@@ -28,7 +28,7 @@ namespace ElectroCo.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             if (User.IsInRole("gestorArmazem"))
             {
@@ -38,11 +38,8 @@ namespace ElectroCo.Controllers
             {
                 return LocalRedirect("~/funcionarios");
             }
-
-            List<string> TiposProduto = (from p in _context.Produtos select p.Tipo).Distinct().ToList<string>();
             
-            
-            return View(TiposProduto);
+            return View(await _context.Produtos.ToListAsync());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -51,10 +48,5 @@ namespace ElectroCo.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [AllowAnonymous]
-        public IActionResult Products(string type)
-        {
-            return View(_context.Produtos.Where(p => p.Tipo == type).ToListAsync());
-        }
     }
 }

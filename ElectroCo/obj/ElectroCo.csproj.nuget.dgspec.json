@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\migue\\Source\\Repos\\ElectroCo\\ElectroCo\\ElectroCo.csproj": {}
+    "C:\\Users\\Oscar\\Desktop\\IPT\\2ºano\\2º Semestre\\TI2\\aulas 3 horas\\Projecto\\ElectroCo\\ElectroCo\\ElectroCo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\migue\\Source\\Repos\\ElectroCo\\ElectroCo\\ElectroCo.csproj": {
+    "C:\\Users\\Oscar\\Desktop\\IPT\\2ºano\\2º Semestre\\TI2\\aulas 3 horas\\Projecto\\ElectroCo\\ElectroCo\\ElectroCo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\migue\\Source\\Repos\\ElectroCo\\ElectroCo\\ElectroCo.csproj",
+        "projectUniqueName": "C:\\Users\\Oscar\\Desktop\\IPT\\2ºano\\2º Semestre\\TI2\\aulas 3 horas\\Projecto\\ElectroCo\\ElectroCo\\ElectroCo.csproj",
         "projectName": "ElectroCo",
-        "projectPath": "C:\\Users\\migue\\Source\\Repos\\ElectroCo\\ElectroCo\\ElectroCo.csproj",
-        "packagesPath": "C:\\Users\\migue\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\migue\\Source\\Repos\\ElectroCo\\ElectroCo\\obj\\",
+        "projectPath": "C:\\Users\\Oscar\\Desktop\\IPT\\2ºano\\2º Semestre\\TI2\\aulas 3 horas\\Projecto\\ElectroCo\\ElectroCo\\ElectroCo.csproj",
+        "packagesPath": "C:\\Users\\Oscar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Oscar\\Desktop\\IPT\\2ºano\\2º Semestre\\TI2\\aulas 3 horas\\Projecto\\ElectroCo\\ElectroCo\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\migue\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Oscar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -71,6 +67,18 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.3, )"
+            },
+            "bootstrap": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
+            "jQuery": {
+              "target": "Package",
+              "version": "[3.5.1, )"
+            },
+            "jquery.datatables": {
+              "target": "Package",
+              "version": "[1.10.15, )"
             }
           },
           "imports": [
@@ -91,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
