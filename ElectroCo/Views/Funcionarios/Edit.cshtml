@@ -4,52 +4,57 @@
     ViewData["Title"] = "Editar";
 }
 
-    <div class="row">
-        <h2>@ViewData["Title"]</h2>
-        @if (User.IsInRole("administrador"))
-        {
-            <a asp-action="Index">Lista de Funcionários</a>
-        }
-    </div>
+<div class="row">
+    <h2>@ViewData["Title"]</h2>
+</div>
+<div class="row">
+    @if (User.IsInRole("administrador"))
+    {
+        <a asp-action="Index">Lista de Funcionários</a>
+    }
+</div>
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
+
+    <form asp-action="Edit">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ID" />
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
+                <input readonly asp-for="Nome" class="form-control" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <input readonly asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Telefone" class="control-label"></label>
-                <input asp-for="Telefone" class="form-control" />
-                <span asp-validation-for="Telefone" class="text-danger"></span>
+                <label asp-for="TipoFuncionario" class="control-label">Tipo de Funcionario</label>
+                <input readonly asp-for="TipoFuncionario" class="form-control" />
             </div>
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="NumFuncionario" class="control-label"></label>
                 <input asp-for="NumFuncionario" class="form-control" />
                 <span asp-validation-for="NumFuncionario" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TipoFuncionario" class="control-label">Tipo de Funcionario</label>
-                <select asp-for="TipoFuncionario" class="form-control">
-                    <option value="administrador">Administrador</option>
-                    <option value="gestorArmazem">Gestor de Armazem</option>
-                </select>
+                <label asp-for="Telefone" class="control-label"></label>
+                <input asp-for="Telefone" class="form-control" />
+                <span asp-validation-for="Telefone" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col-md-12">
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-default" />
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 
 

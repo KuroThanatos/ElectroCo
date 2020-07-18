@@ -29,7 +29,7 @@ namespace ElectroCo.Models
         public string Nome { get; set; }
 
         [DataType(DataType.Password)]
-        public string password { get; set; }
+        public string Password { get; set; }
 
         /// <summary>
         /// Email Principal do Utilizador

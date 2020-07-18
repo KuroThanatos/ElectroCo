@@ -49,9 +49,21 @@ else
                 </td>
                 <td>
                     @{
-                        if (User.IsInRole("gestorArmazem,administrador"))
+                        if (!User.IsInRole("cliente"))
                         {
-                            <a asp-action="Concluido" asp-route-id="@item.ID">Concluido</a>
+                            if (item.EstadoEncomenda != "Concluido")
+                            {
+                                <a asp-action="Concluido" asp-route-id="@item.ID">Concluir</a>
+                            }
+
+                            if (User.IsInRole("administrador"))
+                            {
+                                if (item.EstadoEncomenda != "Concluido")
+                                {
+                                    <span>|</span>
+                                }
+                                <a asp-controller="DetalhesEncomendas" asp-action="Details" asp-route-id="@item.ID">Ver Encomenda </a>
+                            }
                         }
                         else
                         {

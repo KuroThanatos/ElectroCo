@@ -159,6 +159,9 @@ namespace ElectroCo.Migrations
                     b.Property<int>("NumFuncionario")
                         .HasColumnType("int");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Telefone")
                         .IsRequired()
                         .HasColumnType("nvarchar(9)")
@@ -168,9 +171,6 @@ namespace ElectroCo.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("password")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -208,13 +208,16 @@ namespace ElectroCo.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("EstadoProduto")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Imagem")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
 
                     b.Property<float>("Preco")
                         .HasColumnType("real");
@@ -223,6 +226,7 @@ namespace ElectroCo.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Tipo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -407,21 +411,21 @@ namespace ElectroCo.Migrations
                         new
                         {
                             Id = "ad",
-                            ConcurrencyStamp = "9c672dc1-6478-45bd-b1b6-1139ff5f8d79",
+                            ConcurrencyStamp = "42ca3339-57fa-4f5a-811f-c78d4003ae30",
                             Name = "administrador",
                             NormalizedName = "administrador"
                         },
                         new
                         {
                             Id = "ga",
-                            ConcurrencyStamp = "7858d579-e075-4526-ada1-7f96ccd2f0d1",
+                            ConcurrencyStamp = "ad4d8f2d-cd50-4d1e-8ac5-c2991545e9e1",
                             Name = "gestorArmazem",
                             NormalizedName = "gestorArmazem"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "a7ce4ba6-26c7-476a-9f67-75ac529b8b1c",
+                            ConcurrencyStamp = "51fffe77-cb44-4625-b6cc-06c66a413bf1",
                             Name = "cliente",
                             NormalizedName = "cliente"
                         });

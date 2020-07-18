@@ -67,13 +67,13 @@ namespace ElectroCo.Controllers
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = funcionarios.Email, Email = funcionarios.Email};
-                var result = await _userManager.CreateAsync(user,funcionarios.password);
+                var result = await _userManager.CreateAsync(user,funcionarios.Password);
                 if (result.Succeeded)
                 {
                     var claim = new System.Security.Claims.Claim("Nome", funcionarios.Nome);
                     await _userManager.AddClaimAsync(user, claim);
                     var result1 = await _userManager.AddToRoleAsync(user, funcionarios.TipoFuncionario);
-                    funcionarios.password = null;
+                    funcionarios.Password = null;
                     funcionarios.UserId = user.Id;
                     try
                     {

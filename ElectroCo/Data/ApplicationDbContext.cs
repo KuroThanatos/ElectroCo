@@ -41,8 +41,8 @@ namespace ElectroCo.Data
                 new IdentityUserClaim<string> { Id = 3, UserId = "91b48022-fcca-4aed-8bee-63f2ff93a8c5", ClaimType = "Nome", ClaimValue = "Cliente Cliente" }
                 );
             modelBuilder.Entity<Funcionarios>().HasData(
-                new Funcionarios { ID = 1, Email = "gerente@ipt.pt", Nome = "Gerente Gerente", NumFuncionario = 666, password = null, Telefone = "987456123", TipoFuncionario = "administrador", UserId = "f554eee4-e19d-4830-a02c-aabe9f18e8a7" },
-                new Funcionarios { ID = 2, Email = "gestor@ipt.pt", Nome = "Gestor Gestor", NumFuncionario = 777, password = null, Telefone = "987456123", TipoFuncionario = "gestorArmazem", UserId = "96fc6f49-a2b8-42eb-a63d-edc9e8a7c816" }
+                new Funcionarios { ID = 1, Email = "gerente@ipt.pt", Nome = "Gerente Gerente", NumFuncionario = 666, Password = null, Telefone = "987456123", TipoFuncionario = "administrador", UserId = "f554eee4-e19d-4830-a02c-aabe9f18e8a7" },
+                new Funcionarios { ID = 2, Email = "gestor@ipt.pt", Nome = "Gestor Gestor", NumFuncionario = 777, Password = null, Telefone = "987456123", TipoFuncionario = "gestorArmazem", UserId = "96fc6f49-a2b8-42eb-a63d-edc9e8a7c816" }
                 );
             modelBuilder.Entity<Clientes>().HasData(
                     new Clientes { ID = 1, Email = "cliente@ipt.pt", Nome = "Cliente Cliente", CodigoPostal = "2000-070 Almeirim", Morada = "Rua São João da Ribeira, nº59", Telefone = "987456123", NIF = "123456789", UserId = "91b48022-fcca-4aed-8bee-63f2ff93a8c5" }

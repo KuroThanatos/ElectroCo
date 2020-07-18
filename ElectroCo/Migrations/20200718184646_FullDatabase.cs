@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ElectroCo.Migrations
 {
-    public partial class firstMigration : Migration
+    public partial class FullDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -71,10 +71,10 @@ namespace ElectroCo.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: false),
-                    password = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(maxLength: 70, nullable: false),
+                    Password = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    Telefone = table.Column<string>(nullable: true),
+                    Telefone = table.Column<string>(maxLength: 9, nullable: false),
                     NumFuncionario = table.Column<int>(nullable: false),
                     TipoFuncionario = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
@@ -90,11 +90,11 @@ namespace ElectroCo.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(nullable: true),
-                    Tipo = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(maxLength: 70, nullable: false),
+                    Tipo = table.Column<string>(nullable: false),
                     Preco = table.Column<float>(nullable: false),
                     Stock = table.Column<int>(nullable: false),
-                    EstadoProduto = table.Column<string>(nullable: true),
+                    EstadoProduto = table.Column<string>(nullable: false),
                     Imagem = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -246,6 +246,7 @@ namespace ElectroCo.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Quantidade = table.Column<int>(nullable: false),
                     ClientID = table.Column<int>(nullable: false),
                     ProdutoID = table.Column<int>(nullable: false)
                 },
@@ -297,17 +298,75 @@ namespace ElectroCo.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ad", "11181315-ccc1-4259-b0a8-ae529c8911c0", "administrador", "administrador" });
+                values: new object[,]
+                {
+                    { "c", "51fffe77-cb44-4625-b6cc-06c66a413bf1", "cliente", "cliente" },
+                    { "ga", "ad4d8f2d-cd50-4d1e-8ac5-c2991545e9e1", "gestorArmazem", "gestorArmazem" },
+                    { "ad", "42ca3339-57fa-4f5a-811f-c78d4003ae30", "administrador", "administrador" }
+                });
 
             migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ga", "8421d3ab-34cc-4dbf-8046-e65432d447b1", "gestorArmazem", "gestorArmazem" });
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "91b48022-fcca-4aed-8bee-63f2ff93a8c5", 0, "bd1c4aa5-aaed-45ff-a6e9-11e8c6888644", "cliente@ipt.pt", true, false, null, "CLIENTE@IPT.PT", "CLIENTE@IPT.PT", "AQAAAAEAACcQAAAAEOwjUR76Lx3fR0i9QH3Noni0nzQTLzJ9a2CM1v+IdBwB6ADWtKRgX4o4Sl8FyBIoqA==", null, false, "CYQGW2ATI3AOJUO66PHZWTHIPBZRU6NL", false, "cliente@ipt.pt" },
+                    { "f554eee4-e19d-4830-a02c-aabe9f18e8a7", 0, "bd1c4aa5-aaed-45ff-a6e9-11e8c6888644", "gerente@ipt.pt", true, false, null, "GERENTE@IPT.PT", "GERENTE@IPT.PT", "AQAAAAEAACcQAAAAEOwjUR76Lx3fR0i9QH3Noni0nzQTLzJ9a2CM1v+IdBwB6ADWtKRgX4o4Sl8FyBIoqA==", null, false, "CYQGW2ATI3AOJUO66PHZWTHIPBZRU6NL", false, "gerente@ipt.pt" },
+                    { "96fc6f49-a2b8-42eb-a63d-edc9e8a7c816", 0, "bd1c4aa5-aaed-45ff-a6e9-11e8c6888644", "gestor@ipt.pt", true, false, null, "GESTOR@IPT.PT", "GESTOR@IPT.PT", "AQAAAAEAACcQAAAAEOwjUR76Lx3fR0i9QH3Noni0nzQTLzJ9a2CM1v+IdBwB6ADWtKRgX4o4Sl8FyBIoqA==", null, false, "CYQGW2ATI3AOJUO66PHZWTHIPBZRU6NL", false, "gestor@ipt.pt" }
+                });
 
             migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "c", "0f1d61ed-41eb-4fb0-ac04-ae7b02a4293a", "cliente", "cliente" });
+                table: "Clientes",
+                columns: new[] { "ID", "CodigoPostal", "Email", "Morada", "NIF", "Nome", "Telefone", "UserId" },
+                values: new object[] { 1, "2000-070 Almeirim", "cliente@ipt.pt", "Rua São João da Ribeira, nº59", "123456789", "Cliente Cliente", "987456123", "91b48022-fcca-4aed-8bee-63f2ff93a8c5" });
+
+            migrationBuilder.InsertData(
+                table: "Funcionarios",
+                columns: new[] { "ID", "Email", "Nome", "NumFuncionario", "Password", "Telefone", "TipoFuncionario", "UserId" },
+                values: new object[,]
+                {
+                    { 2, "gestor@ipt.pt", "Gestor Gestor", 777, null, "987456123", "gestorArmazem", "96fc6f49-a2b8-42eb-a63d-edc9e8a7c816" },
+                    { 1, "gerente@ipt.pt", "Gerente Gerente", 666, null, "987456123", "administrador", "f554eee4-e19d-4830-a02c-aabe9f18e8a7" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Produtos",
+                columns: new[] { "ID", "EstadoProduto", "Imagem", "Nome", "Preco", "Stock", "Tipo" },
+                values: new object[,]
+                {
+                    { 5, "Disponível", "5.png", "GSKILL 16GB 3600MHZ Cl18", 75f, 21, "Memórias RAM" },
+                    { 6, "Disponível", "6.png", "SSD Samsung 750 500GB", 52f, 56, "Armazenamento Interno" },
+                    { 7, "Disponível", "7.png", "SSD PNY 500GB", 48f, 34, "Armazenamento Interno" },
+                    { 3, "Disponível", "3.png", "AMD Ryzen 3600", 186f, 3, "Processadores" },
+                    { 9, "Disponível", "9.png", "Corsair Crystal 465X", 90f, 2, "Caixas de Computador" },
+                    { 10, "Disponível", "10.png", "Water Cooler CoolerMaster MasterLiquid ML240L RGB", 50f, 12, "Coolers CPU" },
+                    { 11, "Disponível", "11.png", "Corsair LL120 FAN Pack 3 ", 80f, 4, "Ventoinhas" },
+                    { 12, "Disponível", "12.png", "ASUS B550 TUF motherboard", 135f, 1, "Motherboard" },
+                    { 2, "Disponível", "2.png", "Asus zenphone", 320f, 10, "Smartphones" },
+                    { 1, "Disponível", "1.png", "Msi b550 motherboard", 210f, 4, "Motherboard" },
+                    { 4, "Indisponível", "4.png", "PSU Seasonic 650W Platinum", 112f, 0, "Fonte de Alimentação" },
+                    { 8, "Disponível", "8.png", "ZOTAC NVIDIA RTX 2070 mini ", 450f, 2, "Placa Gráfica" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserClaims",
+                columns: new[] { "Id", "ClaimType", "ClaimValue", "UserId" },
+                values: new object[,]
+                {
+                    { 1, "Nome", "Gerente Gerente", "f554eee4-e19d-4830-a02c-aabe9f18e8a7" },
+                    { 2, "Nome", "Gestor Gestor", "96fc6f49-a2b8-42eb-a63d-edc9e8a7c816" },
+                    { 3, "Nome", "Cliente Cliente", "91b48022-fcca-4aed-8bee-63f2ff93a8c5" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[,]
+                {
+                    { "f554eee4-e19d-4830-a02c-aabe9f18e8a7", "ad" },
+                    { "96fc6f49-a2b8-42eb-a63d-edc9e8a7c816", "ga" },
+                    { "91b48022-fcca-4aed-8bee-63f2ff93a8c5", "c" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

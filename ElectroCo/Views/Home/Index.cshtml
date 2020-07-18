@@ -47,9 +47,9 @@
                         <a asp-action="AdicionarCarrinho" asp-controller="Produtos" asp-route-id="@item.ID">Adicionar ao Carrinho</a>
                     </td>
                 }
-                else
+                else if (User.IsInRole("cliente") && item.EstadoProduto == "Indisponível")
                 {
-                    <td></td>
+                    <td> </td>
                 }
             </tr>
              }

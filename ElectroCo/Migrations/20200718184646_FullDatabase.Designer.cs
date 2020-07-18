@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectroCo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200714234327_firstMigration")]
-    partial class firstMigration
+    [Migration("20200718184646_FullDatabase")]
+    partial class FullDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,6 +60,19 @@ namespace ElectroCo.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Clientes");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CodigoPostal = "2000-070 Almeirim",
+                            Email = "cliente@ipt.pt",
+                            Morada = "Rua São João da Ribeira, nº59",
+                            NIF = "123456789",
+                            Nome = "Cliente Cliente",
+                            Telefone = "987456123",
+                            UserId = "91b48022-fcca-4aed-8bee-63f2ff93a8c5"
+                        });
                 });
 
             modelBuilder.Entity("ElectroCo.Models.DetalhesEncomenda", b =>
@@ -140,15 +153,21 @@ namespace ElectroCo.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
 
                     b.Property<int>("NumFuncionario")
                         .HasColumnType("int");
 
-                    b.Property<string>("Telefone")
+                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(9)")
+                        .HasMaxLength(9);
 
                     b.Property<string>("TipoFuncionario")
                         .HasColumnType("nvarchar(max)");
@@ -156,12 +175,31 @@ namespace ElectroCo.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("password")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("ID");
 
                     b.ToTable("Funcionarios");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Email = "gerente@ipt.pt",
+                            Nome = "Gerente Gerente",
+                            NumFuncionario = 666,
+                            Telefone = "987456123",
+                            TipoFuncionario = "administrador",
+                            UserId = "f554eee4-e19d-4830-a02c-aabe9f18e8a7"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Email = "gestor@ipt.pt",
+                            Nome = "Gestor Gestor",
+                            NumFuncionario = 777,
+                            Telefone = "987456123",
+                            TipoFuncionario = "gestorArmazem",
+                            UserId = "96fc6f49-a2b8-42eb-a63d-edc9e8a7c816"
+                        });
                 });
 
             modelBuilder.Entity("ElectroCo.Models.Produtos", b =>
@@ -172,13 +210,16 @@ namespace ElectroCo.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("EstadoProduto")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Imagem")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(70)")
+                        .HasMaxLength(70);
 
                     b.Property<float>("Preco")
                         .HasColumnType("real");
@@ -187,11 +228,134 @@ namespace ElectroCo.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Tipo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
                     b.ToTable("Produtos");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            EstadoProduto = "Disponível",
+                            Imagem = "1.png",
+                            Nome = "Msi b550 motherboard",
+                            Preco = 210f,
+                            Stock = 4,
+                            Tipo = "Motherboard"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            EstadoProduto = "Disponível",
+                            Imagem = "2.png",
+                            Nome = "Asus zenphone",
+                            Preco = 320f,
+                            Stock = 10,
+                            Tipo = "Smartphones"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            EstadoProduto = "Disponível",
+                            Imagem = "3.png",
+                            Nome = "AMD Ryzen 3600",
+                            Preco = 186f,
+                            Stock = 3,
+                            Tipo = "Processadores"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            EstadoProduto = "Indisponível",
+                            Imagem = "4.png",
+                            Nome = "PSU Seasonic 650W Platinum",
+                            Preco = 112f,
+                            Stock = 0,
+                            Tipo = "Fonte de Alimentação"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            EstadoProduto = "Disponível",
+                            Imagem = "5.png",
+                            Nome = "GSKILL 16GB 3600MHZ Cl18",
+                            Preco = 75f,
+                            Stock = 21,
+                            Tipo = "Memórias RAM"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            EstadoProduto = "Disponível",
+                            Imagem = "6.png",
+                            Nome = "SSD Samsung 750 500GB",
+                            Preco = 52f,
+                            Stock = 56,
+                            Tipo = "Armazenamento Interno"
+                        },
+                        new
+                        {
+                            ID = 7,
+                            EstadoProduto = "Disponível",
+                            Imagem = "7.png",
+                            Nome = "SSD PNY 500GB",
+                            Preco = 48f,
+                            Stock = 34,
+                            Tipo = "Armazenamento Interno"
+                        },
+                        new
+                        {
+                            ID = 8,
+                            EstadoProduto = "Disponível",
+                            Imagem = "8.png",
+                            Nome = "ZOTAC NVIDIA RTX 2070 mini ",
+                            Preco = 450f,
+                            Stock = 2,
+                            Tipo = "Placa Gráfica"
+                        },
+                        new
+                        {
+                            ID = 9,
+                            EstadoProduto = "Disponível",
+                            Imagem = "9.png",
+                            Nome = "Corsair Crystal 465X",
+                            Preco = 90f,
+                            Stock = 2,
+                            Tipo = "Caixas de Computador"
+                        },
+                        new
+                        {
+                            ID = 10,
+                            EstadoProduto = "Disponível",
+                            Imagem = "10.png",
+                            Nome = "Water Cooler CoolerMaster MasterLiquid ML240L RGB",
+                            Preco = 50f,
+                            Stock = 12,
+                            Tipo = "Coolers CPU"
+                        },
+                        new
+                        {
+                            ID = 11,
+                            EstadoProduto = "Disponível",
+                            Imagem = "11.png",
+                            Nome = "Corsair LL120 FAN Pack 3 ",
+                            Preco = 80f,
+                            Stock = 4,
+                            Tipo = "Ventoinhas"
+                        },
+                        new
+                        {
+                            ID = 12,
+                            EstadoProduto = "Disponível",
+                            Imagem = "12.png",
+                            Nome = "ASUS B550 TUF motherboard",
+                            Preco = 135f,
+                            Stock = 1,
+                            Tipo = "Motherboard"
+                        });
                 });
 
             modelBuilder.Entity("ElectroCo.Models.ShoppingCart", b =>
@@ -205,6 +369,9 @@ namespace ElectroCo.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ProdutoID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantidade")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -246,21 +413,21 @@ namespace ElectroCo.Migrations
                         new
                         {
                             Id = "ad",
-                            ConcurrencyStamp = "11181315-ccc1-4259-b0a8-ae529c8911c0",
+                            ConcurrencyStamp = "42ca3339-57fa-4f5a-811f-c78d4003ae30",
                             Name = "administrador",
                             NormalizedName = "administrador"
                         },
                         new
                         {
                             Id = "ga",
-                            ConcurrencyStamp = "8421d3ab-34cc-4dbf-8046-e65432d447b1",
+                            ConcurrencyStamp = "ad4d8f2d-cd50-4d1e-8ac5-c2991545e9e1",
                             Name = "gestorArmazem",
                             NormalizedName = "gestorArmazem"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "0f1d61ed-41eb-4fb0-ac04-ae7b02a4293a",
+                            ConcurrencyStamp = "51fffe77-cb44-4625-b6cc-06c66a413bf1",
                             Name = "cliente",
                             NormalizedName = "cliente"
                         });
@@ -353,6 +520,56 @@ namespace ElectroCo.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "f554eee4-e19d-4830-a02c-aabe9f18e8a7",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "bd1c4aa5-aaed-45ff-a6e9-11e8c6888644",
+                            Email = "gerente@ipt.pt",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "GERENTE@IPT.PT",
+                            NormalizedUserName = "GERENTE@IPT.PT",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOwjUR76Lx3fR0i9QH3Noni0nzQTLzJ9a2CM1v+IdBwB6ADWtKRgX4o4Sl8FyBIoqA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "CYQGW2ATI3AOJUO66PHZWTHIPBZRU6NL",
+                            TwoFactorEnabled = false,
+                            UserName = "gerente@ipt.pt"
+                        },
+                        new
+                        {
+                            Id = "96fc6f49-a2b8-42eb-a63d-edc9e8a7c816",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "bd1c4aa5-aaed-45ff-a6e9-11e8c6888644",
+                            Email = "gestor@ipt.pt",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "GESTOR@IPT.PT",
+                            NormalizedUserName = "GESTOR@IPT.PT",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOwjUR76Lx3fR0i9QH3Noni0nzQTLzJ9a2CM1v+IdBwB6ADWtKRgX4o4Sl8FyBIoqA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "CYQGW2ATI3AOJUO66PHZWTHIPBZRU6NL",
+                            TwoFactorEnabled = false,
+                            UserName = "gestor@ipt.pt"
+                        },
+                        new
+                        {
+                            Id = "91b48022-fcca-4aed-8bee-63f2ff93a8c5",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "bd1c4aa5-aaed-45ff-a6e9-11e8c6888644",
+                            Email = "cliente@ipt.pt",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CLIENTE@IPT.PT",
+                            NormalizedUserName = "CLIENTE@IPT.PT",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOwjUR76Lx3fR0i9QH3Noni0nzQTLzJ9a2CM1v+IdBwB6ADWtKRgX4o4Sl8FyBIoqA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "CYQGW2ATI3AOJUO66PHZWTHIPBZRU6NL",
+                            TwoFactorEnabled = false,
+                            UserName = "cliente@ipt.pt"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -377,6 +594,29 @@ namespace ElectroCo.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "Nome",
+                            ClaimValue = "Gerente Gerente",
+                            UserId = "f554eee4-e19d-4830-a02c-aabe9f18e8a7"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "Nome",
+                            ClaimValue = "Gestor Gestor",
+                            UserId = "96fc6f49-a2b8-42eb-a63d-edc9e8a7c816"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClaimType = "Nome",
+                            ClaimValue = "Cliente Cliente",
+                            UserId = "91b48022-fcca-4aed-8bee-63f2ff93a8c5"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -416,6 +656,23 @@ namespace ElectroCo.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "f554eee4-e19d-4830-a02c-aabe9f18e8a7",
+                            RoleId = "ad"
+                        },
+                        new
+                        {
+                            UserId = "96fc6f49-a2b8-42eb-a63d-edc9e8a7c816",
+                            RoleId = "ga"
+                        },
+                        new
+                        {
+                            UserId = "91b48022-fcca-4aed-8bee-63f2ff93a8c5",
+                            RoleId = "c"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
