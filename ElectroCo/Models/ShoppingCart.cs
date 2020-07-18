@@ -22,7 +22,7 @@ namespace ElectroCo.Models
         /// <summary>
         /// Quantidade do mesmo produto
         /// </summary>
-        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+        [Display(Name = "Quantidade")]
         public int Quantidade { get; set; }
 
         //FK para Cliente

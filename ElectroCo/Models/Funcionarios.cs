@@ -49,11 +49,13 @@ namespace ElectroCo.Models
         /// <summary>
         /// Número do Funcionário
         /// </summary>
+        [Display(Name = "Número de Funcionário")]
         public int NumFuncionario { get; set; }
 
         /// <summary>
         /// Tipo do Funcionário (Admin ou Gestor de Armazém)
         /// </summary>
+        [Display(Name = "Tipo de Funcionário")]
         public string TipoFuncionario { get; set; }
 
         /// <summary>
