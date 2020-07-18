@@ -5,11 +5,8 @@
     var Total = 0.0;
 }
 
-<h2>Index</h2>
+<h2>Carrinho de Compras</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -42,7 +39,7 @@
                 @Html.DisplayFor(modelItem => item.Product.Preco)
             </td>
             <td>
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.ID">Remover</a>
             </td>
 
 

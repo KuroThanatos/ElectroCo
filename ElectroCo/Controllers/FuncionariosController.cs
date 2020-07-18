@@ -114,7 +114,7 @@ namespace ElectroCo.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Email,Telefone,NumFuncionario,TipoFuncionario")] Funcionarios funcionarios)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Nome,Email,Telefone,NumFuncionario,TipoFuncionario")] Funcionarios funcionarios)
         {
             if (id != funcionarios.ID)
             {
