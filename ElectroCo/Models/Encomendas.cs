@@ -24,6 +24,7 @@ namespace ElectroCo.Models
         /// Estado da Encomenda (estará em aberta quando o cliente)
         /// O estado será alterado pelo Gestor de Armazém
         /// </summary>
+        
         public string EstadoEncomenda { get; set; }
 
         /// <summary>
