@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ElectroCo.Models
 {
+    /// <summary>
+    /// Representa os dados de um Item(produto) de uma 'encomenda'
+    /// </summary>
     public class DetalhesEncomenda
     {
 

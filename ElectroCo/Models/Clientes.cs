@@ -6,6 +6,9 @@ namespace ElectroCo.Models
 {
     public class Clientes
     {
+        /// <summary>
+        /// Representa os dados de um 'cliente'
+        /// </summary>
         public Clientes()
         {
             Orders = new HashSet<Encomendas>();
@@ -74,7 +77,9 @@ namespace ElectroCo.Models
         /// lista de Encomendas de um determinado cliente
         /// </summary>
         public virtual ICollection<Encomendas> Orders { get; set; }
-
+        /// <summary>
+        /// lista de Itens que estao no ShoppingCart que pertence a um cliente
+        /// </summary>
         public virtual ICollection<ShoppingCart> Cart { get; set; }
 
     }

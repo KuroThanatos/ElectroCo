@@ -7,12 +7,18 @@ using System.Threading.Tasks;
 
 namespace ElectroCo.Models
 {
+    /// <summary>
+    /// Representa um Item do 'carrinho de compras' do cliente
+    /// </summary>
     public class ShoppingCart
     {
 
         [Key]
         public int ID { get; set; }
 
+        /// <summary>
+        /// Quantidade do mesmo produto
+        /// </summary>
         public int Quantidade { get; set; }
 
         //FK para Cliente

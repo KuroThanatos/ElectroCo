@@ -16,6 +16,9 @@ namespace ElectroCo.Controllers
     [Authorize(Roles = "administrador,cliente")]
     public class ClientesController : Controller
     {
+        /// <summary>
+        /// variável que identifica a BD 
+        /// </summary>
         private readonly ApplicationDbContext _context;
 
         /// <summary>
@@ -30,14 +33,21 @@ namespace ElectroCo.Controllers
             _userManager = userManager;
         }
 
-        // GET: Clientes
+        /// <summary>
+        /// Lista os dados dos clientes
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Clientes.ToListAsync());
         }
 
-        // GET: Clientes/Details/5
+        /// <summary>
+        /// Mostra os dados de um cliente
+        /// </summary>
+        /// <param name="id">Identificador do Cliente</param>
+        /// <returns></returns>
         [Authorize(Roles = "administrador,cliente")]
         public async Task<IActionResult> Details(string id)
         {
