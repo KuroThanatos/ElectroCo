@@ -41,7 +41,7 @@
             </td>
             <td>
                 @{
-                    if (User.IsInRole("gestorArmazem"))
+                    if (User.IsInRole("gestorArmazem,administrador"))
                     {
                         <a asp-action="Concluido" asp-route-id="@item.ID">Concluido</a>
                     }

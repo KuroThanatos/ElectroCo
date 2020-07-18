@@ -296,7 +296,7 @@ namespace ElectroCo.Controllers
                 produto.Stock += stock;
                 if(produto.Stock > 0)
                 {
-                    produto.EstadoProduto = "Disponivel";
+                    produto.EstadoProduto = "Disponível";
                 }
                 _context.Update(produto);
                 await _context.SaveChangesAsync();
@@ -349,31 +349,54 @@ namespace ElectroCo.Controllers
         /// </summary>
         /// <returns></returns>
         private Dictionary<string,string[]> TipoProdutos() {
-            var product_types = new Dictionary<string, string[]>();
-            product_types.Add("armazenamento", new string[] {
+            var product_types = new Dictionary<string, string[]>
+            {
+                {
+                    "armazenamento",
+                    new string[] {
             "Adaptadores de Armazenamento", "Armazenamento Externo", "Armazenamento Interno", "Armazenamento em Cloud", "Caixas Externas e Docking",
             "Cartões de Memórias", "Leitores de Cartões", "Pen Drives",
-            });
-                    product_types.Add("componentes", new string[] {
+            }
+                },
+                {
+                    "componentes",
+                    new string[] {
                 "Caixas de Computador", "Coolers CPU", "Drives Ópticas", "Fonte de Alimentação", "Memórias RAM", "Motherboard", "Placa Gráfica",
                 "Placas de Expansão", "Placas de Som", "Processadores", "Ventoinhas",
-            });
-                    product_types.Add("computadores", new string[] {
+            }
+                },
+                {
+                    "computadores",
+                    new string[] {
                 "Acessórios Portáteis","Barebones","Desktops","Mini PCS","Notebooks","Servidores",
-            });
-                    product_types.Add("imagem e som", new string[] {
+            }
+                },
+                {
+                    "imagem e som",
+                    new string[] {
                 "Câmara","Entretenimento e Streaming","Home Audio", "Monitores", "Projeção de Imagem", "Suportes", "Televisores",
-            });
-                    product_types.Add("mobilidade", new string[] {
+            }
+                },
+                {
+                    "mobilidade",
+                    new string[] {
             "Acessórios","EBooks","Mobile Audio","Smartphones","Tablets","Wearables",
-            });
-                    product_types.Add("periféricos", new string[] {
+            }
+                },
+                {
+                    "periféricos",
+                    new string[] {
             "Conversação Web", "Design Gráfico", "Distribuição de Energia", "Gravação e Controlo de Produção", "Impressão e Consumíveis",
             "PC Audio", "Ratos / Teclados", "Simulação e Controladores Gaming",
-            });
-                    product_types.Add("redes/comunicação", new string[] {
+            }
+                },
+                {
+                    "redes/comunicação",
+                    new string[] {
             "Access Points / Repetidores", "Antenas", "Bluetooth", "Placas Rede", "Powerlines", "Routers / Modems", "Switch",
-            });
+            }
+                }
+            };
 
             return product_types;
         }

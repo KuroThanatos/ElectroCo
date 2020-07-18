@@ -5,7 +5,7 @@
 
 @if (User.IsInRole("cliente") || !User.Identity.IsAuthenticated)
 {
-    <table id="defaultTable" class="table">
+    <table id="defaultTable" class="table table-responsive">
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(model => model.Nome)</th>
@@ -46,6 +46,10 @@
                     <td>
                         <a asp-action="AdicionarCarrinho" asp-controller="Produtos" asp-route-id="@item.ID">Adicionar ao Carrinho</a>
                     </td>
+                }
+                else
+                {
+                    <td></td>
                 }
             </tr>
              }
