@@ -25,13 +25,23 @@ namespace ElectroCo.Controllers
         }
 
         // GET: DetalhesEncomendas
+        /*
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.DetalhesEncomendas.Include(d => d.Order).Include(d => d.Product);
             return View(await applicationDbContext.ToListAsync());
         }
+        */
 
-        // GET: DetalhesEncomendas/Details/5
+
+        /// <summary>
+        /// Função que retorna os dados de uma encomenda, ou seja:
+        ///         -Os dados guardados na tabela encomenda de uma encomenda (Estado da encomenda, Morada de Entrega, Morada de Faturação, ...)
+        ///         -Os produtos guardados na tabela Detalhesencomenda
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -61,6 +71,14 @@ namespace ElectroCo.Controllers
             return RedirectToAction("Index", "Clientes");
         }
 
+        /// <summary>
+        /// Função que cria os Detalhes de uma encomenda.
+        /// Começa por descobrir o id da encomenda
+        /// verifica se  Carrinho esta vazio
+        /// Se estiver Remove a encomenda
+        /// Se nao estiver itera os produtos que estao dentro do carrinho e adiciona os a BD
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Create()
         {
             var Cliente = await _context.Clientes
@@ -78,57 +96,80 @@ namespace ElectroCo.Controllers
 
                 return RedirectToAction("Index", "Produtos");
             }
-            if (VerifyStock(applicationDbContext))
+
+            try
             {
-                try
+                foreach (var item in applicationDbContext)
                 {
-                    foreach (var item in applicationDbContext)
-                    {
-                        var detalhes = new DetalhesEncomenda();
-                        detalhes.EncomendaID = idEnc;
-                        detalhes.Quantidade = item.Quantidade;
-                        detalhes.PrecoProduto = item.Product.Preco;
-                        detalhes.ProdutoID = item.Product.ID;
-                        _context.Add(detalhes);
-                        _context.Remove(item);
-
-                        var produto = await _context.Produtos.FirstOrDefaultAsync(p => p.ID == item.Product.ID);
-                        produto.Stock -= item.Quantidade;
-
-                        if (produto.Stock == 0) {
-                            produto.EstadoProduto = "Indisponível";
-                        }
-                        _context.Update(produto);
-                    }
-
-                    await _context.SaveChangesAsync();
-
-                    return RedirectToAction(nameof(Index));
+                    var detalhes = new DetalhesEncomenda();
+                    detalhes.EncomendaID = idEnc;
+                    detalhes.Quantidade = item.Quantidade;
+                    detalhes.PrecoProduto = item.Product.Preco;
+                    detalhes.ProdutoID = item.Product.ID;
+                    _context.Add(detalhes);
+                    _context.Remove(item);
                 }
-                catch
-                {
-                        return RedirectToAction("Index", "Produtos");
-                }
+
+                await _context.SaveChangesAsync();
+
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                    return RedirectToAction("Index", "Produtos");
             }
 
-            TempData["error"] = "Não existe Stock suficiente para satisfazer a Encomenda";
-            return RedirectToAction("Index","ShoppingCart");
-
+           
         }
 
-        private bool VerifyStock(IQueryable<ShoppingCart> applicationDbContext)
+        /*
+        // GET: DetalhesEncomendas/Create
+        public IActionResult Create2()
         {
-            foreach (var item in applicationDbContext)
-            {
-                var produto = _context.Produtos.FirstOrDefaultAsync(p => p.ID == item.Product.ID);
-
-                if (produto.Result.Stock - item.Quantidade < 0)
-                    return false;
-            }
-
-            return true;
+            ViewData["EncomendaID"] = new SelectList(_context.Encomendas, "ID", "ID");
+            ViewData["ProdutoID"] = new SelectList(_context.Produtos, "ID", "ID");
+            return View();
         }
 
+
+
+        // POST: DetalhesEncomendas/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create2([Bind("ID,Quantidade,PrecoProduto,EncomendaID,ProdutoID")] DetalhesEncomenda detalhesEncomenda)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(detalhesEncomenda);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["EncomendaID"] = new SelectList(_context.Encomendas, "ID", "ID", detalhesEncomenda.EncomendaID);
+            ViewData["ProdutoID"] = new SelectList(_context.Produtos, "ID", "ID", detalhesEncomenda.ProdutoID);
+            return View(detalhesEncomenda);
+        }
+
+        // GET: DetalhesEncomendas/Edit/5
+        [Authorize(Roles = "administrador")]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var detalhesEncomenda = await _context.DetalhesEncomendas.FindAsync(id);
+            if (detalhesEncomenda == null)
+            {
+                return NotFound();
+            }
+            ViewData["EncomendaID"] = new SelectList(_context.Encomendas, "ID", "ID", detalhesEncomenda.EncomendaID);
+            ViewData["ProdutoID"] = new SelectList(_context.Produtos, "ID", "ID", detalhesEncomenda.ProdutoID);
+            return View(detalhesEncomenda);
+        }
 
         // POST: DetalhesEncomendas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -167,8 +208,13 @@ namespace ElectroCo.Controllers
             ViewData["ProdutoID"] = new SelectList(_context.Produtos, "ID", "ID", detalhesEncomenda.ProdutoID);
             return View(detalhesEncomenda);
         }
+        */
 
-        // GET: DetalhesEncomendas/Delete/5
+        /// <summary>
+        /// Função para apagar um detalhe de uma encomenda 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -189,7 +235,11 @@ namespace ElectroCo.Controllers
             return View(detalhesEncomenda);
         }
 
-        // POST: DetalhesEncomendas/Delete/5
+        /// <summary>
+        /// Função para apagar um detalhe de uma encomenda 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "administrador")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
