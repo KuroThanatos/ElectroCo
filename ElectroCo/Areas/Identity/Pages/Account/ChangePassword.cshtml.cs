@@ -1,25 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Common;
 using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using ElectroCo.Data;
-using ElectroCo.Models;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using System.Security.Claims;
 
 namespace ElectroCo.Areas.Identity.Pages.Account
 {
@@ -29,18 +18,15 @@ namespace ElectroCo.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly ApplicationDbContext db;
 
         public ChangePasswordModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            ILogger<RegisterModel> logger,
-            ApplicationDbContext context)
+            ILogger<RegisterModel> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            db = context;
         }
 
         [BindProperty]
@@ -80,7 +66,7 @@ namespace ElectroCo.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
             
             if (ModelState.IsValid )
             {
@@ -88,7 +74,7 @@ namespace ElectroCo.Areas.Identity.Pages.Account
                 if (user == null)
                 {
                     TempData["error"] = "Não existe informação";
-                    return LocalRedirect("returnUrl");
+                    return LocalRedirect(returnUrl);
                 }
                 var result = await _userManager.ChangePasswordAsync(user, Input.ActualPassword, Input.Password);
 

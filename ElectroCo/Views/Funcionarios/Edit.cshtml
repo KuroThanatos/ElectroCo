@@ -4,7 +4,13 @@
     ViewData["Title"] = "Editar";
 }
 
-<h2>@ViewData["Title"]</h2>
+    <div class="row">
+        <h2>@ViewData["Title"]</h2>
+        @if (User.IsInRole("administrador"))
+        {
+            <a asp-action="Index">Lista de Funcionários</a>
+        }
+    </div>
 
 <hr />
 <div class="row">
@@ -45,10 +51,7 @@
         </form>
     </div>
 </div>
-@if (User.IsInRole("administrador"))
-{
-<a asp-action="Index">Lista de Funcionários</a>
-}
+
 
 
 @section Scripts {

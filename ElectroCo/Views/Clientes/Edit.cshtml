@@ -5,8 +5,14 @@
 }
 <form asp-action="Edit">
     <div class="form-group">
-        <h2>@ViewData["Title"]</h2>
-        <input type="submit" value="Save" class="btn btn-default" />
+        <p>
+            <h2>@ViewData["Title"]</h2>
+            @if (User.IsInRole("administrador"))
+            {
+                <a asp-action = "Index" > Lista de Clientes </a>
+            }
+        </p>
+            <input type="submit" value="Guardar" class="btn btn-default" />
     </div>
     <div class="row">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -64,12 +70,6 @@
         </div>
     </div>
 </form>
-@if (User.IsInRole("administrador"))
-{
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
-}
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

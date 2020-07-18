@@ -15,6 +15,7 @@ namespace ElectroCo.Controllers
 {
     public class EncomendasController : Controller
     {
+        #region global variables
         /// <summary>
         /// variável que identifica a BD 
         /// </summary>
@@ -23,14 +24,17 @@ namespace ElectroCo.Controllers
         /// recolhe os dados de uma pessoa que está autenticada
         /// </summary>
         private readonly UserManager<IdentityUser> _userManager;
+        #endregion
 
-
+        #region constructor
         public EncomendasController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
+        #endregion
 
+        #region actions (index, concluido)
         /// <summary>
         /// Lista as encomendas de um cliente
         /// Se for um cliente, ve as suas proprias encomendas,
@@ -83,41 +87,45 @@ namespace ElectroCo.Controllers
 
             return RedirectToAction("Index");
         }
+        #endregion
 
+        #region unused action
         /// <summary>
         /// Função que permite ver os detalhes de uma encomenda e os produtos que foram encomendados
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize]
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //[Authorize]
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var encomendas = await _context.Encomendas
-                .Include(e => e.Cliente)
-                .Include(e => e.Gestor)
-                .FirstOrDefaultAsync(m => m.ID == id);
+        //    var encomendas = await _context.Encomendas
+        //        .Include(e => e.Cliente)
+        //        .Include(e => e.Gestor)
+        //        .FirstOrDefaultAsync(m => m.ID == id);
 
-            var pro =  _context.DetalhesEncomendas.Where(m => m.EncomendaID == id);
+        //    var pro =  _context.DetalhesEncomendas.Where(m => m.EncomendaID == id);
 
 
-            if (encomendas == null)
-            {
-                return NotFound();
-            }
-            if (User.IsInRole("administrador") ||
-                encomendas.Cliente.UserId == _userManager.GetUserId(User)
-                )
-            {
-                return View(await pro.ToListAsync());
-            }
-            return RedirectToAction("Index");
-        }
+        //    if (encomendas == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    if (User.IsInRole("administrador") ||
+        //        encomendas.Cliente.UserId == _userManager.GetUserId(User)
+        //        )
+        //    {
+        //        return View(await pro.ToListAsync());
+        //    }
+        //    return RedirectToAction("Index");
+        //}
+        #endregion
 
+        #region action create
         /// <summary>
         /// Função para criar uma nova encomenda que:
         ///      -Verifica se existe o cliente que quer fazer a encomenda
@@ -225,70 +233,73 @@ namespace ElectroCo.Controllers
             }
             return View();
         }
+        #endregion
+
+        #region unused code
         /// <summary>
         /// Função para editar uma encmenda
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         // GET: Encomendas/Edit/5
-        [Authorize(Roles = "administrador")]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        // [Authorize(Roles = "administrador")]
+        // public async Task<IActionResult> Edit(int? id)
+        // {
+        //     if (id == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            var encomendas = await _context.Encomendas.FindAsync(id);
-            if (encomendas == null)
-            {
-                return NotFound();
-            }
-            ViewData["ClientID"] = new SelectList(_context.Clientes, "ID", "Name", encomendas.ClientID);
-            ViewData["GestorID"] = new SelectList(_context.Funcionarios, "ID", "Name", encomendas.GestorID);
-            return View(encomendas);
-        }
+        //     var encomendas = await _context.Encomendas.FindAsync(id);
+        //     if (encomendas == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //     ViewData["ClientID"] = new SelectList(_context.Clientes, "ID", "Name", encomendas.ClientID);
+        //     ViewData["GestorID"] = new SelectList(_context.Funcionarios, "ID", "Name", encomendas.GestorID);
+        //     return View(encomendas);
+        // }
 
-       /// <summary>
-       /// Função para editar uma encomenda
-       /// </summary>
-       /// <param name="id"></param>
-       /// <param name="encomendas"></param>
-       /// <returns></returns>
-        [Authorize(Roles = "administrador")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,EstadoEncomenda,DataEncomenda,MoradaEncomenda,MoradaFaturacao,PrevisaoEntrega,TrackID,ClientID,GestorID")] Encomendas encomendas)
-        {
-            if (id != encomendas.ID)
-            {
-                return NotFound();
-            }
+        ///// <summary>
+        ///// Função para editar uma encomenda
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <param name="encomendas"></param>
+        ///// <returns></returns>
+        // [Authorize(Roles = "administrador")]
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public async Task<IActionResult> Edit(int id, [Bind("ID,EstadoEncomenda,DataEncomenda,MoradaEncomenda,MoradaFaturacao,PrevisaoEntrega,TrackID,ClientID,GestorID")] Encomendas encomendas)
+        // {
+        //     if (id != encomendas.ID)
+        //     {
+        //         return NotFound();
+        //     }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(encomendas);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EncomendasExists(encomendas.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ClientID"] = new SelectList(_context.Clientes, "ID", "Name", encomendas.ClientID);
-            ViewData["GestorID"] = new SelectList(_context.Funcionarios, "ID", "Name", encomendas.GestorID);
-            return View(encomendas);
-        }
+        //     if (ModelState.IsValid)
+        //     {
+        //         try
+        //         {
+        //             _context.Update(encomendas);
+        //             await _context.SaveChangesAsync();
+        //         }
+        //         catch (DbUpdateConcurrencyException)
+        //         {
+        //             if (!EncomendasExists(encomendas.ID))
+        //             {
+        //                 return NotFound();
+        //             }
+        //             else
+        //             {
+        //                 throw;
+        //             }
+        //         }
+        //         return RedirectToAction(nameof(Index));
+        //     }
+        //     ViewData["ClientID"] = new SelectList(_context.Clientes, "ID", "Name", encomendas.ClientID);
+        //     ViewData["GestorID"] = new SelectList(_context.Funcionarios, "ID", "Name", encomendas.GestorID);
+        //     return View(encomendas);
+        // }
 
         /*
         [Authorize(Roles = "administrador")]
@@ -324,9 +335,10 @@ namespace ElectroCo.Controllers
         }
         */
 
-        private bool EncomendasExists(int id)
-        {
-            return _context.Encomendas.Any(e => e.ID == id);
-        }
+        //private bool EncomendasExists(int id)
+        //{
+        //    return _context.Encomendas.Any(e => e.ID == id);
+        //}
+        #endregion
     }
 }

@@ -3,56 +3,57 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Criar novo Funcionario</h2>
+<h2>Criar novo Funcionário</h2>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Nome" class="control-label"></label>
+                    <input asp-for="Nome" class="form-control" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Telefone" class="control-label"></label>
+                    <input asp-for="Telefone" class="form-control" />
+                    <span asp-validation-for="Telefone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NumFuncionario" class="control-label" />
+                    <input asp-for="NumFuncionario" class="form-control" />
+                    <span asp-validation-for="NumFuncionario" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="password" class="control-label" />
+                    <input asp-for="password" class="form-control" />
+                    <span asp-validation-for="password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="TipoFuncionario" class="control-label" />
+                    <select asp-for="TipoFuncionario" class="form-control">
+                        <option value="administrador">Administrador</option>
+                        <option value="gestorArmazem">Gestor de Armazém</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Telefone" class="control-label"></label>
-                <input asp-for="Telefone" class="form-control" />
-                <span asp-validation-for="Telefone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="password" class="control-label">Password</label>
-                <input asp-for="password" class="form-control" />
-                <span asp-validation-for="password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NumFuncionario" class="control-label">Numero de Funcionario</label>
-                <input asp-for="NumFuncionario" class="form-control" />
-                <span asp-validation-for="NumFuncionario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TipoFuncionario" class="control-label">Tipo de Funcionario</label>
-                <select asp-for="TipoFuncionario" class="form-control">
-                    <option value="administrador">administrador</option>
-                    <option value="gestorArmazem">Gestor de Armazem</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <input type="submit" value="Criar" class="btn btn-default" />
+                </div>
+</form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

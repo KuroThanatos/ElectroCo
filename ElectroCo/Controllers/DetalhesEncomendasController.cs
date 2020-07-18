@@ -1,29 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ElectroCo.Data;
 using ElectroCo.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System.Diagnostics;
 
 namespace ElectroCo.Controllers
 {
     public class DetalhesEncomendasController : Controller
     {
+        #region global variables
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        #endregion
 
+        #region constructor
         public DetalhesEncomendasController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
+        #endregion
 
+        #region unused actions
         // GET: DetalhesEncomendas
         /*
         public async Task<IActionResult> Index()
@@ -32,8 +33,9 @@ namespace ElectroCo.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
         */
+        #endregion
 
-
+        #region actions (details,create)
         /// <summary>
         /// Função que retorna os dados de uma encomenda, ou seja:
         ///         -Os dados guardados na tabela encomenda de uma encomenda (Estado da encomenda, Morada de Entrega, Morada de Faturação, ...)
@@ -134,7 +136,9 @@ namespace ElectroCo.Controllers
             return RedirectToAction("Index", "ShoppingCarts");
            
         }
+#endregion
 
+        #region private functions
         private Produtos AtualizarProduto(Produtos produtos, int quantidade)
         {
             produtos.Stock -= quantidade;
@@ -153,7 +157,9 @@ namespace ElectroCo.Controllers
             }
             return true;
         }
+        #endregion
 
+        #region commented controllers
         /*
         // GET: DetalhesEncomendas/Create
         public IActionResult Create2()
@@ -246,45 +252,47 @@ namespace ElectroCo.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize(Roles = "administrador")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //[Authorize(Roles = "administrador")]
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var detalhesEncomenda = await _context.DetalhesEncomendas
-                .Include(d => d.Order)
-                .Include(d => d.Product)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (detalhesEncomenda == null)
-            {
-                return NotFound();
-            }
+        //    var detalhesEncomenda = await _context.DetalhesEncomendas
+        //        .Include(d => d.Order)
+        //        .Include(d => d.Product)
+        //        .FirstOrDefaultAsync(m => m.ID == id);
+        //    if (detalhesEncomenda == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(detalhesEncomenda);
-        }
+        //    return View(detalhesEncomenda);
+        //}
 
-        /// <summary>
-        /// Função para apagar um detalhe de uma encomenda 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [Authorize(Roles = "administrador")]
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var detalhesEncomenda = await _context.DetalhesEncomendas.FindAsync(id);
-            _context.DetalhesEncomendas.Remove(detalhesEncomenda);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        ///// <summary>
+        ///// Função para apagar um detalhe de uma encomenda 
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <returns></returns>
+        //[Authorize(Roles = "administrador")]
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var detalhesEncomenda = await _context.DetalhesEncomendas.FindAsync(id);
+        //    _context.DetalhesEncomendas.Remove(detalhesEncomenda);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
-        private bool DetalhesEncomendaExists(int id)
-        {
-            return _context.DetalhesEncomendas.Any(e => e.ID == id);
-        }
+
+        //private bool DetalhesEncomendaExists(int id)
+        //{
+        //    return _context.DetalhesEncomendas.Any(e => e.ID == id);
+        //}
+        #endregion
     }
 }

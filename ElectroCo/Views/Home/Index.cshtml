@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<ElectroCo.Models.Produtos>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Produtos";
 }
 
 @if (User.IsInRole("cliente") || !User.Identity.IsAuthenticated)
@@ -56,11 +56,4 @@
             </tbody>
     </table>
 
-}
-else
-{
-    <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    </div>
 }

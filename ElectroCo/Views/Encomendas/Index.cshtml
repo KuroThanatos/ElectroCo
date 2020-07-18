@@ -1,10 +1,17 @@
 ﻿@model IEnumerable<ElectroCo.Models.Encomendas>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Encomendas";
+}
+@if (User.IsInRole("cliente"))
+{
+    <h1>As suas Encomendas</h1>
+}
+else
+{
+    <h1>@ViewData["Title"]</h1>
 }
 
-<h1>As suas Encomendas</h1>
 
 <table id="defaultTable" class="table">
     <thead>
@@ -25,34 +32,35 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EstadoEncomenda)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataEncomenda)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrevisaoEntrega)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrackID)
-            </td>
-            <td>
-                @{
-                    if (User.IsInRole("gestorArmazem,administrador"))
-                    {
-                        <a asp-action="Concluido" asp-route-id="@item.ID">Concluido</a>
-                    }
-                    else
-                    {
-                        <a asp-controller="DetalhesEncomendas" asp-action="Details" asp-route-id="@item.ID">Ver Encomenda </a>
-                    }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EstadoEncomenda)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataEncomenda)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrevisaoEntrega)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrackID)
+                </td>
+                <td>
+                    @{
+                        if (User.IsInRole("gestorArmazem,administrador"))
+                        {
+                            <a asp-action="Concluido" asp-route-id="@item.ID">Concluido</a>
+                        }
+                        else
+                        {
+                            <a asp-controller="DetalhesEncomendas" asp-action="Details" asp-route-id="@item.ID">Ver Encomenda </a>
+                        }
 
-                }
-            </td>
-        </tr>
-}
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

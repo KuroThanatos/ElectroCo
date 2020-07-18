@@ -32,6 +32,7 @@ namespace ElectroCo.Models
 
         [ForeignKey(nameof(Product))]
         public int ProdutoID { get; set; }// ShoppingCart ---> Produto
+        [Display(Name = "Produto")]
         public virtual Produtos Product { get; set; }
     }
 }

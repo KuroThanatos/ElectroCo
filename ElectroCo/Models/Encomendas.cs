@@ -42,7 +42,7 @@ namespace ElectroCo.Models
         /// <summary>
         /// Morada para onde será faturada a encomenda
         /// </summary>
-        [Display(Name = "Morada de Faturção")]
+        [Display(Name = "Morada de Faturação")]
         public string MoradaFaturacao { get; set; }
 
         /// <summary>
