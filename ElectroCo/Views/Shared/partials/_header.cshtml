@@ -1,78 +1,22 @@
-﻿@{
-    var product_types = new Dictionary<string, string[]>();
-    product_types.Add("armazenamento", new string[] {
-    "Adaptadores de Armazenamento", "Armazenamento Externo", "Armazenamento Interno", "Armazenamento em Cloud", "Caixas Externas e Docking",
-    "Cartões de Memórias", "Leitores de Cartões", "Pen Drives",
-    });
-    product_types.Add("componentes", new string[] {
-        "Caixas de Computador", "Coolers CPU", "Drives Ópticas", "Fonte de Alimentação", "Memórias RAM", "Motherboard", "Placa Gráfica",
-        "Placas de Expansão", "Placas de Som", "Processadores", "Ventoinhas",
-    });
-    product_types.Add("computadores", new string[] {
-        "Acessórios Portáteis","Barebones","Desktops","Mini PCS","Notebooks","Servidores",
-    });
-    product_types.Add("imagem e som", new string[] {
-        "Câmara","Entretenimento e Streaming","Home Audio", "Monitores", "Projeção de Imagem", "Suportes", "Televisores",
-    });
-    product_types.Add("mobilidade", new string[] {
-    "Acessórios","EBooks","Mobile Audio","Smartphones","Tablets","Wearables",
-    });
-    product_types.Add("periféricos", new string[] {
-    "Conversação Web", "Design Gráfico", "Distribuição de Energia", "Gravação e Controlo de Produção", "Impressão e Consumíveis",
-    "PC Audio", "Ratos / Teclados", "Simulação e Controladores Gaming",
-    });
-    product_types.Add("redes/comunicação", new string[] {
-    "Access Points / Repetidores", "Antenas", "Bluetooth", "Placas Rede", "Powerlines", "Routers / Modems", "Switch",
-    });
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <div class="client-menu">
+        @if (User.IsInRole("gestorArmazem"))
+        {
+            <ul class="nav nav-tabs">
+                <li class="nav-item text-light"><a class="nav-link" asp-action="Index" asp-controller="Produtos">Inventário</a></li>
+                <li class="nav-item text-light"><a class="nav-link" asp-action="Index" asp-controller="Encomendas">Encomendas</a></li>
+            </ul>
+        }
+        else
+        {
+            <ul class="nav nav-tabs">
+                <li class="nav-item text-light"><a class="nav-link" asp-action="Index" asp-controller="Produtos">Produtos</a></li>
+                <li class="nav-item text-light"><a class="nav-link" asp-action="Index" asp-controller="Funcionários">Funcionários</a></li>
+                <li class="nav-item text-light"><a class="nav-link" asp-action="Index" asp-controller="Encomendas">Encomendas</a></li>
+            </ul>
+        }
 
+
+    </div>
 }
-<div class="client-menu">
-    @if (User.IsInRole("cliente") || !User.Identity.IsAuthenticated)
-    {
-
-    <div class="dropdown">
-        <a class="nav-item dropdown-toggle" data-toggle="dropdown">
-            Categorias
-        </a>
-        <ul class="dropdown-menu">
-            @foreach (var key in product_types.Keys)
-            {
-                <li class="dropdown-submenu">
-                    <a class="dropright">@key.ToUpper()</a>
-                    <ul class="dropdown-menu">
-                        @foreach (var types in product_types[key])
-                        {
-                            <li>
-                                <a tabindex="-1" class="text-light">@types.ToUpper() </a>
-                            </li>
-
-                        }
-                    </ul>
-                </li>
-            }
-        </ul>
-    </div>
-
-
-
-    }
-    else if (User.IsInRole("gestorArmazem"))
-    {
-        <ul class="nav nav-tabs">
-            <li class="nav-item text-light"><a class="nav-link">Inventário</a></li>
-            <li class="nav-item text-light"><a class="nav-link" asp-action="Index" asp-controller="Encomendas">Encomendas</a></li>
-        </ul>
-
-
-    }
-    else
-    {
-        <ul class="nav nav-tabs">
-            <li class="nav-item text-light"><a class="nav-link" asp-action="Index" asp-controller="Produtos">Produtos</a></li>
-            <li class="nav-item text-light"><a class="nav-link" asp-action="Index" asp-controller="Funcionários">Funcionários</a></li>
-            <li class="nav-item text-light"><a class="nav-link" asp-action="Index" asp-controller="Encomendas">Encomendas</a></li>
-        </ul>
-    }
-
-
-    </div>

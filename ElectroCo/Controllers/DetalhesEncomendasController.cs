@@ -96,31 +96,59 @@ namespace ElectroCo.Controllers
 
                 return RedirectToAction("Index", "Produtos");
             }
-
-            try
+            if (VerificaEncomenda(applicationDbContext)) 
             {
-                foreach (var item in applicationDbContext)
+                try
                 {
-                    var detalhes = new DetalhesEncomenda();
-                    detalhes.EncomendaID = idEnc;
-                    detalhes.Quantidade = item.Quantidade;
-                    detalhes.PrecoProduto = item.Product.Preco;
-                    detalhes.ProdutoID = item.Product.ID;
-                    _context.Add(detalhes);
-                    _context.Remove(item);
+                    foreach (var item in applicationDbContext)
+                    {
+                        var detalhes = new DetalhesEncomenda
+                        {
+                            EncomendaID = idEnc,
+                            Quantidade = item.Quantidade,
+                            PrecoProduto = item.Product.Preco,
+                            ProdutoID = item.Product.ID
+                        };
+                        var produtoAtualizado = _context.Produtos.Find(detalhes.ProdutoID);
+                        produtoAtualizado = AtualizarProduto(produtoAtualizado, item.Quantidade);
+                        _context.Add(detalhes);
+                        _context.Remove(item);
+                        _context.Update(produtoAtualizado);
+                    }
+
+                    await _context.SaveChangesAsync();
+
+
+                    return RedirectToAction("Index", "Encomendas");
                 }
-
-                await _context.SaveChangesAsync();
-
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                    return RedirectToAction("Index", "Produtos");
+                catch
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
 
+            TempData["error"] = "Não é possível satisfazer a encomenda devido a insuficiência de stock";
+            return RedirectToAction("Index", "ShoppingCarts");
            
+        }
+
+        private Produtos AtualizarProduto(Produtos produtos, int quantidade)
+        {
+            produtos.Stock -= quantidade;
+            if (produtos.Stock == 0) {
+                produtos.EstadoProduto = "Indisponível";
+            }
+            return produtos;
+        }
+
+        private bool VerificaEncomenda(IQueryable<ShoppingCart> applicationDbContext)
+        {
+            foreach (var item in applicationDbContext) {
+                var produto = _context.Produtos.Find(item.ProdutoID);
+                if (produto.Stock < item.Quantidade)
+                    return false;
+            }
+            return true;
         }
 
         /*

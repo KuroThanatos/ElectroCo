@@ -79,6 +79,7 @@ namespace ElectroCo.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize(Roles = "cliente")]
         public async Task<IActionResult> AdicionarCarrinho(int? id)
         {
             if (id == null)
@@ -106,12 +107,19 @@ namespace ElectroCo.Controllers
 
             try
             {
-                //Se ja esta adicionar +1  a quantidade
-                if(shoppingProduto != null){
-                    shoppingProduto.Quantidade = shoppingProduto.Quantidade + 1;
-                    _context.Update(shoppingProduto);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                
+                //Se ja esta adicionar +1  a quantidade e retirar ao stock
+                if (shoppingProduto != null) { 
+                    shoppingProduto.Quantidade += 1;
+                    if (shoppingProduto.Quantidade <= ProdutoExiste.Stock)
+                    {
+                        _context.Update(shoppingProduto);
+                        await _context.SaveChangesAsync();
+                    }
+                    else {
+                        TempData["error"] = "Não pode adicionar mais do que o Stock existente";
+                    }
+                    return RedirectToAction("Index","Home");
                 }
                 //Se nao existe, adiciona o Produto ao carrinho.
                 shopppingCart.ClientID = Cliente.ID;
@@ -122,7 +130,7 @@ namespace ElectroCo.Controllers
                 await _context.SaveChangesAsync();
 
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index","Home");
             }
             catch (Exception)
             {
