@@ -5,6 +5,9 @@ namespace ElectroCo.Models
 {
     public class Produtos
     {
+        /// <summary>
+        /// Representa os dados de um 'produto'
+        /// </summary>
         public Produtos()
         {
             Orders = new HashSet<DetalhesEncomenda>();
@@ -43,8 +46,14 @@ namespace ElectroCo.Models
         /// Imagem do Produto
         /// </summary>
         public string Imagem { get; set; }
-
+        /// <summary>
+        /// lista de Encomendas de detalhesEncomendas 
+        /// </summary>
         public virtual ICollection<DetalhesEncomenda> Orders { get; set; }
+
+        /// <summary>
+        /// lista de Encomendas de ShoppingCarts ao qual este pertence 
+        /// </summary>
         public virtual ICollection<ShoppingCart> Cart { get; set; }
 
     }

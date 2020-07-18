@@ -7,6 +7,9 @@ namespace ElectroCo.Models
 {
     public class Funcionarios
     {
+        /// <summary>
+        /// Representa os dados de um 'Funcionario'
+        /// </summary>
         public Funcionarios()
         {
             Orders = new HashSet<Encomendas>();
@@ -15,6 +18,9 @@ namespace ElectroCo.Models
         [Key]
         public int ID { get; set; }
 
+        /// <summary>
+        /// Nome do Cliente
+        /// </summary>
         [Required(ErrorMessage = "O Nome é de preenchimento obrigatório")]
         public string Nome { get; set; }
 

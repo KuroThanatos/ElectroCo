@@ -9,6 +9,9 @@ namespace ElectroCo.Models
 {
     public class Encomendas
     {
+        /// <summary>
+        /// Representa os dados de uma 'Encomenda'
+        /// </summary>
         public Encomendas()
         {
             Orders = new HashSet<DetalhesEncomenda>();

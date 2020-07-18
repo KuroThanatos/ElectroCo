@@ -18,8 +18,18 @@ namespace ElectroCo.Controllers
 {
     public class ProdutosController : Controller
     {
+        /// <summary>
+        /// variável que identifica a BD 
+        /// </summary>
         private readonly ApplicationDbContext _context;
+        /// <summary>
+        /// recolher os dados de uma pessoa que está autenticada
+        /// </summary>
         private readonly UserManager<IdentityUser> _userManager;
+        /// <summary>
+        /// variável que contém os dados do 'ambiente' do servidor. 
+        /// Em particular, onde estão os ficheiros guardados, no disco rígido do servidor
+        /// </summary>
         private readonly IWebHostEnvironment _caminho;
 
         public ProdutosController(ApplicationDbContext context, UserManager<IdentityUser> userManager, IWebHostEnvironment caminho)
@@ -29,13 +39,20 @@ namespace ElectroCo.Controllers
             _caminho = caminho;
         }
 
-        // GET: Produtos
+        /// <summary>
+        /// Lista os Produtos
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _context.Produtos.ToListAsync());
         }
 
-        // GET: Produtos/Details/5
+       /// <summary>
+       /// Mostra os detalhes de um Produto, se este existir.
+       /// </summary>
+       /// <param name="id"></param>
+       /// <returns></returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -52,7 +69,16 @@ namespace ElectroCo.Controllers
 
             return View(produtos);
         }
-
+        /// <summary>
+        /// Função que adiciona um Produto ao Carrinho de Compras.
+        ///     -Verifica se o produto existe;
+        ///     -verifica se o produto ja esta no carrinho:
+        ///         -Se sim, adiciona +1 a quantidade.
+        ///         -Se não, adiciona o produto ao Carrinho de compras
+        /// No final redireciona para a Lista de Produtos
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> AdicionarCarrinho(int? id)
         {
             if (id == null)
@@ -66,27 +92,28 @@ namespace ElectroCo.Controllers
             {
                 return NotFound();
             }
-
+            
             var ProdutoExiste = await _context.Produtos.FirstOrDefaultAsync(m => m.ID == id);
 
             if (ProdutoExiste == null)
             {
                 return NotFound();
             }
-
+            //verificar se o produto existe no Carrinho de compras
             var shopppingCart = new ShoppingCart();
             var shoppingProduto = await _context.ShoppingCart
                .FirstOrDefaultAsync(m => m.ProdutoID.Equals(id) && m.ClientID.Equals(Cliente.ID));
 
             try
             {
+                //Se ja esta adicionar +1  a quantidade
                 if(shoppingProduto != null){
                     shoppingProduto.Quantidade = shoppingProduto.Quantidade + 1;
                     _context.Update(shoppingProduto);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-
+                //Se nao existe, adiciona o Produto ao carrinho.
                 shopppingCart.ClientID = Cliente.ID;
                 shopppingCart.ProdutoID = (int)id;
                 shopppingCart.Quantidade = 1;
@@ -104,7 +131,10 @@ namespace ElectroCo.Controllers
 
         }
 
-        // GET: Produtos/Create
+        /// <summary>
+        /// Retorna a View create com uma ViewBag com os Tipos de Produtos.
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "administrador")]
         public IActionResult Create()
         {
@@ -112,9 +142,14 @@ namespace ElectroCo.Controllers
             return View();
         }
 
-        // POST: Produtos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Funçao que cria um produto.
+        /// Começa por verificar, se a imagem existe e se esta correta.
+        /// Se esta tiver bem, e se todas as caracteristicas do produto tiverem corretas, este adiciona o produto a base de dados.
+        /// </summary>
+        /// <param name="produtos"></param>
+        /// <param name="proImg"></param>
+        /// <returns></returns>
         [Authorize(Roles = "administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -124,19 +159,19 @@ namespace ElectroCo.Controllers
 
             bool img = false;
 
+            //verifica se a imagem existe
             if (proImg == null)
             {
                 produtos.Imagem = "no.png";
 
-                Trace.WriteLine("Nao");
             }
             else
             {
-                Trace.WriteLine(proImg.ContentType);
+                //verifica se o tipo da imagem e o correto
                 if (proImg.ContentType == "image/jpeg" || proImg.ContentType == "image/png")
                 {
+                    // cria o um novo id unico para nome da imagem
                     Guid g;
-
                     g = Guid.NewGuid();
 
                     string extensao = Path.GetExtension(proImg.FileName).ToLower();
@@ -151,7 +186,6 @@ namespace ElectroCo.Controllers
                 else
                 {
                     produtos.Imagem = "no.png";
-                    Trace.WriteLine("Nao2");
                 }
             }
 
@@ -164,6 +198,7 @@ namespace ElectroCo.Controllers
                     await _context.SaveChangesAsync();
                     if (img)
                     {
+                        //guardar a imagem na Pasta Imagens/Produtos
                         using var stream = new FileStream(caminhoCompleto, FileMode.Create);
                         await proImg.CopyToAsync(stream);
                     }
@@ -198,9 +233,12 @@ namespace ElectroCo.Controllers
             return View(produtos);
         }
 
-        // POST: Produtos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Funçao para editar um produto
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="produtos"></param>
+        /// <returns></returns>
         [Authorize(Roles = "administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -233,8 +271,9 @@ namespace ElectroCo.Controllers
             }
             return View(produtos);
         }
-
+       
         // GET: Produtos/Delete/5
+        /*
         [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -264,7 +303,13 @@ namespace ElectroCo.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        */
 
+
+    /// <summary>
+    /// Função que cria um dicionario, para as categorias de um produto.
+    /// </summary>
+    /// <returns></returns>
         private Dictionary<string,string[]> TipoProdutos() {
             var product_types = new Dictionary<string, string[]>();
             product_types.Add("armazenamento", new string[] {

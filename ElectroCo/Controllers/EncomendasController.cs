@@ -15,8 +15,15 @@ namespace ElectroCo.Controllers
 {
     public class EncomendasController : Controller
     {
+        /// <summary>
+        /// variável que identifica a BD 
+        /// </summary>
         private readonly ApplicationDbContext _context;
+        /// <summary>
+        /// recolhe os dados de uma pessoa que está autenticada
+        /// </summary>
         private readonly UserManager<IdentityUser> _userManager;
+
 
         public EncomendasController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
@@ -24,7 +31,13 @@ namespace ElectroCo.Controllers
             _userManager = userManager;
         }
 
-        // GET: Encomendas
+        /// <summary>
+        /// Lista as encomendas de um cliente
+        /// Se for um cliente, ve as suas proprias encomendas,
+        /// Se for um administrador,  ve todas as encomendas
+        /// Se for um Gestor de Armazem, ve as encomendas a satisfazer
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             var Funcionario = await _context.Funcionarios
@@ -48,7 +61,11 @@ namespace ElectroCo.Controllers
             return View(await applicationDbContext.ToListAsync());
 
         }
-
+         /// <summary>
+         /// Função que permite a um gestor de armazem dar por concluida uma encomenda.
+         /// </summary>
+         /// <param name="id"></param>
+         /// <returns></returns>
         public async Task<IActionResult> Concluido(int? id)
         {
             if(id == null)
@@ -65,7 +82,11 @@ namespace ElectroCo.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Encomendas/Details/5
+        /// <summary>
+        /// Função que permite ver os detalhes de uma encomenda e os produtos que foram encomendados
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -94,7 +115,12 @@ namespace ElectroCo.Controllers
             return RedirectToAction("Index", "Clientes");
         }
 
-        // GET: Encomendas/Create
+       /// <summary>
+       /// Função para criar uma nova encomenda que:
+       ///      -Verifica se existe o cliente que quer fazer a encomenda
+       ///      -Verfica se existem Itens(Produtos) no Carrinho de Compras
+       /// </summary>
+       /// <returns></returns>
         public  IActionResult Create()
         {
             var Cliente =  _context.Clientes.FirstOrDefault(m => m.UserId == _userManager.GetUserId(User));
@@ -116,9 +142,11 @@ namespace ElectroCo.Controllers
             return View();
         }
 
-        // POST: Encomendas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="encomendas"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,MoradaEncomenda,MoradaFaturacao,")] Encomendas encomendas)
