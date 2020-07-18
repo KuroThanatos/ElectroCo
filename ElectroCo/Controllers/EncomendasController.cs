@@ -143,7 +143,15 @@ namespace ElectroCo.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Função que cria a encomenda e que faz maior parte das verificações
+        ///         -Primeiro escolhe um funcionario para fazer o tratamento da encomenda
+        ///         -Depois verifica se a morada de Faturação e de envio estao vazias:
+        ///                 -Se sim, usa a morada guardada no Cliente
+        ///                 -Se nao, usa a morada fornecida
+        ///         De seguida descobre o dia de hoje que sera o dia da criaçao da encomenda.
+        ///         A seguir descobre um dia para a encomenda ser entregue:
+        ///                 -Normalmente são 2 dias a seguir a encomenda ter sido criada.
+        ///                 -Se os 2 dias a mais calhar num dia de fim-de-semana soma-se 4 em vez de 2
         /// </summary>
         /// <param name="encomendas"></param>
         /// <returns></returns>
@@ -211,7 +219,11 @@ namespace ElectroCo.Controllers
             }
             return View();
         }
-
+        /// <summary>
+        /// Função para editar uma encmenda
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: Encomendas/Edit/5
         [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Edit(int? id)
@@ -231,9 +243,12 @@ namespace ElectroCo.Controllers
             return View(encomendas);
         }
 
-        // POST: Encomendas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       /// <summary>
+       /// Função para editar uma encomenda
+       /// </summary>
+       /// <param name="id"></param>
+       /// <param name="encomendas"></param>
+       /// <returns></returns>
         [Authorize(Roles = "administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -269,7 +284,7 @@ namespace ElectroCo.Controllers
             return View(encomendas);
         }
 
-        // GET: Encomendas/Delete/5
+        /*
         [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -301,6 +316,7 @@ namespace ElectroCo.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        */
 
         private bool EncomendasExists(int id)
         {

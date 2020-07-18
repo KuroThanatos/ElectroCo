@@ -25,13 +25,23 @@ namespace ElectroCo.Controllers
         }
 
         // GET: DetalhesEncomendas
+        /*
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.DetalhesEncomendas.Include(d => d.Order).Include(d => d.Product);
             return View(await applicationDbContext.ToListAsync());
         }
+        */
 
-        // GET: DetalhesEncomendas/Details/5
+
+        /// <summary>
+        /// Função que retorna os dados de uma encomenda, ou seja:
+        ///         -Os dados guardados na tabela encomenda de uma encomenda (Estado da encomenda, Morada de Entrega, Morada de Faturação, ...)
+        ///         -Os produtos guardados na tabela Detalhesencomenda
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -61,6 +71,14 @@ namespace ElectroCo.Controllers
             return RedirectToAction("Index", "Clientes");
         }
 
+        /// <summary>
+        /// Função que cria os Detalhes de uma encomenda.
+        /// Começa por descobrir o id da encomenda
+        /// verifica se  Carrinho esta vazio
+        /// Se estiver Remove a encomenda
+        /// Se nao estiver itera os produtos que estao dentro do carrinho e adiciona os a BD
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Create()
         {
             var Cliente = await _context.Clientes
@@ -105,7 +123,7 @@ namespace ElectroCo.Controllers
            
         }
 
-
+        /*
         // GET: DetalhesEncomendas/Create
         public IActionResult Create2()
         {
@@ -190,8 +208,13 @@ namespace ElectroCo.Controllers
             ViewData["ProdutoID"] = new SelectList(_context.Produtos, "ID", "ID", detalhesEncomenda.ProdutoID);
             return View(detalhesEncomenda);
         }
+        */
 
-        // GET: DetalhesEncomendas/Delete/5
+        /// <summary>
+        /// Função para apagar um detalhe de uma encomenda 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -212,7 +235,11 @@ namespace ElectroCo.Controllers
             return View(detalhesEncomenda);
         }
 
-        // POST: DetalhesEncomendas/Delete/5
+        /// <summary>
+        /// Função para apagar um detalhe de uma encomenda 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "administrador")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
