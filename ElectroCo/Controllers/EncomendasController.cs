@@ -209,10 +209,8 @@ namespace ElectroCo.Controllers
                     
                     _context.Add(encomendas);
                     await _context.SaveChangesAsync();
-
-                    var encomenda = _context.Encomendas.Last(e => e.ClientID == Cliente.ID);
                     
-                    return RedirectToAction("Create", "DetalhesEncomendas",encomenda.ID);
+                    return RedirectToAction("Create", "DetalhesEncomendas");
                 }
                 catch (Exception)
                 {

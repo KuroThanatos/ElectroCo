@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ElectroCo.Data;
 using ElectroCo.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ElectroCo.Controllers
 {
@@ -49,6 +50,7 @@ namespace ElectroCo.Controllers
         /// Se não houver, manda listar os Produtos
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles ="cliente")]
         public async Task<IActionResult> Encomendar()
         {
             var Cliente = await _context.Clientes
@@ -58,7 +60,7 @@ namespace ElectroCo.Controllers
             {
                 return RedirectToAction("Create", "Encomendas");
             }
-            return RedirectToAction("Index", "Produtos");
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: ShoppingCarts/Details/5

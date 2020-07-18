@@ -9,6 +9,10 @@
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                <th>@Html.DisplayNameFor(model => model.Tipo)</th>
+                <th>@Html.DisplayNameFor(model => model.Preco)</th>
+                <th>@Html.DisplayNameFor(model => model.Stock)</th>
+                <th>@Html.DisplayNameFor(model => model.EstadoProduto)</th>
                 <th></th>
                 @if (User.IsInRole("cliente")){
                     <th></th>
@@ -23,15 +27,27 @@
                     @Html.DisplayFor(modelItem => item.Nome)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Tipo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Preco)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stock)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EstadoProduto)
+                </td>
+                <td>
                     <img src="~/Imagens/produtos/@item.Imagem" height="60" alt="imagem do produto @item.Nome" title="@item.Nome" />
                 </td>
-                @if (User.IsInRole("cliente"))
+                @if (User.IsInRole("cliente") && item.EstadoProduto == "Disponível")
                 {
                     <td>
                         <a asp-action="AdicionarCarrinho" asp-controller="Produtos" asp-route-id="@item.ID">Adicionar ao Carrinho</a>
                     </td>
                 }
-                </tr>
+            </tr>
              }
             </tbody>
     </table>
