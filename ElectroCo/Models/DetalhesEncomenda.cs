@@ -19,11 +19,13 @@ namespace ElectroCo.Models
         /// <summary>
         /// Quantidade do produto
         /// </summary>
+        [Display(Name = "Quantidade")]
         public int Quantidade { get; set; }
 
         /// <summary>
         /// Preço total do Produto
         /// </summary>
+        [Display(Name = "Preço do Produto")]
         [DataType(DataType.Currency)]
         public float PrecoProduto { get; set; }
 

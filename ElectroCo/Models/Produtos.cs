@@ -30,6 +30,7 @@ namespace ElectroCo.Models
         /// </summary>
 
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+        [Display(Name = "Tipo")]
         public string Tipo { get; set; }
 
         /// <summary>
@@ -37,19 +38,22 @@ namespace ElectroCo.Models
         /// </summary>
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
         [DataType(DataType.Currency)]
-        [DisplayFormat(DataFormatString = "{0:C}")] 
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        [Display(Name = "Preço")]
         public float Preco { get; set; }
 
         /// <summary>
         /// Quantidade Disponível do Produto
         /// </summary>
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+        [Display(Name = "Stock")]
         public int Stock { get; set; }
 
         /// <summary>
         /// Estado do Produto (ex: Disponível, Indisponível, ...)
         /// </summary>
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+        [Display(Name = "Estado do produto")]
         public string EstadoProduto { get; set; }
 
         /// <summary>
