@@ -78,80 +78,57 @@ namespace ElectroCo.Controllers
 
                 return RedirectToAction("Index", "Produtos");
             }
-
-            try
+            if (VerifyStock(applicationDbContext))
             {
-                foreach (var item in applicationDbContext)
+                try
                 {
-                    var detalhes = new DetalhesEncomenda();
-                    detalhes.EncomendaID = idEnc;
-                    detalhes.Quantidade = item.Quantidade;
-                    detalhes.PrecoProduto = item.Product.Preco;
-                    detalhes.ProdutoID = item.Product.ID;
-                    _context.Add(detalhes);
-                    _context.Remove(item);
+                    foreach (var item in applicationDbContext)
+                    {
+                        var detalhes = new DetalhesEncomenda();
+                        detalhes.EncomendaID = idEnc;
+                        detalhes.Quantidade = item.Quantidade;
+                        detalhes.PrecoProduto = item.Product.Preco;
+                        detalhes.ProdutoID = item.Product.ID;
+                        _context.Add(detalhes);
+                        _context.Remove(item);
+
+                        var produto = await _context.Produtos.FirstOrDefaultAsync(p => p.ID == item.Product.ID);
+                        produto.Stock -= item.Quantidade;
+
+                        if (produto.Stock == 0) {
+                            produto.EstadoProduto = "Indisponível";
+                        }
+                        _context.Update(produto);
+                    }
+
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index));
                 }
-
-                await _context.SaveChangesAsync();
-
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                    return RedirectToAction("Index", "Produtos");
+                catch
+                {
+                        return RedirectToAction("Index", "Produtos");
+                }
             }
 
-           
+            TempData["error"] = "Não existe Stock suficiente para satisfazer a Encomenda";
+            return RedirectToAction("Index","ShoppingCart");
+
         }
 
-
-        // GET: DetalhesEncomendas/Create
-        public IActionResult Create2()
+        private bool VerifyStock(IQueryable<ShoppingCart> applicationDbContext)
         {
-            ViewData["EncomendaID"] = new SelectList(_context.Encomendas, "ID", "ID");
-            ViewData["ProdutoID"] = new SelectList(_context.Produtos, "ID", "ID");
-            return View();
-        }
-
-
-
-        // POST: DetalhesEncomendas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create2([Bind("ID,Quantidade,PrecoProduto,EncomendaID,ProdutoID")] DetalhesEncomenda detalhesEncomenda)
-        {
-            if (ModelState.IsValid)
+            foreach (var item in applicationDbContext)
             {
-                _context.Add(detalhesEncomenda);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["EncomendaID"] = new SelectList(_context.Encomendas, "ID", "ID", detalhesEncomenda.EncomendaID);
-            ViewData["ProdutoID"] = new SelectList(_context.Produtos, "ID", "ID", detalhesEncomenda.ProdutoID);
-            return View(detalhesEncomenda);
-        }
+                var produto = _context.Produtos.FirstOrDefaultAsync(p => p.ID == item.Product.ID);
 
-        // GET: DetalhesEncomendas/Edit/5
-        [Authorize(Roles = "administrador")]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
+                if (produto.Result.Stock - item.Quantidade < 0)
+                    return false;
             }
 
-            var detalhesEncomenda = await _context.DetalhesEncomendas.FindAsync(id);
-            if (detalhesEncomenda == null)
-            {
-                return NotFound();
-            }
-            ViewData["EncomendaID"] = new SelectList(_context.Encomendas, "ID", "ID", detalhesEncomenda.EncomendaID);
-            ViewData["ProdutoID"] = new SelectList(_context.Produtos, "ID", "ID", detalhesEncomenda.ProdutoID);
-            return View(detalhesEncomenda);
+            return true;
         }
+
 
         // POST: DetalhesEncomendas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 

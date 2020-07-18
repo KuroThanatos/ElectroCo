@@ -13,10 +13,6 @@ $('.dropdown-submenu a.dropright').on("mouseover", function (e) {
     e.preventDefault();
 });
 
-
-
-
-
 $(document).ready(function () {
-    $('#dtBasicExample').DataTable();
+    $('#defaultTable').DataTable();
 });

@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table id="defaultTable" class="table">
     <thead>
         <tr>
             <th>
@@ -49,9 +49,9 @@
                 @Html.DisplayFor(modelItem => item.TipoFuncionario)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Apagar</a>
             </td>
         </tr>
 }

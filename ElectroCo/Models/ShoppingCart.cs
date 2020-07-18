@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ElectroCo.Helpers;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace ElectroCo.Models
 {
@@ -19,6 +22,7 @@ namespace ElectroCo.Models
         /// <summary>
         /// Quantidade do mesmo produto
         /// </summary>
+        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
         public int Quantidade { get; set; }
 
         //FK para Cliente

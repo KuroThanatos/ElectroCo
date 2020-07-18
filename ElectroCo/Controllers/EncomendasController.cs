@@ -183,10 +183,11 @@ namespace ElectroCo.Controllers
                 }
                 try
                 {
+                    Guid g = Guid.NewGuid();
                     DateTime date = DateTime.Now;
                     var week = date.DayOfWeek.ToString();
                     encomendas.ClientID = Cliente.ID;
-                    encomendas.TrackID = "AdcWERewff12oo98";
+                    encomendas.TrackID = g.ToString();
                     encomendas.EstadoEncomenda = "Em processamento";
                     encomendas.DataEncomenda = date;
                     if(week == "Thursday" || week == "Friday")
@@ -201,7 +202,9 @@ namespace ElectroCo.Controllers
                     _context.Add(encomendas);
                     await _context.SaveChangesAsync();
 
-                    return RedirectToAction("Create", "DetalhesEncomendas");
+                    var encomenda = _context.Encomendas.Last(e => e.ClientID == Cliente.ID);
+                    
+                    return RedirectToAction("Create", "DetalhesEncomendas",encomenda.ID);
                 }
                 catch (Exception)
                 {
