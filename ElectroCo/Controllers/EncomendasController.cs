@@ -38,6 +38,7 @@ namespace ElectroCo.Controllers
         /// Se for um Gestor de Armazem, ve as encomendas a satisfazer
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "administrador,gestorArmazem,cliente")]
         public async Task<IActionResult> Index()
         {
             var Funcionario = await _context.Funcionarios
@@ -61,11 +62,12 @@ namespace ElectroCo.Controllers
             return View(await applicationDbContext.ToListAsync());
 
         }
-         /// <summary>
-         /// Função que permite a um gestor de armazem dar por concluida uma encomenda.
-         /// </summary>
-         /// <param name="id"></param>
-         /// <returns></returns>
+        /// <summary>
+        /// Função que permite a um gestor de armazem dar por concluida uma encomenda.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize(Roles = "administrador,gestorArmazem")]
         public async Task<IActionResult> Concluido(int? id)
         {
             if(id == null)
@@ -87,6 +89,7 @@ namespace ElectroCo.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -112,15 +115,16 @@ namespace ElectroCo.Controllers
             {
                 return View(await pro.ToListAsync());
             }
-            return RedirectToAction("Index", "Clientes");
+            return RedirectToAction("Index");
         }
 
-       /// <summary>
-       /// Função para criar uma nova encomenda que:
-       ///      -Verifica se existe o cliente que quer fazer a encomenda
-       ///      -Verfica se existem Itens(Produtos) no Carrinho de Compras
-       /// </summary>
-       /// <returns></returns>
+        /// <summary>
+        /// Função para criar uma nova encomenda que:
+        ///      -Verifica se existe o cliente que quer fazer a encomenda
+        ///      -Verfica se existem Itens(Produtos) no Carrinho de Compras
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Roles = "cliente")]
         public  IActionResult Create()
         {
             var Cliente =  _context.Clientes.FirstOrDefault(m => m.UserId == _userManager.GetUserId(User));
@@ -157,6 +161,7 @@ namespace ElectroCo.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "cliente")]
         public async Task<IActionResult> Create([Bind("ID,MoradaEncomenda,MoradaFaturacao,")] Encomendas encomendas)
         {
             if (ModelState.IsValid)

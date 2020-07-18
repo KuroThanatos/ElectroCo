@@ -42,6 +42,7 @@ namespace ElectroCo.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -62,7 +63,7 @@ namespace ElectroCo.Controllers
             {
                 return NotFound();
             }
-            if (User.IsInRole("administrador, gestorArmazem") ||
+            if (User.IsInRole("administrador") || User.IsInRole("gestorArmazem") ||
                cliente.UserId == _userManager.GetUserId(User)
                )
             {

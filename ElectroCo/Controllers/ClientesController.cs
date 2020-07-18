@@ -101,7 +101,10 @@ namespace ElectroCo.Controllers
                 TempData["error"] = "Não existe informação";
                 return LocalRedirect("~/");
             }
-            return View(cliente);
+            if(User.IsInRole("administrador") || cliente.UserId == _userManager.GetUserId(User))
+                return View(cliente);
+            
+            return LocalRedirect("~/");
         }
 
         // POST: Clientes/Edit/5
@@ -149,36 +152,36 @@ namespace ElectroCo.Controllers
         }
 
         // GET: Clientes/Delete/5
-        [Authorize(Roles = "administrador")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //[Authorize(Roles = "administrador")]
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var clientes = await _context.Clientes
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (clientes == null)
-            {
-                return NotFound();
-            }
+        //    var clientes = await _context.Clientes
+        //        .FirstOrDefaultAsync(m => m.ID == id);
+        //    if (clientes == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(clientes);
-        }
+        //    return View(clientes);
+        //}
 
 
-        // POST: Clientes/Delete/5
-        [Authorize(Roles = "administrador")]
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var clientes = await _context.Clientes.FindAsync(id);
-            _context.Clientes.Remove(clientes);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //// POST: Clientes/Delete/5
+        //[Authorize(Roles = "administrador")]
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var clientes = await _context.Clientes.FindAsync(id);
+        //    _context.Clientes.Remove(clientes);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool ClientesExists(int id)
         {

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ElectroCo.Controllers
 {
+    [Authorize(Roles ="cliente")]
     public class ShoppingCartsController : Controller
     {
         /// <summary>
@@ -32,6 +33,7 @@ namespace ElectroCo.Controllers
         /// Mostra a lista de Itens(Produtos) que um Cliente tem no seu Carrinho de Compras
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "cliente")]
         public async Task<IActionResult> Index()
         {
             var Cliente = await _context.Clientes

@@ -16,6 +16,7 @@ using System.Diagnostics;
 
 namespace ElectroCo.Controllers
 {
+    [Authorize]
     public class ProdutosController : Controller
     {
         /// <summary>
@@ -43,6 +44,7 @@ namespace ElectroCo.Controllers
         /// Lista os Produtos
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "administrador,gestorArmazem")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Produtos.ToListAsync());
@@ -53,22 +55,23 @@ namespace ElectroCo.Controllers
        /// </summary>
        /// <param name="id"></param>
        /// <returns></returns>
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var produtos = await _context.Produtos
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (produtos == null)
-            {
-                return NotFound();
-            }
+        //    var produtos = await _context.Produtos
+        //        .FirstOrDefaultAsync(m => m.ID == id);
+        //    if (produtos == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(produtos);
-        }
+        //    return View(produtos);
+        //}
+
         /// <summary>
         /// Função que adiciona um Produto ao Carrinho de Compras.
         ///     -Verifica se o produto existe;
@@ -279,7 +282,7 @@ namespace ElectroCo.Controllers
             }
             return View(produtos);
         }
-
+        [Authorize(Roles = "gestorArmazem")]
         public async Task<IActionResult> Repor(int? ID, int stock)
         {
             if(ID == null)

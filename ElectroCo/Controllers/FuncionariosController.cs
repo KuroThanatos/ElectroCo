@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ElectroCo.Controllers
 {
-    [Authorize(Roles = "administrador")]
+    [Authorize(Roles = "administrador,gestorArmazem")]
     public class FuncionariosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,13 +25,14 @@ namespace ElectroCo.Controllers
         }
 
         // GET: Funcionarios
+        [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Funcionarios.ToListAsync());
         }
 
-        // GET: Funcionarios/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Funcionarios/Details/GUID
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -39,7 +40,7 @@ namespace ElectroCo.Controllers
             }
 
             var funcionarios = await _context.Funcionarios
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.UserId == id);
             if (funcionarios == null)
             {
                 return NotFound();
@@ -49,6 +50,7 @@ namespace ElectroCo.Controllers
         }
 
         // GET: Funcionarios/Create
+        [Authorize(Roles = "administrador")]
         public IActionResult Create()
         {
             return View();
@@ -59,6 +61,7 @@ namespace ElectroCo.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "administrador")]
         public async Task<IActionResult> Create([Bind("ID,Nome,Email,Telefone,password,NumFuncionario,TipoFuncionario")] Funcionarios funcionarios)
         {
             if (ModelState.IsValid)
@@ -96,12 +99,19 @@ namespace ElectroCo.Controllers
         // GET: Funcionarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var funcionarios = new Funcionarios();
+            funcionarios = null;
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var funcionarios = await _context.Funcionarios.FindAsync(id);
+            if (User.IsInRole("gestorArmazem"))
+                funcionarios = await _context.Funcionarios.FirstOrDefaultAsync(f => f.UserId == _userManager.GetUserId(User));
+            else
+                funcionarios = await _context.Funcionarios.FindAsync(id);
+
             if (funcionarios == null)
             {
                 return NotFound();
@@ -144,34 +154,34 @@ namespace ElectroCo.Controllers
             return View(funcionarios);
         }
 
-        // GET: Funcionarios/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //// GET: Funcionarios/Delete/5
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var funcionarios = await _context.Funcionarios
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (funcionarios == null)
-            {
-                return NotFound();
-            }
+        //    var funcionarios = await _context.Funcionarios
+        //        .FirstOrDefaultAsync(m => m.ID == id);
+        //    if (funcionarios == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(funcionarios);
-        }
+        //    return View(funcionarios);
+        //}
 
-        // POST: Funcionarios/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var funcionarios = await _context.Funcionarios.FindAsync(id);
-            _context.Funcionarios.Remove(funcionarios);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //// POST: Funcionarios/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var funcionarios = await _context.Funcionarios.FindAsync(id);
+        //    _context.Funcionarios.Remove(funcionarios);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool FuncionariosExists(int id)
         {
