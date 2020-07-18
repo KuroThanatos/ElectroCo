@@ -3,11 +3,12 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<p>
-    <a asp-action="Create">Adicionar novo Produto</a>
-</p>
-<table id="defaultTable" class="table">
+@if (User.IsInRole("administrador")) {
+    <p>
+        <a asp-action="Create">Adicionar novo Produto</a>
+    </p>
+}
+<table id="defaultTable" class="table table-responsive">
     <thead>
         <tr>
             <th>
@@ -29,7 +30,7 @@
                 @Html.DisplayNameFor(model => model.Imagem)
             </th>
             <th>
-                repor stock
+                Repor Stock
             </th>
             <th></th>
         </tr>
@@ -53,26 +54,26 @@
                 @Html.DisplayFor(modelItem => item.EstadoProduto)
             </td>
             <td>
-                <img src="~/Imagens/produtos/@item.Imagem" height="50" alt="imagem do produto @item.Nome" title ="@item.Nome" />
+                <img src="/Imagens/produtos/@item.Imagem" height="50" alt="imagem do produto @item.Nome" title ="@item.Nome" />
             </td>
             @if(User.IsInRole("gestorArmazem")){
         <td>
             <form asp-action="Repor">
                 <td>
-                <div>
-                    <input type="hidden" name="ID" value="@item.ID"/> 
-                    <input name="stock" />
-                </div>
+                    <div>
+                        <input type="hidden" name="ID" value="@item.ID"/> 
+                        <input name="stock" />
+                    </div>
                  </td>
-            <td>
-                <input type="submit" value="Repor" class="btn btn-primary" />
-            </td>
+                <td>
+                    <input type="submit" value="Repor" class="btn btn-primary" />
+                </td>
             </form>
         </td>
             }
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+                <a asp-action="Details" asp-route-id="@item.ID">Detalhes</a>
             </td>
 </tr>
 }

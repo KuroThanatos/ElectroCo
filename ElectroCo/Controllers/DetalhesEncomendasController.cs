@@ -123,6 +123,8 @@ namespace ElectroCo.Controllers
                 }
                 catch
                 {
+                    var encomenda = _context.Encomendas.FirstOrDefaultAsync(m => m.ID == idEnc);
+                    _context.Remove(encomenda);
                     return RedirectToAction("Index", "Home");
                 }
             }

@@ -24,6 +24,7 @@ namespace ElectroCo.Models
         /// <summary>
         /// Preço total do Produto
         /// </summary>
+        [DataType(DataType.Currency)]
         public float PrecoProduto { get; set; }
 
 

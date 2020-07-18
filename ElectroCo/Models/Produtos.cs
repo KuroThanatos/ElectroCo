@@ -30,6 +30,8 @@ namespace ElectroCo.Models
         /// <summary>
         /// Preço atual do Produto
         /// </summary>
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C}")] 
         public float Preco { get; set; }
 
         /// <summary>

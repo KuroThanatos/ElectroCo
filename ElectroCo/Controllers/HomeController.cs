@@ -14,17 +14,14 @@ using Microsoft.VisualBasic;
 
 namespace ElectroCo.Controllers
 {
-    public class HomeController : Controller
-    {
-        private readonly ILogger<HomeController> _logger;
+    public class HomeController : Controller 
+    { 
+    
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public HomeController(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = userManager;
-            _logger = logger;
         }
 
         [AllowAnonymous]

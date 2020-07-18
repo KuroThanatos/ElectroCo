@@ -84,11 +84,8 @@
                     }
         <tr>
             <th>Preço Total:</th>
-            <td>@Total</td>
+            <td>@string.Format(new System.Globalization.CultureInfo("pt-PT"), "{0:C}", Total)</td>
         </tr>
             </tbody>
         </table>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
