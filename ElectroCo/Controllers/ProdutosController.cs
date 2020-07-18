@@ -9,6 +9,10 @@ using ElectroCo.Data;
 using ElectroCo.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System.Diagnostics;
 
 namespace ElectroCo.Controllers
 {
@@ -16,11 +20,13 @@ namespace ElectroCo.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IWebHostEnvironment _caminho;
 
-        public ProdutosController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public ProdutosController(ApplicationDbContext context, UserManager<IdentityUser> userManager, IWebHostEnvironment caminho)
         {
             _context = context;
             _userManager = userManager;
+            _caminho = caminho;
         }
 
         // GET: Produtos
@@ -112,13 +118,64 @@ namespace ElectroCo.Controllers
         [Authorize(Roles = "administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Nome,Tipo,Preco,Stock,EstadoProduto,Imagem")] Produtos produtos)
+        public async Task<IActionResult> Create([Bind("ID,Nome,Tipo,Preco,Stock,EstadoProduto,Imagem")] Produtos produtos, IFormFile proImg)
         {
+            string caminhoCompleto = "";
+
+            bool img = false;
+
+            if (proImg == null)
+            {
+                produtos.Imagem = "no.png";
+
+                Trace.WriteLine("Nao");
+            }
+            else
+            {
+                Trace.WriteLine(proImg.ContentType);
+                if (proImg.ContentType == "image/jpeg" || proImg.ContentType == "image/png")
+                {
+                    Guid g;
+
+                    g = Guid.NewGuid();
+
+                    string extensao = Path.GetExtension(proImg.FileName).ToLower();
+                    string nome = g.ToString() + extensao;
+
+                    caminhoCompleto = Path.Combine(_caminho.WebRootPath, "Imagens\\produtos", nome);
+
+                    produtos.Imagem = nome;
+
+                    img = true;
+                }
+                else
+                {
+                    produtos.Imagem = "no.png";
+                    Trace.WriteLine("Nao2");
+                }
+            }
+
+
             if (ModelState.IsValid)
             {
-                _context.Add(produtos);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try {
+
+                    _context.Add(produtos);
+                    await _context.SaveChangesAsync();
+                    if (img)
+                    {
+                        using var stream = new FileStream(caminhoCompleto, FileMode.Create);
+                        await proImg.CopyToAsync(stream);
+                    }
+
+                    return RedirectToAction(nameof(Index));
+
+                }
+                catch (Exception)
+                {
+                    return View(produtos);
+                }
+                
             }
             return View(produtos);
         }
