@@ -4,14 +4,16 @@ using ElectroCo.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ElectroCo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200718141900_Seed")]
+    partial class Seed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -407,21 +409,21 @@ namespace ElectroCo.Migrations
                         new
                         {
                             Id = "ad",
-                            ConcurrencyStamp = "9c672dc1-6478-45bd-b1b6-1139ff5f8d79",
+                            ConcurrencyStamp = "4bb53270-9740-43b2-911f-7d3842dea8d0",
                             Name = "administrador",
                             NormalizedName = "administrador"
                         },
                         new
                         {
                             Id = "ga",
-                            ConcurrencyStamp = "7858d579-e075-4526-ada1-7f96ccd2f0d1",
+                            ConcurrencyStamp = "fa1f64fc-7647-43a5-a8dd-f6e522103c90",
                             Name = "gestorArmazem",
                             NormalizedName = "gestorArmazem"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "a7ce4ba6-26c7-476a-9f67-75ac529b8b1c",
+                            ConcurrencyStamp = "e3f78b4e-a1c0-4f9a-8586-cb46e298c5b5",
                             Name = "cliente",
                             NormalizedName = "cliente"
                         });
@@ -525,7 +527,6 @@ namespace ElectroCo.Migrations
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "GERENTE@IPT.PT",
-                            NormalizedUserName = "GERENTE@IPT.PT",
                             PasswordHash = "AQAAAAEAACcQAAAAEOwjUR76Lx3fR0i9QH3Noni0nzQTLzJ9a2CM1v+IdBwB6ADWtKRgX4o4Sl8FyBIoqA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "CYQGW2ATI3AOJUO66PHZWTHIPBZRU6NL",
@@ -541,7 +542,6 @@ namespace ElectroCo.Migrations
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "GESTOR@IPT.PT",
-                            NormalizedUserName = "GESTOR@IPT.PT",
                             PasswordHash = "AQAAAAEAACcQAAAAEOwjUR76Lx3fR0i9QH3Noni0nzQTLzJ9a2CM1v+IdBwB6ADWtKRgX4o4Sl8FyBIoqA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "CYQGW2ATI3AOJUO66PHZWTHIPBZRU6NL",
@@ -557,7 +557,6 @@ namespace ElectroCo.Migrations
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "CLIENTE@IPT.PT",
-                            NormalizedUserName = "CLIENTE@IPT.PT",
                             PasswordHash = "AQAAAAEAACcQAAAAEOwjUR76Lx3fR0i9QH3Noni0nzQTLzJ9a2CM1v+IdBwB6ADWtKRgX4o4Sl8FyBIoqA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "CYQGW2ATI3AOJUO66PHZWTHIPBZRU6NL",
@@ -588,29 +587,6 @@ namespace ElectroCo.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ClaimType = "Nome",
-                            ClaimValue = "Gerente Gerente",
-                            UserId = "f554eee4-e19d-4830-a02c-aabe9f18e8a7"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ClaimType = "Nome",
-                            ClaimValue = "Gestor Gestor",
-                            UserId = "96fc6f49-a2b8-42eb-a63d-edc9e8a7c816"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ClaimType = "Nome",
-                            ClaimValue = "Cliente Cliente",
-                            UserId = "91b48022-fcca-4aed-8bee-63f2ff93a8c5"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
