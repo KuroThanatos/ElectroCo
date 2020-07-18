@@ -28,6 +28,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Imagem)
             </th>
+            <th>
+                repor stock
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -52,11 +55,26 @@
             <td>
                 <img src="~/Imagens/produtos/@item.Imagem" height="50" alt="imagem do produto @item.Nome" title ="@item.Nome" />
             </td>
+            @if(User.IsInRole("gestorArmazem")){
+        <td>
+            <form asp-action="Repor">
+                <td>
+                <div>
+                    <input type="hidden" name="ID" value="@item.ID"/> 
+                    <input name="stock" />
+                </div>
+                 </td>
+            <td>
+                <input type="submit" value="Repor" class="btn btn-primary" />
+            </td>
+            </form>
+        </td>
+            }
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Editar</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">Details</a>
             </td>
-        </tr>
+</tr>
 }
     </tbody>
 </table>

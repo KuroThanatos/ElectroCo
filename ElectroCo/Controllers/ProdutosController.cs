@@ -271,7 +271,37 @@ namespace ElectroCo.Controllers
             }
             return View(produtos);
         }
-       
+
+        public async Task<IActionResult> Repor(int? ID, int stock)
+        {
+            if(ID == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            var produto = await _context.Produtos.FirstOrDefaultAsync(m => m.ID == ID);
+            if(produto == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                produto.Stock += stock;
+                if(produto.Stock > 0)
+                {
+                    produto.EstadoProduto = "Disponivel";
+                }
+                _context.Update(produto);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+           
+        }
+
         // GET: Produtos/Delete/5
         /*
         [Authorize(Roles = "administrador")]
@@ -306,10 +336,10 @@ namespace ElectroCo.Controllers
         */
 
 
-    /// <summary>
-    /// Função que cria um dicionario, para as categorias de um produto.
-    /// </summary>
-    /// <returns></returns>
+        /// <summary>
+        /// Função que cria um dicionario, para as categorias de um produto.
+        /// </summary>
+        /// <returns></returns>
         private Dictionary<string,string[]> TipoProdutos() {
             var product_types = new Dictionary<string, string[]>();
             product_types.Add("armazenamento", new string[] {
